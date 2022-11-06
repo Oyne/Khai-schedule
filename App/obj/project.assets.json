@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\andre\\source\\repos\\Schedule\\App\\App.csproj",
+      "projectUniqueName": "C:\\Users\\andre\\source\\repos\\Oyne\\Khai-schedule\\App\\App.csproj",
       "projectName": "App",
-      "projectPath": "C:\\Users\\andre\\source\\repos\\Schedule\\App\\App.csproj",
+      "projectPath": "C:\\Users\\andre\\source\\repos\\Oyne\\Khai-schedule\\App\\App.csproj",
       "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\andre\\source\\repos\\Schedule\\App\\obj\\",
+      "outputPath": "C:\\Users\\andre\\source\\repos\\Oyne\\Khai-schedule\\App\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
