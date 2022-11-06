@@ -396,8 +396,17 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+<<<<<<< Updated upstream
 *.cache
 *.vsidx
 *.sqlite
 *.props
 *.cache
+=======
+App/obj/Debug/net6.0-windows/App.GeneratedMSBuildEditorConfig.editorconfig
+App/obj/Debug/net6.0-windows/App.assets.cache
+App/obj/Debug/net6.0-windows/App.csproj.AssemblyReference.cache
+>>>>>>> Stashed changes
+App/obj/Debug/net6.0-windows/App.assets.cache
+App/obj/Debug/net6.0-windows/App.csproj.AssemblyReference.cache
+App/obj/Debug/net6.0-windows/App.GeneratedMSBuildEditorConfig.editorconfig
