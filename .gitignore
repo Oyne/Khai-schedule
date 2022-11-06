@@ -401,3 +401,9 @@ FodyWeavers.xsd
 *.sqlite
 *.props
 *.cache
+*.vsidx
+.vs/Khai-schedule/v17/.suo
+*.sqlite
+*.props
+*.cache
+*.cache
