@@ -20,6 +20,7 @@
             base.Dispose(disposing);
         }
         private VScrollBar vScrollBar1;
-        private ComboBox comboBox1;
+        private ComboBox GroupChoice;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }
