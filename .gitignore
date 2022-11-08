@@ -410,3 +410,5 @@ App/obj/Debug/net6.0-windows/App.csproj.AssemblyReference.cache
 App/obj/Debug/net6.0-windows/App.assets.cache
 App/obj/Debug/net6.0-windows/App.csproj.AssemblyReference.cache
 App/obj/Debug/net6.0-windows/App.GeneratedMSBuildEditorConfig.editorconfig
+.vs/slnx.sqlite
+App/obj/Debug/net6.0-windows/App.designer.runtimeconfig.json
