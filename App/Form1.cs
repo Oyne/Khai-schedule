@@ -10,6 +10,7 @@ namespace App
             InitializeComponent();
             Thread groupChoiceThread = new Thread(new ThreadStart(GroupChoice_Location));
             groupChoiceThread.Start();
+            this.Load += Form1_Load;
         }
 
         private void InitializeComponent()
@@ -84,13 +85,13 @@ namespace App
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.Load += Form1_Load;
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             formOriginalSize = this.Size;
-            GroupChoiceOriginalRect = new Rectangle(GroupChoice.Location.X, GroupChoice.Location.Y, GroupChoice.Width, GroupChoice.Height);
+            GroupChoiceOriginalRect = new Rectangle(GroupChoice.Location.X, GroupChoice.Location.Y, GroupChoice.Width, GroupChoice.Height);         
         }
 
         private void resizeChildrenControls()
