@@ -9,18 +9,14 @@ namespace App
             groupChoiceThread.Start();
         }
 
-        private class ScheduleElement
-        {
-        }
-
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.GroupChoice = new System.Windows.Forms.ComboBox();
-            this.ScheduleElement = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ChangePosition = new System.Windows.Forms.Button();
-            this.ScheduleElement.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // vScrollBar1
@@ -46,20 +42,20 @@ namespace App
             this.GroupChoice.TabIndex = 2;
             this.GroupChoice.SelectedIndexChanged += new System.EventHandler(this.GroupChoice_SelectedIndexChanged);
             // 
-            // ScheduleElement
+            // tableLayoutPanel1
             // 
-            this.ScheduleElement.ColumnCount = 2;
-            this.ScheduleElement.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.ScheduleElement.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.ScheduleElement.Controls.Add(this.ChangePosition, 0, 0);
-            this.ScheduleElement.Location = new System.Drawing.Point(470, 85);
-            this.ScheduleElement.Name = "ScheduleElement";
-            this.ScheduleElement.RowCount = 2;
-            this.ScheduleElement.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.61111F));
-            this.ScheduleElement.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.38889F));
-            this.ScheduleElement.Size = new System.Drawing.Size(467, 144);
-            this.ScheduleElement.TabIndex = 3;
-            this.ScheduleElement.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint_1);
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.ChangePosition, 0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(470, 85);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.61111F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.38889F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(467, 144);
+            this.tableLayoutPanel1.TabIndex = 3;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint_1);
             // 
             // ChangePosition
             // 
@@ -76,13 +72,13 @@ namespace App
             // 
             this.BackColor = System.Drawing.Color.LightGray;
             this.ClientSize = new System.Drawing.Size(1902, 1033);
-            this.Controls.Add(this.ScheduleElement);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.GroupChoice);
             this.Controls.Add(this.vScrollBar1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.ScheduleElement.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -104,7 +100,7 @@ namespace App
 
         private void ChangePosition_Click(object sender, EventArgs e)
         {
-            this.ScheduleElement.Controls.Add(this.ChangePosition, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.ChangePosition, 1, 0);
         }
 
         private void GroupChoice_SelectedIndexChanged(object sender, EventArgs e)

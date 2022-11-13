@@ -21,7 +21,7 @@
         }
         private VScrollBar vScrollBar1;
         private ComboBox GroupChoice;
-        private TableLayoutPanel ScheduleElement;
+        private TableLayoutPanel tableLayoutPanel1;
         private Button ChangePosition;
     }
 }
