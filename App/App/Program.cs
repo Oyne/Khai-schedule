@@ -11,19 +11,6 @@ using var client = new KhaiClient();
 string group = "";
 string name = "";
 int choice;
-const string time1 = "08:00 - 09:35";
-const string time2 = "09:50 - 11:25";
-const string time3 = "11:55 - 13:30";
-const string time4 = "13:45 - 15:20";
-const string time5 = "15:35 - 17:10";
-
-const string monday = "Понеділок";
-const string tuesday = "Вівторок";
-const string wednesday = "Середа";
-const string thursday = "Четвер";
-const string friday = "П'ятниця";
-
-//string[] daysOfWeek = { "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця" };
 
 Console.WriteLine("\n\n\t\tРасписание ХАИ\n");
 Console.Write("1. Поиск по группе\n2. Поиск по имени\n3. Выход\n>>> ");
@@ -66,11 +53,6 @@ Debugger.Break();
 
 class Output
 {
-    const string time1 = "08:00 - 09:35";
-    const string time2 = "09:50 - 11:25";
-    const string time3 = "11:55 - 13:30";
-    const string time4 = "13:45 - 15:20";
-    const string time5 = "15:35 - 17:10";
     static string[] timeOfPairs = { "08:00 - 09:35", "09:50 - 11:25", "11:55 - 13:30", "13:45 - 15:20", "15:35 - 17:10" };
     static string[] daysOfWeek = { "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця" };
     public async static void Outputing(WeekSchedule weekScheduele, string group)
