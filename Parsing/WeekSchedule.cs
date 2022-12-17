@@ -14,12 +14,12 @@ public class WeekSchedule : IEnumerable<DaySchedule>
 
     public WeekSchedule(DaySchedule monday, DaySchedule tuesday,
         DaySchedule wednesday, DaySchedule thursday, DaySchedule friday)
-    {
-        Monday = monday ?? throw new ArgumentNullException(nameof(monday));
-        Tuesday = tuesday ?? throw new ArgumentNullException(nameof(tuesday));
+    { 
+        Monday    = monday ?? throw new ArgumentNullException(nameof(monday));
+        Tuesday   = tuesday ?? throw new ArgumentNullException(nameof(tuesday));
         Wednesday = wednesday ?? throw new ArgumentNullException(nameof(wednesday));
-        Thursday = thursday ?? throw new ArgumentNullException(nameof(thursday));
-        Friday = friday ?? throw new ArgumentNullException(nameof(friday));
+        Thursday  = thursday ?? throw new ArgumentNullException(nameof(thursday));
+        Friday    = friday ?? throw new ArgumentNullException(nameof(friday));
     }
 
     public static WeekSchedule Parse(IList<DaySchedule> daySchedules)

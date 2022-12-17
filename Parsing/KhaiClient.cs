@@ -1,12 +1,10 @@
 ﻿using HtmlAgilityPack;
-using Parsing;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Xml;
 
 namespace Khai;
 
@@ -31,9 +29,9 @@ public class KhaiClient : IDisposable
         if (string.IsNullOrWhiteSpace(studentId))
             throw new ArgumentException("A student ID is an empty string.", nameof(studentId));
 
-        var response = (await _httpClient.GetAsync(@$"union/schedule/student/{studentId}")).EnsureSuccessStatusCode();
+        var response      = (await _httpClient.GetAsync(@$"union/schedule/student/{studentId}")).EnsureSuccessStatusCode();
         var contentStream = await response.Content.ReadAsStreamAsync();
-
+        
         return ParseWeekSchedule(contentStream);
     }
 
@@ -44,7 +42,7 @@ public class KhaiClient : IDisposable
         if (string.IsNullOrWhiteSpace(lecturerId))
             throw new ArgumentException("A lecturer ID is an empty string.", nameof(lecturerId));
 
-        var response = (await _httpClient.GetAsync(@$"union/schedule/lecturer/{lecturerId}")).EnsureSuccessStatusCode();
+        var response      = (await _httpClient.GetAsync(@$"union/schedule/lecturer/{lecturerId}")).EnsureSuccessStatusCode();
         var contentStream = await response.Content.ReadAsStreamAsync();
 
         return ParseWeekSchedule(contentStream);
@@ -57,7 +55,7 @@ public class KhaiClient : IDisposable
         if (string.IsNullOrWhiteSpace(groupId))
             throw new ArgumentException("A group ID is an empty string.", nameof(groupId));
 
-        var response = (await _httpClient.GetAsync(@$"union/schedule/group/{groupId}")).EnsureSuccessStatusCode();
+        var response      = (await _httpClient.GetAsync(@$"union/schedule/group/{groupId}")).EnsureSuccessStatusCode();
         var contentStream = await response.Content.ReadAsStreamAsync();
 
         return ParseWeekSchedule(contentStream);
@@ -86,7 +84,7 @@ public class KhaiClient : IDisposable
                 row.FirstChild.Attributes["colspan"].Value == "3")
             .ToArray();
 
-        var rowsByDay = scheduleRows.SplitBy(headerRows);
+        var rowsByDay    = scheduleRows.SplitBy(headerRows);
         var daySchedules = new List<DaySchedule>();
 
         foreach (var rows in rowsByDay)
@@ -96,8 +94,8 @@ public class KhaiClient : IDisposable
             for (int i = 0; i < rows.Length; i++)
             {
                 var numeratorClassCells = rows[i].Descendants("td").ToArray();
-                var numeratorClass = ParseUniversityClass(numeratorClassCells[1].GetDirectInnerText());
-
+                var numeratorClass      = ParseUniversityClass(numeratorClassCells[1].GetDirectInnerText());
+                
                 UniversityClass? denominatorClass;
 
                 if (numeratorClassCells[0].Attributes.Contains("rowspan"))
@@ -129,18 +127,24 @@ public class KhaiClient : IDisposable
         var items = text.Split(',');
         string name;
         string? roomNumber;
+        string? type;
+        string? teacher;
 
         if (char.IsDigit(items[0][0]))
         {
-            name = items[1];
+            teacher    = items[3]?.Trim();
+            type       = items[2]?.Trim();
+            name       = items[1].Trim();
             roomNumber = items[0];
         }
         else
         {
-            name = items[0];
+            name       = items[0];
             roomNumber = null;
+            teacher = null;
+            type = null;
         }
 
-        return new UniversityClass(name, roomNumber);
+        return new UniversityClass(name, roomNumber, type, teacher);
     }
 }

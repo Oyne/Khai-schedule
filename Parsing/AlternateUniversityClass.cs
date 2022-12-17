@@ -1,6 +1,4 @@
-﻿using Parsing;
-
-namespace Khai;
+﻿namespace Khai;
 
 public class AlternateUniversityClass
 {
@@ -9,7 +7,7 @@ public class AlternateUniversityClass
 
     public AlternateUniversityClass(UniversityClass? numerator, UniversityClass? denominator)
     {
-        Numerator = numerator;
+        Numerator   = numerator;
         Denominator = denominator;
     }
 }

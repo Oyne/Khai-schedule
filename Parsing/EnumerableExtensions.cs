@@ -11,7 +11,7 @@ public static class EnumerableExtensions
     {
         ArgumentNullException.ThrowIfNull(source);
         ArgumentNullException.ThrowIfNull(separators);
-
+        
         return SplitByIterator(source, separators, comparer);
     }
 
