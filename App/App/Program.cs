@@ -21,6 +21,7 @@ while (true)
     string group = "";
     string name = "";
     int choice;
+    int ret = 0;
 
 MenuCommand:
     Console.Write("1. Поиск по группе\n2. Поиск по имени\n3. Выход\n>>> ");
@@ -34,8 +35,21 @@ MenuCommand:
     {
         case 1:
             {
-                Console.Write("Введите группу: ");
-                group = Console.ReadLine();
+                WeekSchedule groupSch = null;
+                while (groupSch == null)
+                {
+                    Console.Write("Введите группу: ");
+                    group = Console.ReadLine();
+                    if (int.TryParse(group, out ret) && ret == 3) return;
+                    try
+                    {
+                        groupSch = await client.GetGroupWeekSheduleAsync(group);
+                    }
+                    catch (NullReferenceException e)
+                    {
+                        Console.Write("Некорректный ввод, введите группу в формате 515, 525v, 116i1, 516st1\n>>> ");
+                    }
+                }
                 Console.Clear();
                 Output.PrintKhai();
                 Output.Outputing(group, choice);
@@ -43,8 +57,21 @@ MenuCommand:
             break;
         default:
             {
-                Console.Write("Введите имя: ");
-                name = Console.ReadLine();
+                WeekSchedule studentSch = null;
+                while (studentSch == null)
+                {
+                    Console.Write("Введите имя: ");
+                    name = Console.ReadLine();
+                    if (int.TryParse(name, out ret) && ret == 3) return;
+                    try
+                    {
+                        studentSch = await client.GetStudentWeekSheduleAsync(name);
+                    }
+                    catch (NullReferenceException e)
+                    {
+                        Console.Write("Некорректный ввод, введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
+                    }
+                }
                 Console.Clear();
                 Output.PrintKhai();
                 Output.Outputing(name, choice);
@@ -112,12 +139,12 @@ class Output
                     Console.Write("     " + timeOfPairs[j] + "     ");
                     Console.ResetColor();
                     Console.Write("|");
-                    if (day.Classes[j].Numerator.RoomNumber == null) num = day.Classes[j].Numerator.Name.Length;
-                    else num = day.Classes[j].Numerator.RoomNumber.Length + day.Classes[j].Numerator.Name.Length;
+                    if (day.Classes[j].Numerator.RoomNumber == null) num = day.Classes[j].Numerator.Name.Length + 1;
+                    else num = day.Classes[j].Numerator.RoomNumber.Length + day.Classes[j].Numerator.Name.Length + 1;
                     Console.BackgroundColor = ConsoleColor.DarkBlue;
                     if (num > 75)
                     {
-                        Console.Write(day.Classes[j].Denominator.RoomNumber + day.Classes[j].Denominator.Name.Substring(0, 75 - day.Classes[j].Denominator.RoomNumber.Length));
+                        Console.Write(day.Classes[j].Denominator.RoomNumber + ' ' + day.Classes[j].Denominator.Name.Substring(0, 75 - day.Classes[j].Denominator.RoomNumber.Length));
                         Console.ResetColor();
                         Console.WriteLine("|");
                         Console.Write("\t|");
@@ -130,7 +157,7 @@ class Output
                         Console.Write(day.Classes[j].Denominator.Name.Substring(75 - day.Classes[j].Denominator.RoomNumber.Length) + new string(' ', 72 - day.Classes[j].Denominator.Name.Substring(75 - day.Classes[j].Denominator.RoomNumber.Length).Length) + "   ");
                     }
                     else if (num == 75) Console.Write(day.Classes[j].Numerator.RoomNumber + day.Classes[j].Numerator.Name);
-                    else Console.Write(new string(' ', (75 - num) / 2) + day.Classes[j].Numerator.RoomNumber + day.Classes[j].Numerator.Name + new string(' ', 75 - num - ((75 - num) / 2)));
+                    else Console.Write(new string(' ', (75 - num) / 2) + day.Classes[j].Numerator.RoomNumber + ' ' + day.Classes[j].Numerator.Name + new string(' ', 75 - num - ((75 - num) / 2)));
                     Console.ResetColor();
                     Console.Write("|\n");
                     Console.WriteLine("\t" + new string('-', 101));
@@ -154,7 +181,7 @@ class Output
                     if (day.Classes[j].Numerator == null)
                     {
                         if (day.Classes[j].Denominator.RoomNumber == null) den = day.Classes[j].Denominator.Name.Length;
-                        else den = day.Classes[j].Denominator.RoomNumber.Length + day.Classes[j].Denominator.Name.Length;
+                        else den = day.Classes[j].Denominator.RoomNumber.Length + day.Classes[j].Denominator.Name.Length + 1;
                         Console.Write("\t|");
                         Console.BackgroundColor = ConsoleColor.Gray;
                         Console.ForegroundColor = ConsoleColor.Black;
@@ -182,7 +209,7 @@ class Output
                         Console.ForegroundColor = ConsoleColor.Black;
                         if (den > 75)
                         {
-                            Console.WriteLine(day.Classes[j].Denominator.RoomNumber + day.Classes[j].Denominator.Name.Substring(0, 75 - day.Classes[j].Denominator.RoomNumber.Length));
+                            Console.WriteLine(day.Classes[j].Denominator.RoomNumber + ' ' + day.Classes[j].Denominator.Name.Substring(0, 75 - day.Classes[j].Denominator.RoomNumber.Length));
                             Console.Write("\t|");
                             Console.BackgroundColor = ConsoleColor.Gray;
                             Console.ForegroundColor = ConsoleColor.Black;
@@ -192,7 +219,7 @@ class Output
                             Console.Write(day.Classes[j].Denominator.Name.Substring(75 - day.Classes[j].Denominator.RoomNumber.Length));
                         }
                         else if (den == 75) Console.Write(day.Classes[j].Denominator.RoomNumber + day.Classes[j].Denominator.Name);
-                        else Console.Write(new string(' ', (75 - den) / 2) + day.Classes[j].Denominator.RoomNumber + day.Classes[j].Denominator.Name + new string(' ', 75 - den - ((75 - den) / 2)));
+                        else Console.Write(new string(' ', (75 - den) / 2) + day.Classes[j].Denominator.RoomNumber + ' ' + day.Classes[j].Denominator.Name + new string(' ', 75 - den - ((75 - den) / 2)));
                         Console.ResetColor();
                         Console.Write("|\n");
                         Console.WriteLine("\t" + new string('-', 101));
@@ -200,7 +227,7 @@ class Output
                     else if (day.Classes[j].Denominator == null)
                     {
                         if (day.Classes[j].Numerator.RoomNumber == null) num = day.Classes[j].Numerator.Name.Length;
-                        else num = day.Classes[j].Numerator.RoomNumber.Length + day.Classes[j].Numerator.Name.Length;
+                        else num = day.Classes[j].Numerator.RoomNumber.Length + day.Classes[j].Numerator.Name.Length + 1;
                         Console.Write("\t|");
                         Console.BackgroundColor = ConsoleColor.Gray;
                         Console.ForegroundColor = ConsoleColor.Black;
@@ -210,7 +237,7 @@ class Output
                         Console.BackgroundColor = ConsoleColor.DarkBlue;
                         if (num > 75)
                         {
-                            Console.Write(day.Classes[j].Numerator.RoomNumber + day.Classes[j].Numerator.Name.Substring(0, 74 - day.Classes[j].Numerator.RoomNumber.Length));
+                            Console.Write(day.Classes[j].Numerator.RoomNumber + ' ' + day.Classes[j].Numerator.Name.Substring(0, 74 - day.Classes[j].Numerator.RoomNumber.Length));
                             Console.ResetColor();
                             Console.WriteLine("|");
                             Console.Write("\t|");
@@ -222,8 +249,8 @@ class Output
                             Console.BackgroundColor = ConsoleColor.DarkBlue;
                             Console.Write(day.Classes[j].Numerator.Name.Substring(74 - day.Classes[j].Numerator.RoomNumber.Length) + new string(' ', 72 - day.Classes[j].Numerator.Name.Substring(75 - day.Classes[j].Numerator.RoomNumber.Length).Length) + "   ");
                         }
-                        if (num == 75) Console.Write(day.Classes[j].Numerator.RoomNumber + day.Classes[j].Numerator.Name + new string(' ', 75 - num));
-                        else Console.Write(new string(' ', (75 - num) / 2) + day.Classes[j].Numerator.RoomNumber + day.Classes[j].Numerator.Name + new string(' ', 75 - num - ((75 - num) / 2)));
+                        if (num == 75) Console.Write(day.Classes[j].Numerator.RoomNumber + ' ' + day.Classes[j].Numerator.Name + new string(' ', 75 - num));
+                        else Console.Write(new string(' ', (75 - num) / 2) + day.Classes[j].Numerator.RoomNumber + ' ' + day.Classes[j].Numerator.Name + new string(' ', 75 - num - ((75 - num) / 2)));
                         Console.ResetColor();
                         Console.Write("|\n");
                         Console.Write("\t|");
@@ -248,9 +275,9 @@ class Output
                     else
                     {
                         if (day.Classes[j].Numerator.RoomNumber == null) num = day.Classes[j].Numerator.Name.Length;
-                        else num = day.Classes[j].Numerator.RoomNumber.Length + day.Classes[j].Numerator.Name.Length;
+                        else num = day.Classes[j].Numerator.RoomNumber.Length + day.Classes[j].Numerator.Name.Length + 1;
                         if (day.Classes[j].Denominator.RoomNumber == null) den = day.Classes[j].Denominator.Name.Length;
-                        else den = day.Classes[j].Denominator.RoomNumber.Length + day.Classes[j].Denominator.Name.Length;
+                        else den = day.Classes[j].Denominator.RoomNumber.Length + day.Classes[j].Denominator.Name.Length + 1;
                         Console.Write("\t|");
                         Console.BackgroundColor = ConsoleColor.Gray;
                         Console.ForegroundColor = ConsoleColor.Black;
@@ -260,7 +287,7 @@ class Output
                         Console.BackgroundColor = ConsoleColor.DarkBlue;
                         if (num > 75)
                         {
-                            Console.Write(day.Classes[j].Numerator.RoomNumber + day.Classes[j].Numerator.Name.Substring(0, 74 - day.Classes[j].Numerator.RoomNumber.Length));
+                            Console.Write(day.Classes[j].Numerator.RoomNumber + ' ' + day.Classes[j].Numerator.Name.Substring(0, 74 - day.Classes[j].Numerator.RoomNumber.Length));
                             Console.ResetColor();
                             Console.WriteLine("|");
                             Console.Write("\t|");
@@ -272,8 +299,8 @@ class Output
                             Console.BackgroundColor = ConsoleColor.DarkBlue;
                             Console.Write(day.Classes[j].Numerator.Name.Substring(74 - day.Classes[j].Numerator.RoomNumber.Length) + new string(' ', 72 - day.Classes[j].Numerator.Name.Substring(75 - day.Classes[j].Numerator.RoomNumber.Length).Length) + "   ");
                         }
-                        else if (num == 75) Console.Write(day.Classes[j].Numerator.RoomNumber + day.Classes[j].Numerator.Name);
-                        else Console.Write(new string(' ', (75 - num) / 2) + day.Classes[j].Numerator.RoomNumber + day.Classes[j].Numerator.Name + new string(' ', 75 - num - ((75 - num) / 2)));
+                        else if (num == 75) Console.Write(day.Classes[j].Numerator.RoomNumber + ' ' + day.Classes[j].Numerator.Name);
+                        else Console.Write(new string(' ', (75 - num) / 2) + day.Classes[j].Numerator.RoomNumber + ' ' + day.Classes[j].Numerator.Name + new string(' ', 75 - num - ((75 - num) / 2)));
                         Console.ResetColor();
                         Console.Write("|\n");
                         Console.Write("\t|");
@@ -293,7 +320,7 @@ class Output
                         Console.ForegroundColor = ConsoleColor.Black;
                         if (den > 75)
                         {
-                            Console.Write(day.Classes[j].Denominator.RoomNumber + day.Classes[j].Denominator.Name.Substring(0, 74 - day.Classes[j].Denominator.RoomNumber.Length));
+                            Console.Write(day.Classes[j].Denominator.RoomNumber + ' ' + day.Classes[j].Denominator.Name.Substring(0, 74 - day.Classes[j].Denominator.RoomNumber.Length));
                             Console.ResetColor();
                             Console.WriteLine("|");
                             Console.Write("\t|");
@@ -306,8 +333,8 @@ class Output
                             Console.ForegroundColor = ConsoleColor.Black;
                             Console.Write(day.Classes[j].Denominator.Name.Substring(75 - day.Classes[j].Denominator.RoomNumber.Length) + new string(' ', 72 - day.Classes[j].Denominator.Name.Substring(75 - day.Classes[j].Denominator.RoomNumber.Length).Length) + "   ");
                         }
-                        else if (den == 75) Console.Write(day.Classes[j].Denominator.RoomNumber + day.Classes[j].Denominator.Name);
-                        else Console.Write(new string(' ', (75 - den) / 2) + day.Classes[j].Denominator.RoomNumber + day.Classes[j].Denominator.Name + new string(' ', 75 - den - ((75 - den) / 2)));
+                        else if (den == 75) Console.Write(day.Classes[j].Denominator.RoomNumber + ' ' + day.Classes[j].Denominator.Name);
+                        else Console.Write(new string(' ', (75 - den) / 2) + day.Classes[j].Denominator.RoomNumber + ' ' + day.Classes[j].Denominator.Name + new string(' ', 75 - den - ((75 - den) / 2)));
                         Console.ResetColor();
                         Console.Write("|\n");
                         Console.WriteLine("\t" + new string('-', 101));
