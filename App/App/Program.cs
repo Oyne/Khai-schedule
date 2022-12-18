@@ -7,14 +7,7 @@ using System.Globalization;
 using System.Text;
 using System.Threading;
 
-
-Console.Write("\n\n\t\t\t\t|");
-Console.BackgroundColor = ConsoleColor.White;
-Console.ForegroundColor = ConsoleColor.Black;
-Console.Write(" Расписание ХАИ ");
-Console.ResetColor();
-Console.WriteLine("|");
-Console.WriteLine('\n');
+Output.PrintKhai();
 int width = 130;
 int height = 45;
 Console.SetWindowSize(width, height);
@@ -44,6 +37,7 @@ MenuCommand:
                 Console.Write("Введите группу: ");
                 group = Console.ReadLine();
                 Console.Clear();
+                Output.PrintKhai();
                 Output.Outputing(group, choice);
             }
             break;
@@ -52,6 +46,7 @@ MenuCommand:
                 Console.Write("Введите имя: ");
                 name = Console.ReadLine();
                 Console.Clear();
+                Output.PrintKhai();
                 Output.Outputing(name, choice);
             }
             break;
@@ -64,7 +59,11 @@ MenuCommand:
         Console.Write("Введите 1, 2 или 3: ");
     }
     if (choice == 3) return;
-    else if (choice == 2) goto MenuCommand;
+    else if (choice == 2)
+    {
+        Console.Clear();
+        goto MenuCommand;
+    }
 
     // https://education.khai.edu/union/schedule/student/kuzmichov-i-i
     var StudentSchedule = await client.GetStudentWeekSheduleAsync("kuzmichov-i-i");
@@ -318,5 +317,16 @@ class Output
             Console.WriteLine();
             count++;
         }
+    }
+
+    public static void PrintKhai()
+    {
+        Console.Write("\n\n\t\t\t\t\t\t|");
+        Console.BackgroundColor = ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.Black;
+        Console.Write(" Расписание ХАИ ");
+        Console.ResetColor();
+        Console.WriteLine("|");
+        Console.WriteLine('\n');
     }
 }
