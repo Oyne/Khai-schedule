@@ -53,6 +53,7 @@ MenuCommand:
                 }
                 Console.Clear();
                 Output.PrintKhai();
+                Console.WriteLine($"\t\t\t\t\t\t   Группа: {group}");
                 Output.Outputing(group, choice);
             }
             break;
@@ -75,6 +76,7 @@ MenuCommand:
                 }
                 Console.Clear();
                 Output.PrintKhai();
+                Console.WriteLine($"\t\t\t\t\t      Студент: {name}");
                 Output.Outputing(name, choice);
             }
             break;
