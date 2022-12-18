@@ -8,17 +8,14 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 
+
 int width = 130;
 int height = 45;
 Console.SetWindowSize(width, height);
 ConsoleColor DefaultConsBackColor = Console.BackgroundColor;
 ConsoleColor DefaultConsTextColor = Console.ForegroundColor;
-//ConsoleColor ConsBackColor = DefaultConsBackColor;
-//ConsoleColor ConsTextColor = DefaultConsTextColor;
 ConsoleColor ConsBackColor = ConsoleColor.White;
 ConsoleColor ConsTextColor = ConsoleColor.Black;
-
-Output.PrintKhai();
 
 while (true)
 {
@@ -33,12 +30,19 @@ while (true)
     int ret = 0;
 
 MenuCommand:
+
+    Console.BackgroundColor = DefaultConsBackColor;
+    Console.ForegroundColor = DefaultConsTextColor;
+    Console.Clear();
+
+    Output.PrintKhai();
+
     Console.Write("1. Поиск по группе\n2. Поиск по имени\n3. Выход\n>>> ");
     while (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 3)
     {
         Console.Write("Введите 1, 2 или 3: ");
     }
-    if (choice == 3) return;
+    if (choice == 3) Environment.Exit(0);
 
     switch (choice)
     {
@@ -49,7 +53,7 @@ MenuCommand:
                 {
                     Console.Write("Введите группу: ");
                     group = Console.ReadLine();
-                    if (int.TryParse(group, out ret) && ret == 3) return;
+                    if (int.TryParse(group, out ret) && ret == 3) Environment.Exit(0);
                     try
                     {
                         groupSch = await client.GetGroupWeekSheduleAsync(group);
@@ -59,13 +63,13 @@ MenuCommand:
                         Console.Write("Некорректный ввод, введите группу в формате 515, 525v, 116i1, 516st1\n>>> ");
                     }
                 }
-                //Console.Clear();
                 Console.BackgroundColor = ConsBackColor;
                 Console.ForegroundColor = ConsTextColor;
                 Console.Clear();
                 Output.PrintKhai();
                 Console.WriteLine($"\t\t\t\t\t\t   Группа: {group}");
-                Output.Outputing(group, choice);
+                await Task.Run(() => Output.Outputing(group, choice));
+                //Output.Outputing(group, choice);
             }
             break;
         default:
@@ -75,7 +79,7 @@ MenuCommand:
                 {
                     Console.Write("Введите имя: ");
                     name = Console.ReadLine();
-                    if (int.TryParse(name, out ret) && ret == 3) return;
+                    if (int.TryParse(name, out ret) && ret == 3) Environment.Exit(0);
                     try
                     {
                         studentSch = await client.GetStudentWeekSheduleAsync(name);
@@ -90,12 +94,13 @@ MenuCommand:
                 Console.Clear();
                 Output.PrintKhai();
                 Console.WriteLine($"\t\t\t\t\t      Студент: {name}");
-                Output.Outputing(name, choice);
+                await Task.Run(() => Output.Outputing(name, choice));
+                //Output.Outputing(name, choice);
             }
             break;
     }
 
-    Thread.Sleep(1000);
+    //Thread.Sleep(1000);
     Console.Write("1. Сохранить расписание в текстовый файл\n2. Вернуться в главное меню\n3. Выход\n>>> ");
     while (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 3)
     {
@@ -123,7 +128,7 @@ class Output
 {
     static string[] timeOfPairs = { "08:00 - 09:35", "09:50 - 11:25", "11:55 - 13:30", "13:45 - 15:20", "15:35 - 17:10" };
     static string[] daysOfWeek = { "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця" };
-    public async static void Outputing(string str, int choice)
+    public async static Task Outputing(string str, int choice)
     {
         ConsoleColor DefaultBackColor = Console.BackgroundColor;
         ConsoleColor DefaultTextColor = Console.ForegroundColor;
