@@ -8,10 +8,18 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 
-Output.PrintKhai();
 int width = 130;
 int height = 45;
 Console.SetWindowSize(width, height);
+ConsoleColor DefaultConsBackColor = Console.BackgroundColor;
+ConsoleColor DefaultConsTextColor = Console.ForegroundColor;
+//ConsoleColor ConsBackColor = DefaultConsBackColor;
+//ConsoleColor ConsTextColor = DefaultConsTextColor;
+ConsoleColor ConsBackColor = ConsoleColor.White;
+ConsoleColor ConsTextColor = ConsoleColor.Black;
+
+Output.PrintKhai();
+
 while (true)
 {
     Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -51,6 +59,9 @@ MenuCommand:
                         Console.Write("Некорректный ввод, введите группу в формате 515, 525v, 116i1, 516st1\n>>> ");
                     }
                 }
+                //Console.Clear();
+                Console.BackgroundColor = ConsBackColor;
+                Console.ForegroundColor = ConsTextColor;
                 Console.Clear();
                 Output.PrintKhai();
                 Console.WriteLine($"\t\t\t\t\t\t   Группа: {group}");
@@ -74,6 +85,8 @@ MenuCommand:
                         Console.Write("Некорректный ввод, введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
                     }
                 }
+                Console.BackgroundColor = ConsBackColor;
+                Console.ForegroundColor = ConsTextColor;
                 Console.Clear();
                 Output.PrintKhai();
                 Console.WriteLine($"\t\t\t\t\t      Студент: {name}");
@@ -112,6 +125,21 @@ class Output
     static string[] daysOfWeek = { "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця" };
     public async static void Outputing(string str, int choice)
     {
+        ConsoleColor DefaultBackColor = Console.BackgroundColor;
+        ConsoleColor DefaultTextColor = Console.ForegroundColor;
+        ConsoleColor TableBackColor = ConsoleColor.White;
+        ConsoleColor TableTextColor = ConsoleColor.Black;
+        ConsoleColor NumBackColor = ConsoleColor.White;
+        ConsoleColor NumTextColor = ConsoleColor.Black;
+        ConsoleColor DenBackColor = ConsoleColor.DarkBlue;
+        ConsoleColor DenTextColor = ConsoleColor.White;
+        ConsoleColor TimeBackColor = ConsoleColor.White;
+        ConsoleColor TimeTextColor = ConsoleColor.Black;
+        ConsoleColor DayOfWeekBackColor = ConsoleColor.White;
+        ConsoleColor DayOfWeekTextColor = ConsoleColor.Black;
+        //ConsoleColor BlankBackColor = ConsoleColor.DarkBlue;
+        //ConsoleColor BlankTextColor = ConsoleColor.White;
+
         var client = new KhaiClient();
         WeekSchedule Schedule;
         if (choice == 1) Schedule = await client.GetGroupWeekSheduleAsync(str);
@@ -123,12 +151,15 @@ class Output
 
         foreach (var day in Schedule)
         {
+            Console.BackgroundColor = TableBackColor;
+            Console.ForegroundColor = TableTextColor;
             Console.WriteLine("\t" + new string('-', 101));
             Console.Write("\t|");
-            Console.BackgroundColor = ConsoleColor.Gray;
-            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = DayOfWeekBackColor;
+            Console.ForegroundColor = DayOfWeekTextColor;
             Console.Write(new string(' ', (99 - daysOfWeek[count].Length) / 2) + daysOfWeek[count] + new string(' ', 99 - (99 - daysOfWeek[count].Length) / 2 - daysOfWeek[count].Length));
-            Console.ResetColor();
+            Console.BackgroundColor = TableBackColor;
+            Console.ForegroundColor = TableTextColor;
             Console.Write("|\n");
             Console.WriteLine("\t" + new string('-', 101));
             for (int j = 0; j < 5; j++)
@@ -140,10 +171,11 @@ class Output
                 if (day.Classes[j].Numerator == day.Classes[j].Denominator && day.Classes[j].Numerator != null)
                 {
                     Console.Write("\t|");
-                    Console.BackgroundColor = ConsoleColor.Gray;
-                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.BackgroundColor = TimeBackColor;
+                    Console.ForegroundColor = TimeTextColor;
                     Console.Write("     " + timeOfPairs[j] + "     ");
-                    Console.ResetColor();
+                    Console.BackgroundColor = TableBackColor;
+                    Console.ForegroundColor = TableTextColor;
                     Console.Write("|");
                     if (day.Classes[j].Numerator.RoomNumber != null)
                     {
@@ -160,38 +192,46 @@ class Output
                         output += ", " + day.Classes[j].Numerator.Type;
                         num += day.Classes[j].Numerator.Type.Length + 2;
                     }
-                        Console.BackgroundColor = ConsoleColor.DarkBlue;
+                    Console.BackgroundColor = NumBackColor;
+                    Console.ForegroundColor = NumTextColor;
                     if (num > 75)
                     {
                         Console.Write(output.Substring(0, 75));
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.WriteLine("|");
                         Console.Write("\t|");
-                        Console.BackgroundColor = ConsoleColor.Gray;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = TimeBackColor;
+                        Console.ForegroundColor = TimeTextColor;
                         Console.Write(new string(' ', 23));
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.Write("|");
-                        Console.BackgroundColor = ConsoleColor.DarkBlue;
+                        Console.BackgroundColor = NumBackColor;
+                        Console.ForegroundColor = NumTextColor;
                         Console.Write(output.Substring(75) + new string(' ', 75 - output.Substring(75).Length));
                     }
                     else if (num == 75) Console.Write(output);
                     else Console.Write(new string(' ', (75 - num) / 2) + output + new string(' ', 75 - num - ((75 - num) / 2)));
-                    Console.ResetColor();
+                    Console.BackgroundColor = TableBackColor;
+                    Console.ForegroundColor = TableTextColor;
                     Console.Write("|\n");
                     Console.WriteLine("\t" + new string('-', 101));
                 }
                 else if (day.Classes[j].Numerator == day.Classes[j].Denominator && day.Classes[j].Numerator == null)
                 {
                     Console.Write("\t|");
-                    Console.BackgroundColor = ConsoleColor.Gray;
-                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.BackgroundColor = TimeBackColor;
+                    Console.ForegroundColor = TimeTextColor;
                     Console.Write("     " + timeOfPairs[j] + "     ");
-                    Console.ResetColor();
+                    Console.BackgroundColor = TableBackColor;
+                    Console.ForegroundColor = TableTextColor;
                     Console.Write("|");
-                    Console.BackgroundColor = ConsoleColor.DarkGray;
+                    //Console.BackgroundColor = BlankBackColor;
+                    //Console.ForegroundColor = BlankTextColor;
                     Console.Write(new string(' ', (75 - 19) / 2) + "*******************" + new string(' ', 75 - 19 - (75 - 19) / 2));
-                    Console.ResetColor();
+                    Console.BackgroundColor = TableBackColor;
+                    Console.ForegroundColor = TableTextColor;
                     Console.Write("|\n");
                     Console.WriteLine("\t" + new string('-', 101));
                 }
@@ -215,48 +255,56 @@ class Output
                             den += day.Classes[j].Denominator.Type.Length + 2;
                         }
                         Console.Write("\t|");
-                        Console.BackgroundColor = ConsoleColor.Gray;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = TimeBackColor;
+                        Console.ForegroundColor = TimeTextColor;
                         Console.Write(new string(' ', 23));
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.Write("|");
-                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                        //Console.BackgroundColor = BlankBackColor;
+                        //Console.ForegroundColor = BlankTextColor;
                         Console.Write(new string(' ', (75 - 19) / 2) + "*******************" + new string(' ', 75 - 19 - (75 - 19) / 2));
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.Write("|\n");
                         Console.Write("\t|");
-                        Console.BackgroundColor = ConsoleColor.Gray;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = TimeBackColor;
+                        Console.ForegroundColor = TimeTextColor;
                         Console.Write("     " + timeOfPairs[j] + "     ");
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.Write("|");
                         Console.WriteLine(new string('-', 76));
                         Console.Write("\t|");
-                        Console.BackgroundColor = ConsoleColor.Gray;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = TimeBackColor;
+                        Console.ForegroundColor = TimeTextColor;
                         Console.Write(new string(' ', 23));
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.Write("|");
-                        Console.BackgroundColor = ConsoleColor.DarkCyan;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = DenBackColor;
+                        Console.ForegroundColor = DenTextColor;
                         if (den > 75)
                         {
                             Console.Write(output.Substring(0, 75));
-                            Console.ResetColor();
+                            Console.BackgroundColor = TableBackColor;
+                            Console.ForegroundColor = TableTextColor;
                             Console.WriteLine("|");
                             Console.Write("\t|");
-                            Console.BackgroundColor = ConsoleColor.Gray;
-                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.BackgroundColor = TimeBackColor;
+                            Console.ForegroundColor = TimeTextColor;
                             Console.Write(new string(' ', 23));
-                            Console.ResetColor();
+                            Console.BackgroundColor = TableBackColor;
+                            Console.ForegroundColor = TableTextColor;
                             Console.Write("|");
-                            Console.BackgroundColor = ConsoleColor.DarkCyan;
-                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.BackgroundColor = DenBackColor;
+                            Console.ForegroundColor = DenTextColor;
                             Console.Write(output.Substring(75) + new string(' ', 75 - output.Substring(75).Length));
                         }
                         else if (den == 75) Console.Write(output);
                         else Console.Write(new string(' ', (75 - den) / 2) + output + new string(' ', 75 - den - ((75 - den) / 2)));
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.Write("|\n");
                         Console.WriteLine("\t" + new string('-', 101));
                     }
@@ -278,46 +326,58 @@ class Output
                             num += day.Classes[j].Numerator.Type.Length + 2;
                         }
                         Console.Write("\t|");
-                        Console.BackgroundColor = ConsoleColor.Gray;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = TimeBackColor;
+                        Console.ForegroundColor = TimeTextColor;
                         Console.Write(new string(' ', 23));
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.Write("|");
-                        Console.BackgroundColor = ConsoleColor.DarkBlue;
+                        Console.BackgroundColor = NumBackColor;
+                        Console.ForegroundColor = NumTextColor;
                         if (num > 75)
                         {
                             Console.Write(output.Substring(0, 75));
-                            Console.ResetColor();
+                            Console.BackgroundColor = TableBackColor;
+                            Console.ForegroundColor = TableTextColor;
                             Console.WriteLine("|");
                             Console.Write("\t|");
-                            Console.BackgroundColor = ConsoleColor.Gray;
-                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.BackgroundColor = TimeBackColor;
+                            Console.ForegroundColor = TimeTextColor;
                             Console.Write(new string(' ', 23));
-                            Console.ResetColor();
+                            Console.BackgroundColor = TableBackColor;
+                            Console.ForegroundColor = TableTextColor;
                             Console.Write("|");
-                            Console.BackgroundColor = ConsoleColor.DarkBlue;
+                            Console.BackgroundColor = NumBackColor;
+                            Console.ForegroundColor = NumTextColor;
                             Console.Write(output.Substring(75) + new string(' ', 75 - output.Substring(75).Length));
                         }
                         else if (num == 75) Console.Write(output);
                         else Console.Write(new string(' ', (75 - num) / 2) + output + new string(' ', 75 - num - ((75 - num) / 2)));
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.Write("|\n");
                         Console.Write("\t|");
-                        Console.BackgroundColor = ConsoleColor.Gray;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = TimeBackColor;
+                        Console.ForegroundColor = TimeTextColor;
                         Console.Write("     " + timeOfPairs[j] + "     ");
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.Write("|");
                         Console.WriteLine(new string('-', 75));
                         Console.Write("\t|");
-                        Console.BackgroundColor = ConsoleColor.Gray;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = TimeBackColor;
+                        Console.ForegroundColor = TimeTextColor;
                         Console.Write(new string(' ', 23));
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.Write("|");
-                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                        //Console.BackgroundColor = BlankBackColor;
+                        //Console.ForegroundColor = BlankTextColor;
+                        Console.BackgroundColor = DenBackColor;
+                        Console.ForegroundColor = DenTextColor;
                         Console.Write(new string(' ', (75 - 19) / 2) + "*******************" + new string(' ', 75 - 19 - (75 - 19) / 2));
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.Write("|\n");
                         Console.WriteLine("\t" + new string('-', 101));
                     }
@@ -355,63 +415,74 @@ class Output
                             den += day.Classes[j].Denominator.Type.Length + 2;
                         }
                         Console.Write("\t|");
-                        Console.BackgroundColor = ConsoleColor.Gray;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = TimeBackColor;
+                        Console.ForegroundColor = TimeTextColor;
                         Console.Write(new string(' ', 23));
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.Write("|");
-                        Console.BackgroundColor = ConsoleColor.DarkBlue;
+                        Console.BackgroundColor = NumBackColor;
+                        Console.ForegroundColor = NumTextColor;
                         if (num > 75)
                         {
                             Console.Write(out_num.Substring(0, 75));
-                            Console.ResetColor();
+                            Console.BackgroundColor = TableBackColor;
+                            Console.ForegroundColor = TableTextColor;
                             Console.WriteLine("|");
                             Console.Write("\t|");
-                            Console.BackgroundColor = ConsoleColor.Gray;
-                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.BackgroundColor = TimeBackColor;
+                            Console.ForegroundColor = TimeTextColor;
                             Console.Write(new string(' ', 23));
-                            Console.ResetColor();
+                            Console.BackgroundColor = TableBackColor;
+                            Console.ForegroundColor = TableTextColor;
                             Console.Write("|");
-                            Console.BackgroundColor = ConsoleColor.DarkBlue;
+                            Console.BackgroundColor = NumBackColor;
+                            Console.ForegroundColor = NumTextColor;
                             Console.Write(out_num.Substring(75) + new string(' ', 75 - out_num.Substring(75).Length));
                         }
                         else if (num == 75) Console.Write(out_num);
                         else Console.Write(new string(' ', (75 - num) / 2) + out_num + new string(' ', 75 - num - ((75 - num) / 2)));
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.Write("|\n");
                         Console.Write("\t|");
-                        Console.BackgroundColor = ConsoleColor.Gray;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = TimeBackColor;
+                        Console.ForegroundColor = TimeTextColor;
                         Console.Write("     " + timeOfPairs[j] + "     ");
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.Write("|");
                         Console.WriteLine(new string('-', 76));
                         Console.Write("\t|");
-                        Console.BackgroundColor = ConsoleColor.Gray;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = TimeBackColor;
+                        Console.ForegroundColor = TimeTextColor;
                         Console.Write(new string(' ', 23));
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.Write("|");
-                        Console.BackgroundColor = ConsoleColor.DarkCyan;
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = DenBackColor;
+                        Console.ForegroundColor = DenTextColor;
                         if (den > 75)
                         {
                             Console.Write(out_den.Substring(0, 75));
-                            Console.ResetColor();
+                            Console.BackgroundColor = TableBackColor;
+                            Console.ForegroundColor = TableTextColor;
                             Console.WriteLine("|");
                             Console.Write("\t|");
-                            Console.BackgroundColor = ConsoleColor.Gray;
-                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.BackgroundColor = TimeBackColor;
+                            Console.ForegroundColor = TimeTextColor;
                             Console.Write(new string(' ', 23));
-                            Console.ResetColor();
+                            Console.BackgroundColor = TableBackColor;
+                            Console.ForegroundColor = TableTextColor;
                             Console.Write("|");
-                            Console.BackgroundColor = ConsoleColor.DarkCyan;
-                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.BackgroundColor = DenBackColor;
+                            Console.ForegroundColor = DenTextColor;
                             Console.Write(out_den.Substring(75) + new string(' ', 75 - out_den.Substring(75).Length));
                         }
                         else if (den == 75) Console.Write(out_den);
                         else Console.Write(new string(' ', (75 - den) / 2) + out_den + new string(' ', 75 - den - ((75 - den) / 2)));
-                        Console.ResetColor();
+                        Console.BackgroundColor = TableBackColor;
+                        Console.ForegroundColor = TableTextColor;
                         Console.Write("|\n");
                         Console.WriteLine("\t" + new string('-', 101));
                     }
@@ -424,11 +495,8 @@ class Output
 
     public static void PrintKhai()
     {
-        Console.Write("\n\n\t\t\t\t\t\t|");
-        Console.BackgroundColor = ConsoleColor.White;
-        Console.ForegroundColor = ConsoleColor.Black;
+        Console.Write("\n\n" + new string(' ', 48) +"|");
         Console.Write(" Расписание ХАИ ");
-        Console.ResetColor();
         Console.WriteLine("|");
         Console.WriteLine('\n');
     }
