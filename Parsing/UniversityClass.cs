@@ -5,10 +5,6 @@ namespace Khai;
 public class UniversityClass
 {
     private string _name = string.Empty;
-    private string _roomNumber = string.Empty;
-    private string _type = string.Empty;
-    private string _teacher = string.Empty;
-
 
     public string Name
     {
@@ -28,9 +24,9 @@ public class UniversityClass
 
     public UniversityClass(string name, string? roomNumber, string? type, string? teacher) : this(name)
     {
-        _roomNumber = roomNumber;
-        _teacher = teacher;
-        _type = type;
+        RoomNumber = roomNumber;
+        Teacher = teacher;
+        Type = type;
 
     }
 }
