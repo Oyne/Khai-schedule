@@ -88,6 +88,10 @@ MenuCommand:
                     {
                         Console.Write("Некорректный ввод, введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
                     }
+                    catch (System.Net.Http.HttpRequestException e)
+                    {
+                        Console.Write("Некорректный ввод, введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
+                    }
                 }
                 Console.BackgroundColor = ConsBackColor;
                 Console.ForegroundColor = ConsTextColor;
