@@ -181,7 +181,7 @@ class Output
         int num;
         string output;
 
-        foreach (var day in Schedule)
+        foreach (var day in Schedule.AsDays())
         {
             Console.BackgroundColor = TableBackColor;
             Console.ForegroundColor = TableTextColor;
