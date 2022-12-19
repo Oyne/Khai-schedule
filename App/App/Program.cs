@@ -62,6 +62,10 @@ MenuCommand:
                     {
                         Console.Write("Некорректный ввод, введите группу в формате 515, 525v, 116i1, 516st1\n>>> ");
                     }
+                    catch (Exception e)
+                    {
+                        Console.Write("Некорректный ввод, введите группу в формате 515, 525v, 116i1, 516st1\n>>> ");
+                    }
                 }
                 Console.BackgroundColor = ConsBackColor;
                 Console.ForegroundColor = ConsTextColor;
@@ -89,6 +93,10 @@ MenuCommand:
                         Console.Write("Некорректный ввод, введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
                     }
                     catch (System.Net.Http.HttpRequestException e)
+                    {
+                        Console.Write("Некорректный ввод, введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
+                    }
+                    catch(Exception e)
                     {
                         Console.Write("Некорректный ввод, введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
                     }
