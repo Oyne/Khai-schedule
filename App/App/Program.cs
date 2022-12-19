@@ -60,11 +60,11 @@ MenuCommand:
                     }
                     catch (NullReferenceException e)
                     {
-                        Console.Write("Некорректный ввод, введите группу в формате 515, 525v, 116i1, 516st1\n>>> ");
+                        Console.Write("Некорректный ввод, введите группу в формате 515, 525v (525в), 116i1, 516st (516ст), 555vm-2 (555вм/2)\n>>> ");
                     }
                     catch (Exception e)
                     {
-                        Console.Write("Некорректный ввод, введите группу в формате 515, 525v, 116i1, 516st1\n>>> ");
+                        Console.Write("Некорректный ввод, введите группу в формате 515, 525v (525в), 116i1, 516st (516ст), 555vm-2 (555вм/2)\n>>> ");
                     }
                 }
                 Console.BackgroundColor = ConsBackColor;
