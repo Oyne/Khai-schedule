@@ -26,7 +26,7 @@ static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
 static extern IntPtr GetConsoleWindow();
 /*====================================================================*/
 
-int width = 120; // width of a console
+int width = 150; // width of a console
 int height = 45; // heught of a console
 Console.SetWindowSize(width, height); // set conseole size
 
@@ -167,7 +167,7 @@ MenuCommand:
 }
 class Output
 {
-    const int TABLEWIDTH = 101; // set general table size (default: 101)
+    const int TABLEWIDTH = 110; // set general table size (default: 101)
     const int TIMEWIDTH = 23; // set general time field size (default: 23  (!!!!  NOT LESS THAN 13  !!!!))
     const int SUBJECTWIDTH = TABLEWIDTH - TIMEWIDTH - 3; // set general subject field size (default: 75 (TABLEWIDTH - TIMEWIDTH - 3))
 
@@ -203,14 +203,14 @@ class Output
         foreach (var day in Schedule.AsDays())
         {
             SetColor(TableBackColor, TableTextColor);
-            Console.WriteLine("\t" + new string('-', TABLEWIDTH));
-            Console.Write("\t|");
+            Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
+            Console.Write(new string(' ', (Console.WindowWidth -TABLEWIDTH)/2) + "|");
             Console.BackgroundColor = DayOfWeekBackColor;
             Console.ForegroundColor = DayOfWeekTextColor;
             Console.Write(new string(' ', ((TABLEWIDTH - 2) - daysOfWeek[count].Length) / 2) + daysOfWeek[count] + new string(' ', (TABLEWIDTH - 2) - ((TABLEWIDTH - 2) - daysOfWeek[count].Length) / 2 - daysOfWeek[count].Length));
             SetColor(TableBackColor, TableTextColor);
             Console.Write("|\n");
-            Console.WriteLine("\t" + new string('-', TABLEWIDTH));
+            Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
             for (int j = 0; j < 5; j++)
             {
                 if (j >= day.Classes.Count) break;
@@ -219,7 +219,7 @@ class Output
                 den = 0;
                 if (day.Classes[j].Numerator == day.Classes[j].Denominator && day.Classes[j].Numerator != null)
                 {
-                    Console.Write("\t|");
+                    Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                     SetColor(TimeBackColor, TimeTextColor);
                     Console.Write(new string(' ', (TIMEWIDTH - timeOfPairs[j].Length) /2) + timeOfPairs[j] + new string(' ', TIMEWIDTH - timeOfPairs[j].Length - ((TIMEWIDTH - timeOfPairs[j].Length) / 2)));
                     SetColor(TableBackColor, TableTextColor);
@@ -244,8 +244,8 @@ class Output
                     {
                         Console.Write(output.Substring(0, SUBJECTWIDTH));
                         SetColor(TableBackColor, TableTextColor);
-                        Console.WriteLine("|");
-                        Console.Write("\t|");
+                        Console.WriteLine("|");                        
+                        Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TableBackColor, TableTextColor);
                         Console.Write(new string(' ', TIMEWIDTH));
                         SetColor(TableBackColor, TableTextColor);
@@ -257,11 +257,11 @@ class Output
                     else Console.Write(new string(' ', (SUBJECTWIDTH - num) / 2) + output + new string(' ', SUBJECTWIDTH - num - ((SUBJECTWIDTH - num) / 2)));
                     SetColor(TableBackColor, TableTextColor);
                     Console.Write("|\n");
-                    Console.WriteLine("\t" + new string('-', TABLEWIDTH));
+                    Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
                 }
                 else if (day.Classes[j].Numerator == day.Classes[j].Denominator && day.Classes[j].Numerator == null)
                 {
-                    Console.Write("\t|");
+                    Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                     SetColor(TimeBackColor, TimeTextColor);
                     Console.Write(new string(' ', (TIMEWIDTH - timeOfPairs[j].Length) / 2) + timeOfPairs[j] + new string(' ', TIMEWIDTH - timeOfPairs[j].Length - ((TIMEWIDTH - timeOfPairs[j].Length) / 2)));
                     SetColor(TableBackColor, TableTextColor);
@@ -271,7 +271,7 @@ class Output
                     Console.Write(new string(' ', (SUBJECTWIDTH - 19) / 2) + "*******************" + new string(' ', SUBJECTWIDTH - 19 - (SUBJECTWIDTH - 19) / 2));
                     SetColor(TableBackColor, TableTextColor);
                     Console.Write("|\n");
-                    Console.WriteLine("\t" + new string('-', TABLEWIDTH));
+                    Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
                 }
                 else
                 {
@@ -292,7 +292,7 @@ class Output
                             output += ", " + day.Classes[j].Denominator.Type;
                             den += day.Classes[j].Denominator.Type.Length + 2;
                         }
-                        Console.Write("\t|");
+                        Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);
                         Console.Write(new string(' ', TIMEWIDTH));
                         SetColor(TableBackColor, TableTextColor);
@@ -302,13 +302,13 @@ class Output
                         Console.Write(new string(' ', (SUBJECTWIDTH - 19) / 2) + "*******************" + new string(' ', SUBJECTWIDTH - 19 - (SUBJECTWIDTH - 19) / 2));
                         SetColor(TableBackColor, TableTextColor);
                         Console.Write("|\n");
-                        Console.Write("\t|");
+                        Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);
                         Console.Write(new string(' ', (TIMEWIDTH - timeOfPairs[j].Length) / 2) + timeOfPairs[j] + new string(' ', TIMEWIDTH - timeOfPairs[j].Length - ((TIMEWIDTH - timeOfPairs[j].Length) / 2)));
                         SetColor(TableBackColor, TableTextColor);
                         Console.Write("|");
                         Console.WriteLine(new string('-', SUBJECTWIDTH+1));
-                        Console.Write("\t|");
+                        Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);
                         Console.Write(new string(' ', TIMEWIDTH));
                         SetColor(TableBackColor, TableTextColor);
@@ -319,7 +319,7 @@ class Output
                             Console.Write(output.Substring(0, SUBJECTWIDTH));
                             SetColor(TableBackColor, TableTextColor);
                             Console.WriteLine("|");
-                            Console.Write("\t|");
+                            Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                             SetColor(TimeBackColor, TimeTextColor);
                             Console.Write(new string(' ', TIMEWIDTH));
                             SetColor(TableBackColor, TableTextColor);
@@ -331,7 +331,7 @@ class Output
                         else Console.Write(new string(' ', (SUBJECTWIDTH - den) / 2) + output + new string(' ', SUBJECTWIDTH - den - ((SUBJECTWIDTH - den) / 2)));
                         SetColor(TableBackColor, TableTextColor);
                         Console.Write("|\n");
-                        Console.WriteLine("\t" + new string('-', TABLEWIDTH));
+                        Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
                     }
                     else if (day.Classes[j].Denominator == null)
                     {
@@ -350,7 +350,7 @@ class Output
                             output += ", " + day.Classes[j].Numerator.Type;
                             num += day.Classes[j].Numerator.Type.Length + 2;
                         }
-                        Console.Write("\t|");
+                        Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);
                         Console.Write(new string(' ', TIMEWIDTH));
                         SetColor(TableBackColor, TableTextColor);
@@ -361,7 +361,7 @@ class Output
                             Console.Write(output.Substring(0, SUBJECTWIDTH));
                             SetColor(TableBackColor, TableTextColor);
                             Console.WriteLine("|");
-                            Console.Write("\t|");
+                            Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                             SetColor(TimeBackColor, TimeTextColor);
                             Console.Write(new string(' ', TIMEWIDTH));
                             SetColor(TableBackColor, TableTextColor);
@@ -373,13 +373,13 @@ class Output
                         else Console.Write(new string(' ', (SUBJECTWIDTH - num) / 2) + output + new string(' ', SUBJECTWIDTH - num - ((SUBJECTWIDTH - num) / 2)));
                         SetColor(TableBackColor, TableTextColor);
                         Console.Write("|\n");
-                        Console.Write("\t|");
+                        Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);
                         Console.Write(new string(' ', (TIMEWIDTH - timeOfPairs[j].Length) / 2) + timeOfPairs[j] + new string(' ', TIMEWIDTH - timeOfPairs[j].Length - ((TIMEWIDTH - timeOfPairs[j].Length) / 2)));
                         SetColor(TableBackColor, TableTextColor);
                         Console.Write("|");
                         Console.WriteLine(new string('-', SUBJECTWIDTH + 1));
-                        Console.Write("\t|");
+                        Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);
                         Console.Write(new string(' ', TIMEWIDTH));
                         SetColor(TableBackColor, TableTextColor);
@@ -390,7 +390,7 @@ class Output
                         Console.Write(new string(' ', (SUBJECTWIDTH - 19) / 2) + "*******************" + new string(' ', SUBJECTWIDTH - 19 - (SUBJECTWIDTH - 19) / 2));
                         SetColor(TableBackColor, TableTextColor);
                         Console.Write("|\n");
-                        Console.WriteLine("\t" + new string('-', TABLEWIDTH));
+                        Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
                     }
                     else
                     {
@@ -425,7 +425,7 @@ class Output
                             out_den += ", " + day.Classes[j].Denominator.Type;
                             den += day.Classes[j].Denominator.Type.Length + 2;
                         }
-                        Console.Write("\t|");
+                        Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);
                         Console.Write(new string(' ', TIMEWIDTH));
                         SetColor(TableBackColor, TableTextColor);
@@ -436,7 +436,7 @@ class Output
                             Console.Write(out_num.Substring(0, SUBJECTWIDTH));
                             SetColor(TableBackColor, TableTextColor);
                             Console.WriteLine("|");
-                            Console.Write("\t|");
+                            Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                             SetColor(TimeBackColor, TimeTextColor);
                             Console.Write(new string(' ', TIMEWIDTH));
                             SetColor(TableBackColor, TableTextColor);
@@ -448,13 +448,13 @@ class Output
                         else Console.Write(new string(' ', (SUBJECTWIDTH - num) / 2) + out_num + new string(' ', SUBJECTWIDTH - num - ((SUBJECTWIDTH - num) / 2)));
                         SetColor(TableBackColor, TableTextColor);
                         Console.Write("|\n");
-                        Console.Write("\t|");
+                        Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);
                         Console.Write(new string(' ', (TIMEWIDTH - timeOfPairs[j].Length) / 2) + timeOfPairs[j] + new string(' ', TIMEWIDTH - timeOfPairs[j].Length - ((TIMEWIDTH - timeOfPairs[j].Length) / 2)));
                         SetColor(TableBackColor, TableTextColor);
                         Console.Write("|");
                         Console.WriteLine(new string('-', SUBJECTWIDTH+1));
-                        Console.Write("\t|");
+                        Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);
                         Console.Write(new string(' ', TIMEWIDTH));
                         SetColor(TableBackColor, TableTextColor);
@@ -465,7 +465,7 @@ class Output
                             Console.Write(out_den.Substring(0, SUBJECTWIDTH));
                             SetColor(TableBackColor, TableTextColor);
                             Console.WriteLine("|");
-                            Console.Write("\t|");
+                            Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                             SetColor(TimeBackColor, TimeTextColor);
                             Console.Write(new string(' ', TIMEWIDTH));
                             SetColor(TableBackColor, TableTextColor);
@@ -477,7 +477,7 @@ class Output
                         else Console.Write(new string(' ', (SUBJECTWIDTH - den) / 2) + out_den + new string(' ', SUBJECTWIDTH - den - ((SUBJECTWIDTH - den) / 2)));
                         SetColor(TableBackColor, TableTextColor);
                         Console.Write("|\n");
-                        Console.WriteLine("\t" + new string('-', TABLEWIDTH));
+                        Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
                     }
                 }
             }
