@@ -9,7 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 
-// code to fix size of a concole
+// code to fix size of a console
 /*====================================================================*/
 const int MF_BYCOMMAND = 0x00000000;
 const int SC_MINIMIZE = 0xF020;
@@ -95,7 +95,7 @@ MenuCommand:
                 Console.ForegroundColor = ConsTextColor;
                 Console.Clear();
                 Output.PrintKhai();
-                Console.WriteLine($"\t\t\t\t\t\t   Группа: {group}");
+                Console.WriteLine(new string(' ', (Console.WindowWidth - 8 - group.Length)/2) + $"Группа: {group}");
                 await Task.Run(() => Output.Outputing(group, choice));
                 //Output.Outputing(group, choice);
             }
@@ -129,7 +129,7 @@ MenuCommand:
                 Console.ForegroundColor = ConsTextColor;
                 Console.Clear();
                 Output.PrintKhai();
-                Console.WriteLine($"\t\t\t\t\t      Студент: {name}");
+                Console.WriteLine(new string(' ', (Console.WindowWidth - 9 - name.Length) / 2) + $"Студент: {name}");
                 await Task.Run(() => Output.Outputing(name, choice));
                 //Output.Outputing(name, choice);
             }
@@ -167,9 +167,9 @@ MenuCommand:
 }
 class Output
 {
-    const int TABLEWIDTH = 101; // default: 101
-    const int TIMEWIDTH = 23; // default: 23  (!!!!  NOT LESS THAN 13  !!!!)
-    const int SUBJECTWIDTH = TABLEWIDTH - TIMEWIDTH - 3; // default: 75 (TABLEWIDTH - TIMEWIDTH - 3)
+    const int TABLEWIDTH = 101; // set general table size (default: 101)
+    const int TIMEWIDTH = 23; // set general time field size (default: 23  (!!!!  NOT LESS THAN 13  !!!!))
+    const int SUBJECTWIDTH = TABLEWIDTH - TIMEWIDTH - 3; // set general subject field size (default: 75 (TABLEWIDTH - TIMEWIDTH - 3))
 
 
     static string[] timeOfPairs = { "08:00 - 09:35", "09:50 - 11:25", "11:55 - 13:30", "13:45 - 15:20", "15:35 - 17:10" };
@@ -494,7 +494,7 @@ class Output
 
     public static void PrintKhai()
     {
-        Console.Write("\n\n" + new string(' ', 48) +"|");
+        Console.Write("\n\n" + new string(' ', (Console.WindowWidth-18)/2) +"|");
         Console.Write(" Расписание ХАИ ");
         Console.WriteLine("|");
         Console.WriteLine('\n');
