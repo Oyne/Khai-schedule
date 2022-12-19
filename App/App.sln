@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{965B92D4-04D1-4AC1-983B-417AD4EE5ABC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App", "App\App.csproj", "{965B92D4-04D1-4AC1-983B-417AD4EE5ABC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KhaiClient", "..\Parsing\KhaiClient.csproj", "{7A25B56E-185B-4401-9DE5-4BBAAB60C9D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileWork", "FileWork\FileWork.csproj", "{8D936E7A-D665-47CD-9789-A6569F5877EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{7A25B56E-185B-4401-9DE5-4BBAAB60C9D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A25B56E-185B-4401-9DE5-4BBAAB60C9D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A25B56E-185B-4401-9DE5-4BBAAB60C9D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D936E7A-D665-47CD-9789-A6569F5877EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D936E7A-D665-47CD-9789-A6569F5877EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D936E7A-D665-47CD-9789-A6569F5877EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D936E7A-D665-47CD-9789-A6569F5877EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
