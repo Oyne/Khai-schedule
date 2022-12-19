@@ -96,7 +96,7 @@ MenuCommand:
                     {
                         Console.Write("Некорректный ввод, введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         Console.Write("Некорректный ввод, введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
                     }
@@ -123,6 +123,21 @@ MenuCommand:
     {
         Console.Clear();
         goto MenuCommand;
+    }
+    else
+    {
+        Console.WriteLine("Данная функция ещё не доступна");
+        Console.Write("1. Вернуться в главное меню\n2. Выход\n>>> ");
+        while (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 2)
+        {
+            Console.Write("Введите 1 или 2: ");
+        }
+        if (choice == 2) return;
+        else if (choice == 1)
+        {
+            Console.Clear();
+            goto MenuCommand;
+        }
     }
 
     // https://education.khai.edu/union/schedule/student/kuzmichov-i-i
