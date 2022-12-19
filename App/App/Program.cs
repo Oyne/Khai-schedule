@@ -31,8 +31,8 @@ while (true)
 
 MenuCommand:
 
-    Console.BackgroundColor = DefaultConsBackColor;
-    Console.ForegroundColor = DefaultConsTextColor;
+    Console.BackgroundColor = ConsBackColor;
+    Console.ForegroundColor = ConsTextColor;
     Console.Clear();
 
     Output.PrintKhai();
@@ -60,11 +60,11 @@ MenuCommand:
                     }
                     catch (NullReferenceException e)
                     {
-                        Console.Write("Некорректный ввод, введите группу в формате 515, 525v (525в), 116i1, 516st (516ст), 555vm-2 (555вм/2)\n>>> ");
+                        Console.Write("Некорректный ввод, введите группу в формате 325, 525v (525в), 116i1, 432st (432ст), 555vm-2 (555вм/2)\n>>> ");
                     }
                     catch (Exception e)
                     {
-                        Console.Write("Некорректный ввод, введите группу в формате 515, 525v (525в), 116i1, 516st (516ст), 555vm-2 (555вм/2)\n>>> ");
+                        Console.Write("Очень некорректный ввод, введите группу в формате 325, 525v (525в), 116i1, 432st (432ст), 555vm-2 (555вм/2)\n>>> ");
                     }
                 }
                 Console.BackgroundColor = ConsBackColor;
@@ -98,7 +98,7 @@ MenuCommand:
                     }
                     catch (Exception e)
                     {
-                        Console.Write("Некорректный ввод, введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
+                        Console.Write("Очень некорректный ввод, введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
                     }
                 }
                 Console.BackgroundColor = ConsBackColor;
