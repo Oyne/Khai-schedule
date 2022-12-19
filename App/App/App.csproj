@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Parsing\KhaiClient.csproj" />
+    <ProjectReference Include="..\FileWork\FileWork.csproj" />
   </ItemGroup>
 
 </Project>
