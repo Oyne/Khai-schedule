@@ -4,14 +4,34 @@ using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 
+const int MF_BYCOMMAND = 0x00000000;
+const int SC_MINIMIZE = 0xF020;
+const int SC_MAXIMIZE = 0xF030;
+const int SC_SIZE = 0xF000;
 
-int width = 130;
+[DllImport("user32.dll")]
+static extern int DeleteMenu(IntPtr hMenu, int nPosition, int wFlags);
+
+[DllImport("user32.dll")]
+static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+
+[DllImport("kernel32.dll", ExactSpelling = true)]
+static extern IntPtr GetConsoleWindow();
+
+int width = 120;
 int height = 45;
 Console.SetWindowSize(width, height);
+
+DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_MINIMIZE, MF_BYCOMMAND);
+DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_MAXIMIZE, MF_BYCOMMAND);
+DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_SIZE, MF_BYCOMMAND);
+
+
 ConsoleColor DefaultConsBackColor = Console.BackgroundColor;
 ConsoleColor DefaultConsTextColor = Console.ForegroundColor;
 ConsoleColor ConsBackColor = ConsoleColor.White;
@@ -51,7 +71,7 @@ MenuCommand:
                 WeekSchedule groupSch = null;
                 while (groupSch == null)
                 {
-                    Console.Write("Введите группу: ");
+                    Console.Write("Введите группу в формате 325, 525v (525в), 116i1, 432st (432ст), 555vm-2 (555вм/2)\n>>> ");
                     group = Console.ReadLine();
                     if (group == "exit") Environment.Exit(0);
                     try
@@ -60,11 +80,11 @@ MenuCommand:
                     }
                     catch (NullReferenceException e)
                     {
-                        Console.Write("Некорректный ввод, введите группу в формате 325, 525v (525в), 116i1, 432st (432ст), 555vm-2 (555вм/2)\n>>> ");
+                        Console.Write("Некорректный ввод или группы не существует\n");
                     }
                     catch (Exception e)
                     {
-                        Console.Write("Очень некорректный ввод, введите группу в формате 325, 525v (525в), 116i1, 432st (432ст), 555vm-2 (555вм/2)\n>>> ");
+                        Console.Write("Очень некорректный ввод, группы не существует или плохое интернет соединение\n");
                     }
                 }
                 Console.BackgroundColor = ConsBackColor;
@@ -81,7 +101,7 @@ MenuCommand:
                 WeekSchedule studentSch = null;
                 while (studentSch == null)
                 {
-                    Console.Write("Введите имя: ");
+                    Console.Write("Введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
                     name = Console.ReadLine();
                     if (name == "exit") Environment.Exit(0);
                     try
@@ -90,15 +110,15 @@ MenuCommand:
                     }
                     catch (NullReferenceException e)
                     {
-                        Console.Write("Некорректный ввод, введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
+                        Console.Write("Некорректный ввод или студента не существует\n");
                     }
                     catch (System.Net.Http.HttpRequestException e)
                     {
-                        Console.Write("Некорректный ввод, введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
+                        Console.Write("Некорректный ввод или студента не существует\n");
                     }
                     catch (Exception e)
                     {
-                        Console.Write("Очень некорректный ввод, введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
+                        Console.Write("Очень некорректный ввод, студента не существует или плохое интернет соединение\n");
                     }
                 }
                 Console.BackgroundColor = ConsBackColor;
@@ -149,16 +169,16 @@ class Output
     {
         ConsoleColor DefaultBackColor = Console.BackgroundColor;
         ConsoleColor DefaultTextColor = Console.ForegroundColor;
-        ConsoleColor TableBackColor = ConsoleColor.White;
-        ConsoleColor TableTextColor = ConsoleColor.Black;
-        ConsoleColor NumBackColor = ConsoleColor.White;
-        ConsoleColor NumTextColor = ConsoleColor.Black;
-        ConsoleColor DenBackColor = ConsoleColor.DarkBlue;
-        ConsoleColor DenTextColor = ConsoleColor.White;
-        ConsoleColor TimeBackColor = ConsoleColor.White;
-        ConsoleColor TimeTextColor = ConsoleColor.Black;
-        ConsoleColor DayOfWeekBackColor = ConsoleColor.White;
-        ConsoleColor DayOfWeekTextColor = ConsoleColor.Black;
+        ConsoleColor TableBackColor = ConsoleColor.White;           // background color of the table
+        ConsoleColor TableTextColor = ConsoleColor.Black;           // font color of the table
+        ConsoleColor NumBackColor = ConsoleColor.White;             // background color of the numerator
+        ConsoleColor NumTextColor = ConsoleColor.Black;             // font color of the numerator
+        ConsoleColor DenBackColor = ConsoleColor.DarkBlue;          // background color of the denominator
+        ConsoleColor DenTextColor = ConsoleColor.White;             // font color of the denominator
+        ConsoleColor TimeBackColor = ConsoleColor.White;            // background color of the time field
+        ConsoleColor TimeTextColor = ConsoleColor.Black;            // font color of the time field
+        ConsoleColor DayOfWeekBackColor = ConsoleColor.White;       // background color of the day of week field
+        ConsoleColor DayOfWeekTextColor = ConsoleColor.Black;       // font color of the day of week field
         //ConsoleColor BlankBackColor = ConsoleColor.DarkBlue;
         //ConsoleColor BlankTextColor = ConsoleColor.White;
 
