@@ -139,16 +139,6 @@ MenuCommand:
             goto MenuCommand;
         }
     }
-
-    // https://education.khai.edu/union/schedule/student/kuzmichov-i-i
-    var StudentSchedule = await client.GetStudentWeekSheduleAsync("kuzmichov-i-i");
-
-    // https://education.khai.edu/union/schedule/lecturer/abramov-k-d-504
-    var lecturerSchedule = await client.GetLecturerWeekSheduleAsync("abramov-k-d-504");
-
-    // https://education.khai.edu/union/schedule/group/525v
-    var GroupSchedule = await client.GetGroupWeekSheduleAsync("525b");
-
     Debugger.Break();
 }
 class Output
@@ -181,7 +171,7 @@ class Output
         int num;
         string output;
 
-        foreach (var day in Schedule)
+        foreach (var day in Schedule.AsDays())
         {
             Console.BackgroundColor = TableBackColor;
             Console.ForegroundColor = TableTextColor;

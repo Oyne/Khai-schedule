@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace Khai;
 
-public static class EnumerableExtensions
+internal static class EnumerableExtensions
 {
     public static IEnumerable<TSource[]> SplitBy<TSource>(
         this IEnumerable<TSource> source, TSource[] separators, IEqualityComparer<TSource>? comparer = null)
     {
         ArgumentNullException.ThrowIfNull(source);
         ArgumentNullException.ThrowIfNull(separators);
-        
+
         return SplitByIterator(source, separators, comparer);
     }
 

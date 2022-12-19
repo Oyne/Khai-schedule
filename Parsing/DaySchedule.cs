@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Khai;
 
-public class DaySchedule : IEnumerable<AlternateUniversityClass>
+public class DaySchedule
 {
-    public ReadOnlyCollection<AlternateUniversityClass> Classes { get; }
+    private IList<AlternateUniversityClass> _classes = new List<AlternateUniversityClass>();
+
+    public IList<AlternateUniversityClass> Classes
+    {
+        get => _classes;
+        set => _classes = value ?? throw new ArgumentNullException(nameof(value));
+    }
+
+    public DaySchedule() { }
 
     public DaySchedule(IList<AlternateUniversityClass> classes)
     {
-        ArgumentNullException.ThrowIfNull(classes);
-
-        if (classes.Count <= 0)
-            throw new ArgumentException("A classes count must be greater 0.");
-
-        Classes = new(classes);
+        Classes = classes;
     }
-
-    IEnumerator<AlternateUniversityClass> IEnumerable<AlternateUniversityClass>.GetEnumerator()
-        => Classes.GetEnumerator();
-
-    IEnumerator IEnumerable.GetEnumerator() => Classes.GetEnumerator();
 }
