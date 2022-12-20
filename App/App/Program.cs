@@ -117,6 +117,7 @@ MenuCommand:
                         Console.Write("Введите группу в формате 325, 525v (525в), 116i1, 432st (432ст), 555vm-2 (555вм/2)\n>>> ");
                         group = Console.ReadLine();
                         if (group == "exit") Environment.Exit(0);
+                        if (group == "back") goto MenuCommand;
                         try
                         {
                             Schedule = await client.GetGroupWeekSheduleAsync(group);
@@ -147,6 +148,7 @@ MenuCommand:
                         Console.Write("Введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
                         name = Console.ReadLine();
                         if (name == "exit") Environment.Exit(0);
+                        if (name == "back") goto MenuCommand;
                         try
                         {
                             Schedule = await client.GetStudentWeekSheduleAsync(name);
@@ -184,37 +186,40 @@ MenuCommand:
                         Console.ForegroundColor = ConsTextColor;
                         Console.Clear();
                         Output.PrintKhai();
-                        Console.WriteLine(new string(' ', (Console.WindowWidth - 9 - name.Length) / 2) + $"Студент: {name}");
                         await Task.Run(() => Output.Outputing(Schedule));
                         boolean = false;
                     }
                     catch (FileWasNotFoundException e)
                     {
-                        Console.WriteLine("\nНе удалось прочитать файл.");
+                        Console.WriteLine("Не удалось прочитать файл.\n");
                     }
                     catch (ScheduleWasNotFoundException e)
                     {
-                        Console.WriteLine("\nНет сохранённого расписания.");
+                        Console.WriteLine("Нет сохранённого расписания.\n");
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine("\nПроизошло что-то очень плохое");
+                        Console.WriteLine("Произошло что-то очень плохое\n");
                     }
                     Console.Write("1. Вернуться в главное меню <1>\n2. Выход <Esc>\n>>> ");
-                    keyInfo = Console.ReadKey(true);
-                    switch (keyInfo.Key)
+                    boolean = true;
+                    while (boolean)
                     {
-                        case ConsoleKey.D1:
-                            {
-                                Console.Clear();
-                                goto MenuCommand;
-                            }
-                            break;
-                        case ConsoleKey.Escape:
-                            {
-                                Environment.Exit(0);
-                            }
-                            break;
+                        keyInfo = Console.ReadKey(true);
+                        switch (keyInfo.Key)
+                        {
+                            case ConsoleKey.D1:
+                                {
+                                    Console.Clear();
+                                    goto MenuCommand;
+                                }
+                                break;
+                            case ConsoleKey.Escape:
+                                {
+                                    Environment.Exit(0);
+                                }
+                                break;
+                        }
                     }
                 }
                 break;
@@ -264,20 +269,24 @@ MenuCommand:
                     }
                     Console.WriteLine("Расписание успешно сохранено\n");
                     Console.Write("1. Вернуться в главное меню <1>\n2. Выход <Esc>\n>>> ");
-                    keyInfo = Console.ReadKey(true);
-                    switch (keyInfo.Key)
+                    boolean  = true;
+                    while (boolean)
                     {
-                        case ConsoleKey.D1:
-                            {
-                                Console.Clear();
-                                goto MenuCommand;
-                            }
-                            break;
-                        case ConsoleKey.Escape:
-                            {
-                                Environment.Exit(0);
-                            }
-                            break;
+                        keyInfo = Console.ReadKey(true);
+                        switch (keyInfo.Key)
+                        {
+                            case ConsoleKey.D1:
+                                {
+                                    Console.Clear();
+                                    goto MenuCommand;
+                                }
+                                break;
+                            case ConsoleKey.Escape:
+                                {
+                                    Environment.Exit(0);
+                                }
+                                break;
+                        }
                     }
                 }
                 break;
