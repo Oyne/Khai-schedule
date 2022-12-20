@@ -80,9 +80,14 @@ while (true)
     using var client = new KhaiClient();
     string group = "";
     string name = "";
+    string exit = "";
     int choice;
+    bool boolean;
+    WeekSchedule Schedule;
 
 MenuCommand:
+
+    boolean = true;
 
     Console.BackgroundColor = ConsBackColor;
     Console.ForegroundColor = ConsTextColor;
@@ -90,109 +95,210 @@ MenuCommand:
 
     Output.PrintKhai();
 
-    Console.Write("1. Поиск по группе\n2. Поиск по имени\n3. Выход\n>>> ");
-    while (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 3)
-    {
-        Console.Write("Введите 1, 2 или 3: ");
-    }
-    if (choice == 3) Environment.Exit(0);
+    ConsoleKeyInfo keyInfo;
 
-    switch (choice)
+    Console.Write("1. Поиск по группе <1>\n" +
+        "2. Поиск по имени <2>\n" +
+        "3. Считать расписание из файла <3>\n" +
+        "4. Удалить расписание из файла <4>\n" +
+        "5. Выход <Esc>\n>>> "
+        );
+
+    while (boolean)
     {
-        case 1:
-            {
-                WeekSchedule groupSch = null;
-                while (groupSch == null)
+        keyInfo = Console.ReadKey(true);
+        Schedule = null;
+
+        switch (keyInfo.Key)
+        {
+            case ConsoleKey.D1:
                 {
-                    Console.Write("Введите группу в формате 325, 525v (525в), 116i1, 432st (432ст), 555vm-2 (555вм/2)\n>>> ");
-                    group = Console.ReadLine();
-                    if (group == "exit") Environment.Exit(0);
+                    while (Schedule == null)
+                    {
+                        Console.Write("Введите группу в формате 325, 525v (525в), 116i1, 432st (432ст), 555vm-2 (555вм/2)\n>>> ");
+                        group = Console.ReadLine();
+                        if (group == "exit") Environment.Exit(0);
+                        try
+                        {
+                            Schedule = await client.GetGroupWeekSheduleAsync(group);
+                        }
+                        catch (NullReferenceException e)
+                        {
+                            Console.Write("Некорректный ввод или группы не существует\n");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.Write("Очень некорректный ввод, группы не существует или плохое интернет соединение\n");
+                        }
+                    }
+                    Console.BackgroundColor = ConsBackColor;
+                    Console.ForegroundColor = ConsTextColor;
+                    Console.Clear();
+                    Output.PrintKhai();
+                    Console.WriteLine(new string(' ', (Console.WindowWidth - 8 - group.Length) / 2) + $"Группа: {group}");
+                    await Task.Run(() => Output.Outputing(Schedule));
+                    //Output.Outputing(group, choice);
+                    boolean = false;
+                }
+                break;
+            case ConsoleKey.D2:
+                {
+                    while (Schedule == null)
+                    {
+                        Console.Write("Введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
+                        name = Console.ReadLine();
+                        if (name == "exit") Environment.Exit(0);
+                        try
+                        {
+                            Schedule = await client.GetStudentWeekSheduleAsync(name);
+                        }
+                        catch (NullReferenceException e)
+                        {
+                            Console.Write("Некорректный ввод или студента не существует\n");
+                        }
+                        catch (System.Net.Http.HttpRequestException e)
+                        {
+                            Console.Write("Некорректный ввод или студента не существует\n");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.Write("Очень некорректный ввод, студента не существует или плохое интернет соединение\n");
+                        }
+                    }
+                    Console.BackgroundColor = ConsBackColor;
+                    Console.ForegroundColor = ConsTextColor;
+                    Console.Clear();
+                    Output.PrintKhai();
+                    Console.WriteLine(new string(' ', (Console.WindowWidth - 9 - name.Length) / 2) + $"Студент: {name}");
+                    await Task.Run(() => Output.Outputing(Schedule));
+                    //Output.Outputing(name, choice);
+                    boolean = false;
+                }
+                break;
+            case ConsoleKey.D3:
+                {
                     try
                     {
-                        groupSch = await client.GetGroupWeekSheduleAsync(group);
+                        Schedule = FileWork.ReadScheduleFromFile();
+
+                        Console.BackgroundColor = ConsBackColor;
+                        Console.ForegroundColor = ConsTextColor;
+                        Console.Clear();
+                        Output.PrintKhai();
+                        Console.WriteLine(new string(' ', (Console.WindowWidth - 9 - name.Length) / 2) + $"Студент: {name}");
+                        await Task.Run(() => Output.Outputing(Schedule));
+                        boolean = false;
                     }
-                    catch (NullReferenceException e)
+                    catch (FileWasNotFoundException e)
                     {
-                        Console.Write("Некорректный ввод или группы не существует\n");
+                        Console.WriteLine("\nНе удалось прочитать файл.");
+                    }
+                    catch (ScheduleWasNotFoundException e)
+                    {
+                        Console.WriteLine("\nНет сохранённого расписания.");
                     }
                     catch (Exception e)
                     {
-                        Console.Write("Очень некорректный ввод, группы не существует или плохое интернет соединение\n");
+                        Console.WriteLine("\nПроизошло что-то очень плохое");
+                    }
+                    Console.Write("1. Вернуться в главное меню <1>\n2. Выход <Esc>\n>>> ");
+                    keyInfo = Console.ReadKey(true);
+                    switch (keyInfo.Key)
+                    {
+                        case ConsoleKey.D1:
+                            {
+                                Console.Clear();
+                                goto MenuCommand;
+                            }
+                            break;
+                        case ConsoleKey.Escape:
+                            {
+                                Environment.Exit(0);
+                            }
+                            break;
                     }
                 }
-                Console.BackgroundColor = ConsBackColor;
-                Console.ForegroundColor = ConsTextColor;
-                Console.Clear();
-                Output.PrintKhai();
-                Console.WriteLine(new string(' ', (Console.WindowWidth - 8 - group.Length)/2) + $"Группа: {group}");
-                await Task.Run(() => Output.Outputing(group, choice));
-                //Output.Outputing(group, choice);
-            }
-            break;
-        default:
-            {
-                WeekSchedule studentSch = null;
-                while (studentSch == null)
+                break;
+            case ConsoleKey.Escape:
                 {
-                    Console.Write("Введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
-                    name = Console.ReadLine();
-                    if (name == "exit") Environment.Exit(0);
-                    try
-                    {
-                        studentSch = await client.GetStudentWeekSheduleAsync(name);
-                    }
-                    catch (NullReferenceException e)
-                    {
-                        Console.Write("Некорректный ввод или студента не существует\n");
-                    }
-                    catch (System.Net.Http.HttpRequestException e)
-                    {
-                        Console.Write("Некорректный ввод или студента не существует\n");
-                    }
-                    catch (Exception e)
-                    {
-                        Console.Write("Очень некорректный ввод, студента не существует или плохое интернет соединение\n");
-                    }
+                    Environment.Exit(0);
                 }
-                Console.BackgroundColor = ConsBackColor;
-                Console.ForegroundColor = ConsTextColor;
-                Console.Clear();
-                Output.PrintKhai();
-                Console.WriteLine(new string(' ', (Console.WindowWidth - 9 - name.Length) / 2) + $"Студент: {name}");
-                await Task.Run(() => Output.Outputing(name, choice));
-                //Output.Outputing(name, choice);
-            }
-            break;
+                break;
+        }
     }
 
     //Thread.Sleep(1000);
-    Console.Write("1. Сохранить расписание в текстовый файл\n2. Вернуться в главное меню\n3. Выход\n>>> ");
-    while (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 3)
+    Console.Write("1. Сохранить расписание в текстовый файл <1>\n" +
+        "2. Вернуться в главное меню <2>\n" +
+        "3. Выход <Esc>\n>>> ");
+    while (true)
     {
-        Console.Write("Введите 1, 2 или 3: ");
-    }
-    if (choice == 3) return;
-    else if (choice == 2)
-    {
-        Console.Clear();
-        goto MenuCommand;
-    }
-    else
-    {
-        Console.WriteLine("Данная функция ещё не доступна");
-        Console.Write("1. Вернуться в главное меню\n2. Выход\n>>> ");
-        while (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 2)
+        keyInfo = Console.ReadKey(true);
+
+        switch (keyInfo.Key)
         {
-            Console.Write("Введите 1 или 2: ");
-        }
-        if (choice == 2) return;
-        else if (choice == 1)
-        {
-            Console.Clear();
-            goto MenuCommand;
+            case ConsoleKey.D1:
+                {
+                    try
+                    {
+                        FileWork.SaveSchduleToFile(Schedule);
+                    }
+                    catch (DirectoryDoesNotExistException e)
+                    {
+                        Console.WriteLine("Путь для сохранения файла не найден");
+                        FileWork.CreateAFile();
+                        Console.WriteLine("Путь для сохранения файла создан \"C://Khai/\"");
+                        Console.WriteLine("Файл с расписанием создан");
+                        FileWork.SaveSchduleToFile(Schedule);
+                    }
+                    catch (FileDoesNotExistException e)
+                    {
+                        Console.WriteLine("Файл для сохранения не найден");
+                        FileWork.CreateAFile();
+                        Console.WriteLine("Файл с расписанием создан по пути \"C://Khai/\"");
+                        FileWork.SaveSchduleToFile(Schedule);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("\nПроизошло что-то очень плохое");
+                        Environment.Exit(0);
+                    }
+                    Console.WriteLine("Расписание успешно сохранено\n");
+                    Console.Write("1. Вернуться в главное меню <1>\n2. Выход <Esc>\n>>> ");
+                    keyInfo = Console.ReadKey(true);
+                    switch (keyInfo.Key)
+                    {
+                        case ConsoleKey.D1:
+                            {
+                                Console.Clear();
+                                goto MenuCommand;
+                            }
+                            break;
+                        case ConsoleKey.Escape:
+                            {
+                                Environment.Exit(0);
+                            }
+                            break;
+                    }
+                }
+                break;
+            case ConsoleKey.D2:
+                {
+                    Console.Clear();
+                    goto MenuCommand;
+                }
+                break;
+            case ConsoleKey.Escape:
+                {
+                    Environment.Exit(0);
+                }
+                break;
         }
     }
+   
+
     Debugger.Break();
+
 }
 class Output
 {
@@ -203,7 +309,7 @@ class Output
 
     static string[] timeOfPairs = { "08:00 - 09:35", "09:50 - 11:25", "11:55 - 13:30", "13:45 - 15:20", "15:35 - 17:10" };
     static string[] daysOfWeek = { "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця" };
-    public async static Task Outputing(string str, int choice)
+    public async static Task Outputing(WeekSchedule Schedule)
     {
         ConsoleColor CutrrentBackColor = Console.BackgroundColor;
         ConsoleColor CutrrentTextColor = Console.ForegroundColor;
@@ -221,9 +327,9 @@ class Output
         //ConsoleColor BlankTextColor = ConsoleColor.White;
 
         var client = new KhaiClient();
-        WeekSchedule Schedule;
-        if (choice == 1) Schedule = await client.GetGroupWeekSheduleAsync(str);
-        else Schedule = await client.GetStudentWeekSheduleAsync(str);
+        //WeekSchedule Schedule;
+        //if (choice == 1) Schedule = await client.GetGroupWeekSheduleAsync(str);
+        //else Schedule = await client.GetStudentWeekSheduleAsync(str);
         int count = 0;
         int den;
         int num;
