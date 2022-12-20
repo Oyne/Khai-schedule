@@ -28,12 +28,42 @@ static extern IntPtr GetConsoleWindow();
 
 int width = 150; // width of a console
 int height = 45; // heught of a console
-Console.SetWindowSize(width, height); // set conseole size
+Console.SetWindowSize(width, height); // set console size
 
 // code to fix size of a concole
 DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_MINIMIZE, MF_BYCOMMAND);
 DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_MAXIMIZE, MF_BYCOMMAND);
 DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_SIZE, MF_BYCOMMAND);
+
+//Console.WriteLine("Arrow keys to resize, Enter to quit");
+//Console.CursorVisible = false;
+//Console.ForegroundColor = ConsoleColor.Red;
+//ConsoleKeyInfo keyInfo;
+
+//do
+//{
+//    Console.CursorLeft = 0;
+//    Console.CursorTop = 1;
+//    Console.Write("({0}x{1}) ", Console.WindowWidth, Console.WindowHeight);
+
+//    keyInfo = Console.ReadKey();
+
+//    switch (keyInfo.Key)
+//    {
+//        case ConsoleKey.LeftArrow:
+//            Console.WindowWidth = Math.Max(Console.WindowWidth - 1, 20);
+//            break;
+//        case ConsoleKey.RightArrow:
+//            Console.WindowWidth = Math.Min(Console.WindowWidth + 1, 100);
+//            break;
+//        case ConsoleKey.UpArrow:
+//            Console.WindowHeight = Math.Max(Console.WindowHeight - 1, 20);
+//            break;
+//        case ConsoleKey.DownArrow:
+//            Console.WindowHeight = Math.Min(Console.WindowHeight + 1, 48);
+//            break;
+//    }
+//} while (keyInfo.Key != ConsoleKey.Enter);
 
 // set background and foreground colors of a console
 ConsoleColor DefaultConsBackColor = Console.BackgroundColor;
@@ -51,7 +81,6 @@ while (true)
     string group = "";
     string name = "";
     int choice;
-    int ret = 0;
 
 MenuCommand:
 
