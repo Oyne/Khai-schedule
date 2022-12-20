@@ -4,7 +4,16 @@ using System.Text.Json;
 public class FileWork
 {
     private const string _directoryPath = "C://Khai";
-    private const string _infoFilePath = "C://Khai/info.json";
+    private const string _infoFilePath = "C://Khai/ifo.json";
+   
+    private static void CheckIsFileExist()
+    {
+        if (!Directory.Exists(_directoryPath))
+            throw new Exception("Directory is not existing");
+
+        if (!File.Exists(_infoFilePath))
+            throw new Exception("File is not existing");
+    }
 
     public static void CreateAFile()
     {
@@ -17,17 +26,41 @@ public class FileWork
 
     public static void SaveSchduleToFile(WeekSchedule weekSchedule)
     {
-        var json = JsonSerializer.Serialize(weekSchedule);
-        File.WriteAllText(_infoFilePath, json);
+        try
+        {
+            CheckIsFileExist();
+            var json = JsonSerializer.Serialize(weekSchedule);
+            File.WriteAllText(_infoFilePath, json);
+        } catch { }
+        
     }
 
+    public static void CleanFile()
+    {
+        try
+        {
+            CheckIsFileExist();
+            File.WriteAllText(_infoFilePath, "");
+        } catch {}
+    }
     public static WeekSchedule ReadScheduleFromFile()
     {
-        var rowJSON = File.ReadAllText(_infoFilePath);
-        var readed = JsonSerializer.Deserialize<Khai.WeekSchedule>(rowJSON);
+        WeekSchedule readed;
+        try
+        {
+            CheckIsFileExist();
+            var rowJSON = File.ReadAllText(_infoFilePath);
+
+            if (rowJSON.Length == 0)
+                throw new Exception("Немає збереженого розкладу.");
+
+             readed = JsonSerializer.Deserialize<Khai.WeekSchedule>(rowJSON);
+        } catch {
+            readed = null;
+        }
 
         if (readed == null)
-            throw new Exception("Не удалось прочитать данные из файла");
+            throw new Exception("Не вдалося прочитати файл.");
 
         return readed;
     }
