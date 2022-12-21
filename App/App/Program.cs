@@ -234,6 +234,11 @@ MenuCommand:
                                     goto MenuCommand;
                                 }
                                 break;
+                            case ConsoleKey.Tab:
+                                {
+                                    MinimizeConsoleWindow();
+                                }
+                                break;
                             case ConsoleKey.Escape:
                                 {
                                     Environment.Exit(0);
