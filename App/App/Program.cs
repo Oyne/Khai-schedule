@@ -135,7 +135,7 @@ MenuCommand:
                 {
                     while (Schedule == null)
                     {
-                        Console.Write("Введите группу в формате 325, 525v (525в), 116i1, 432st (432ст), 555vm-2 (555вм/2)\n>>> ");
+                        Console.Write("Введите группу в формате 325, 525v (525в), 116i1, 430st (430ст), 555vm-2 (555вм/2)\n>>> ");
                         group = Console.ReadLine();
                         if (group == "exit") Environment.Exit(0);
                         if (group == "back") goto MenuCommand;
