@@ -1,7 +1,7 @@
 # Khai-schedule
 ## Посібник по використанню
 
-#### При запусці додатку ви побачите це меню
+#### При запуску додатку ви побачите це меню
 
 [![Vs-Debug-Console-bn-QHBKi-R72.png](https://i.postimg.cc/2yKv81S9/Vs-Debug-Console-bn-QHBKi-R72.png)](https://postimg.cc/2Ln308vn)
 
