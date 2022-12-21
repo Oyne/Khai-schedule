@@ -35,6 +35,24 @@ DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_MINIMIZE, MF_BYCOMMAND);
 DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_MAXIMIZE, MF_BYCOMMAND);
 DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_SIZE, MF_BYCOMMAND);
 
+// code to minimize a console
+/*====================================================================*/
+const Int32 SW_MINIMIZE = 6;
+
+//[DllImport("Kernel32.dll", CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+//static extern IntPtr GetConsoleWindow();
+
+[DllImport("User32.dll", CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+[return: MarshalAs(UnmanagedType.Bool)]
+static extern bool ShowWindow([In] IntPtr hWnd, [In] Int32 nCmdShow);
+
+static void MinimizeConsoleWindow()
+{
+    IntPtr hWndConsole = GetConsoleWindow();
+    ShowWindow(hWndConsole, SW_MINIMIZE);
+}
+/*====================================================================*/
+
 //Console.WriteLine("Arrow keys to resize, Enter to quit");
 //Console.CursorVisible = false;
 //Console.ForegroundColor = ConsoleColor.Red;
@@ -223,6 +241,11 @@ MenuCommand:
                     }
                 }
                 break;
+            case ConsoleKey.Tab:
+                {
+                    MinimizeConsoleWindow();
+                }
+                break;
             case ConsoleKey.Escape:
                 {
                     Environment.Exit(0);
@@ -281,6 +304,11 @@ MenuCommand:
                                     goto MenuCommand;
                                 }
                                 break;
+                            case ConsoleKey.Tab:
+                                {
+                                    MinimizeConsoleWindow();
+                                }
+                                break;
                             case ConsoleKey.Escape:
                                 {
                                     Environment.Exit(0);
@@ -294,6 +322,11 @@ MenuCommand:
                 {
                     Console.Clear();
                     goto MenuCommand;
+                }
+                break;
+            case ConsoleKey.Tab:
+                {
+                    MinimizeConsoleWindow();
                 }
                 break;
             case ConsoleKey.Escape:
@@ -319,10 +352,10 @@ class Output
     static string[] daysOfWeek = { "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця" };
     public async static Task Outputing(WeekSchedule Schedule)
     {
-        ConsoleColor CutrrentBackColor = Console.BackgroundColor;
-        ConsoleColor CutrrentTextColor = Console.ForegroundColor;
-        ConsoleColor TableBackColor = CutrrentBackColor;           // background color of the table
-        ConsoleColor TableTextColor = CutrrentTextColor;           // font color of the table
+        ConsoleColor CurrentBackColor = Console.BackgroundColor;
+        ConsoleColor CurrentTextColor = Console.ForegroundColor;
+        ConsoleColor TableBackColor = CurrentBackColor;           // background color of the table
+        ConsoleColor TableTextColor = CurrentTextColor;           // font color of the table
         ConsoleColor NumBackColor = ConsoleColor.Black;             // background color of the numerator
         ConsoleColor NumTextColor = ConsoleColor.Gray;             // font color of the numerator
         ConsoleColor DenBackColor = ConsoleColor.DarkYellow;          // background color of the denominator
@@ -334,10 +367,6 @@ class Output
         //ConsoleColor BlankBackColor = ConsoleColor.DarkBlue;
         //ConsoleColor BlankTextColor = ConsoleColor.White;
 
-        var client = new KhaiClient();
-        //WeekSchedule Schedule;
-        //if (choice == 1) Schedule = await client.GetGroupWeekSheduleAsync(str);
-        //else Schedule = await client.GetStudentWeekSheduleAsync(str);
         int count = 0;
         int den;
         int num;
@@ -348,8 +377,7 @@ class Output
             SetColor(TableBackColor, TableTextColor);
             Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
             Console.Write(new string(' ', (Console.WindowWidth -TABLEWIDTH)/2) + "|");
-            Console.BackgroundColor = DayOfWeekBackColor;
-            Console.ForegroundColor = DayOfWeekTextColor;
+            SetColor(DayOfWeekBackColor, DayOfWeekTextColor);
             Console.Write(new string(' ', ((TABLEWIDTH - 2) - daysOfWeek[count].Length) / 2) + daysOfWeek[count] + new string(' ', (TABLEWIDTH - 2) - ((TABLEWIDTH - 2) - daysOfWeek[count].Length) / 2 - daysOfWeek[count].Length));
             SetColor(TableBackColor, TableTextColor);
             Console.Write("|\n");

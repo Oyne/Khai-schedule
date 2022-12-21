@@ -3,8 +3,6 @@
 using System.Text.Json;
 public class FileWork
 {
-    Exception FileWasNotFound;
-
     private const string _directoryPath = "C://Khai";
     private const string _infoFilePath = "C://Khai/info.json";
    
