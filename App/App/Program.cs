@@ -10,7 +10,8 @@ using System.Text;
 using System.Threading;
 
 //Console title
-Console.Title = "Khai-schedule";
+Console.Title = "Khai schedule";
+
 // code to fix size of a console
 /*====================================================================*/
 const int MF_BYCOMMAND = 0x00000000;
