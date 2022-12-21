@@ -3,17 +3,29 @@
 
 #### При запуску додатку ви побачите це меню
 
-[![Vs-Debug-Console-bn-QHBKi-R72.png](https://i.postimg.cc/2yKv81S9/Vs-Debug-Console-bn-QHBKi-R72.png)](https://postimg.cc/2Ln308vn)
+```
+1. Поиск по группе <1>
+2. Поиск по имени <2>
+3. Считать расписание из файла <3>
+4. Выход <Esc>
+```
+
 
 ### Пошук за групою
 
 Якщо ви вибрали пошук за групою, вам треба ввести номер вашої групи, за зразком
 
-[![Vs-Debug-Console-q-PQSvm6f3-G.png](https://i.postimg.cc/Qdt8YrJs/Vs-Debug-Console-q-PQSvm6f3-G.png)](https://postimg.cc/LncFhwW0)
+```
+>>> Введите группу в формате 325, 525v (525в), 116i1, 432st (432ст), 555vm-2 (555вм/2)
+```
 
 Після цього буде виведено розклад цієї групи, та під ним буде інше меню
 
-[![Vs-Debug-Console-l-Spib-C5-BFF.png](https://i.postimg.cc/mgXQKBxS/Vs-Debug-Console-l-Spib-C5-BFF.png)](https://postimg.cc/NKX9Hhjy)
+```
+1. Сохранить расписание в текстовый файл <1>
+2. Вернуться в главное меню <2>
+3. Выход <Esc>
+```
 
 Ви можете зберігти розклад групи яку вибрали, та потім використовувати його оффлайн
 
@@ -23,11 +35,17 @@
 
 Якщо ви вибрали пошук за студентом, вам треба ввести ПІБ, за зразком
 
-[![Vs-Debug-Console-YOWyi-Ia-Nj-Z.png](https://i.postimg.cc/rmJWCk9W/Vs-Debug-Console-YOWyi-Ia-Nj-Z.png)](https://postimg.cc/k62BqLzX)
+```
+>>> Введите имя в формате bondarenko-a-o, kuzmichov-i-i
+```
 
 Після цього буде виведено розклад цього студента, та під ним буде інше меню
 
-[![Vs-Debug-Console-l-Spib-C5-BFF.png](https://i.postimg.cc/mgXQKBxS/Vs-Debug-Console-l-Spib-C5-BFF.png)](https://postimg.cc/NKX9Hhjy)
+```
+1. Сохранить расписание в текстовый файл <1>
+2. Вернуться в главное меню <2>
+3. Выход <Esc>
+```
 
 Ви можете зберігти розклад студента якого обрали, та потім використовувати його оффлайн
 
