@@ -413,16 +413,33 @@ class Output
                     SetColor(NumBackColor, NumTextColor);
                     if (num > SUBJECTWIDTH)
                     {
-                        Console.Write(output.Substring(0, SUBJECTWIDTH));
+                        int temp = (num/SUBJECTWIDTH);
+                        int counter = 0;
+                        Console.Write(output.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                        counter++;
                         SetColor(TableBackColor, TableTextColor);
-                        Console.WriteLine("|");                        
+                        Console.WriteLine("|");
+                        while (temp != 1)
+                        {
+                            Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
+                            SetColor(TableBackColor, TableTextColor);
+                            Console.Write(new string(' ', TIMEWIDTH));
+                            SetColor(TableBackColor, TableTextColor);
+                            Console.Write("|");
+                            SetColor(NumBackColor, NumTextColor);
+                            Console.Write(output.Substring(SUBJECTWIDTH*counter, SUBJECTWIDTH));
+                            SetColor(TableBackColor, TableTextColor);
+                            Console.WriteLine("|");
+                            counter++;
+                            temp--;
+                        }
                         Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TableBackColor, TableTextColor);
                         Console.Write(new string(' ', TIMEWIDTH));
                         SetColor(TableBackColor, TableTextColor);
                         Console.Write("|");
                         SetColor(NumBackColor, NumTextColor);
-                        Console.Write(output.Substring(SUBJECTWIDTH) + new string(' ', SUBJECTWIDTH - output.Substring(SUBJECTWIDTH).Length));
+                        Console.Write(output.Substring(SUBJECTWIDTH * counter) + new string(' ', SUBJECTWIDTH - output.Substring(SUBJECTWIDTH * counter).Length));
                     }
                     else if (num == SUBJECTWIDTH) Console.Write(output);
                     else Console.Write(new string(' ', (SUBJECTWIDTH - num) / 2) + output + new string(' ', SUBJECTWIDTH - num - ((SUBJECTWIDTH - num) / 2)));
@@ -487,16 +504,33 @@ class Output
                         SetColor(DenBackColor, DenTextColor);
                         if (den > SUBJECTWIDTH)
                         {
-                            Console.Write(output.Substring(0, SUBJECTWIDTH));
+                            int temp = (den / SUBJECTWIDTH);
+                            int counter = 0;
+                            Console.Write(output.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                            counter++;
                             SetColor(TableBackColor, TableTextColor);
                             Console.WriteLine("|");
+                            while (temp != 1)
+                            {
+                                Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
+                                SetColor(TableBackColor, TableTextColor);
+                                Console.Write(new string(' ', TIMEWIDTH));
+                                SetColor(TableBackColor, TableTextColor);
+                                Console.Write("|");
+                                SetColor(NumBackColor, NumTextColor);
+                                Console.Write(output.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                                SetColor(TableBackColor, TableTextColor);
+                                Console.WriteLine("|");
+                                counter++;
+                                temp--;
+                            }
                             Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
-                            SetColor(TimeBackColor, TimeTextColor);
+                            SetColor(TableBackColor, TableTextColor);
                             Console.Write(new string(' ', TIMEWIDTH));
                             SetColor(TableBackColor, TableTextColor);
                             Console.Write("|");
-                            SetColor(DenBackColor, DenTextColor);
-                            Console.Write(output.Substring(SUBJECTWIDTH) + new string(' ', SUBJECTWIDTH - output.Substring(SUBJECTWIDTH).Length));
+                            SetColor(NumBackColor, NumTextColor);
+                            Console.Write(output.Substring(SUBJECTWIDTH * counter) + new string(' ', SUBJECTWIDTH - output.Substring(SUBJECTWIDTH * counter).Length));
                         }
                         else if (den == SUBJECTWIDTH) Console.Write(output);
                         else Console.Write(new string(' ', (SUBJECTWIDTH - den) / 2) + output + new string(' ', SUBJECTWIDTH - den - ((SUBJECTWIDTH - den) / 2)));
@@ -529,16 +563,33 @@ class Output
                         SetColor(NumBackColor, NumTextColor);
                         if (num > SUBJECTWIDTH)
                         {
-                            Console.Write(output.Substring(0, SUBJECTWIDTH));
+                            int temp = (num / SUBJECTWIDTH);
+                            int counter = 0;
+                            Console.Write(output.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                            counter++;
                             SetColor(TableBackColor, TableTextColor);
                             Console.WriteLine("|");
+                            while (temp != 1)
+                            {
+                                Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
+                                SetColor(TableBackColor, TableTextColor);
+                                Console.Write(new string(' ', TIMEWIDTH));
+                                SetColor(TableBackColor, TableTextColor);
+                                Console.Write("|");
+                                SetColor(NumBackColor, NumTextColor);
+                                Console.Write(output.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                                SetColor(TableBackColor, TableTextColor);
+                                Console.WriteLine("|");
+                                counter++;
+                                temp--;
+                            }
                             Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
-                            SetColor(TimeBackColor, TimeTextColor);
+                            SetColor(TableBackColor, TableTextColor);
                             Console.Write(new string(' ', TIMEWIDTH));
                             SetColor(TableBackColor, TableTextColor);
                             Console.Write("|");
                             SetColor(NumBackColor, NumTextColor);
-                            Console.Write(output.Substring(SUBJECTWIDTH) + new string(' ', SUBJECTWIDTH - output.Substring(SUBJECTWIDTH).Length));
+                            Console.Write(output.Substring(SUBJECTWIDTH * counter) + new string(' ', SUBJECTWIDTH - output.Substring(SUBJECTWIDTH * counter).Length));
                         }
                         else if (num == SUBJECTWIDTH) Console.Write(output);
                         else Console.Write(new string(' ', (SUBJECTWIDTH - num) / 2) + output + new string(' ', SUBJECTWIDTH - num - ((SUBJECTWIDTH - num) / 2)));
@@ -604,16 +655,33 @@ class Output
                         SetColor(NumBackColor, NumTextColor);
                         if (num > SUBJECTWIDTH)
                         {
-                            Console.Write(out_num.Substring(0, SUBJECTWIDTH));
+                            int temp = (num / SUBJECTWIDTH);
+                            int counter = 0;
+                            Console.Write(out_num.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                            counter++;
                             SetColor(TableBackColor, TableTextColor);
                             Console.WriteLine("|");
+                            while (temp != 1)
+                            {
+                                Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
+                                SetColor(TableBackColor, TableTextColor);
+                                Console.Write(new string(' ', TIMEWIDTH));
+                                SetColor(TableBackColor, TableTextColor);
+                                Console.Write("|");
+                                SetColor(NumBackColor, NumTextColor);
+                                Console.Write(out_num.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                                SetColor(TableBackColor, TableTextColor);
+                                Console.WriteLine("|");
+                                counter++;
+                                temp--;
+                            }
                             Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
-                            SetColor(TimeBackColor, TimeTextColor);
+                            SetColor(TableBackColor, TableTextColor);
                             Console.Write(new string(' ', TIMEWIDTH));
                             SetColor(TableBackColor, TableTextColor);
                             Console.Write("|");
                             SetColor(NumBackColor, NumTextColor);
-                            Console.Write(out_num.Substring(SUBJECTWIDTH) + new string(' ', SUBJECTWIDTH - out_num.Substring(SUBJECTWIDTH).Length));
+                            Console.Write(out_num.Substring(SUBJECTWIDTH * counter) + new string(' ', SUBJECTWIDTH - out_num.Substring(SUBJECTWIDTH * counter).Length));
                         }
                         else if (num == SUBJECTWIDTH) Console.Write(out_num);
                         else Console.Write(new string(' ', (SUBJECTWIDTH - num) / 2) + out_num + new string(' ', SUBJECTWIDTH - num - ((SUBJECTWIDTH - num) / 2)));
@@ -633,16 +701,33 @@ class Output
                         SetColor(DenBackColor, DenTextColor);
                         if (den > SUBJECTWIDTH)
                         {
-                            Console.Write(out_den.Substring(0, SUBJECTWIDTH));
+                            int temp = (den / SUBJECTWIDTH);
+                            int counter = 0;
+                            Console.Write(out_den.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                            counter++;
                             SetColor(TableBackColor, TableTextColor);
                             Console.WriteLine("|");
+                            while (temp != 1)
+                            {
+                                Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
+                                SetColor(TableBackColor, TableTextColor);
+                                Console.Write(new string(' ', TIMEWIDTH));
+                                SetColor(TableBackColor, TableTextColor);
+                                Console.Write("|");
+                                SetColor(NumBackColor, NumTextColor);
+                                Console.Write(out_den.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                                SetColor(TableBackColor, TableTextColor);
+                                Console.WriteLine("|");
+                                counter++;
+                                temp--;
+                            }
                             Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
-                            SetColor(TimeBackColor, TimeTextColor);
+                            SetColor(TableBackColor, TableTextColor);
                             Console.Write(new string(' ', TIMEWIDTH));
                             SetColor(TableBackColor, TableTextColor);
                             Console.Write("|");
-                            SetColor(DenBackColor, DenTextColor);
-                            Console.Write(out_den.Substring(SUBJECTWIDTH) + new string(' ', SUBJECTWIDTH - out_den.Substring(SUBJECTWIDTH).Length));
+                            SetColor(NumBackColor, NumTextColor);
+                            Console.Write(out_den.Substring(SUBJECTWIDTH * counter) + new string(' ', SUBJECTWIDTH - out_den.Substring(SUBJECTWIDTH * counter).Length));
                         }
                         else if (den == SUBJECTWIDTH) Console.Write(out_den);
                         else Console.Write(new string(' ', (SUBJECTWIDTH - den) / 2) + out_den + new string(' ', SUBJECTWIDTH - den - ((SUBJECTWIDTH - den) / 2)));
