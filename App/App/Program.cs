@@ -349,6 +349,10 @@ MenuCommand:
     Debugger.Break();
 
 }
+
+/// <summary>
+/// class for outputing the schedule
+/// </summary>
 class Output
 {
     const int TABLEWIDTH = 110; // set general table size (default: 101)
