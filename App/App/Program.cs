@@ -762,6 +762,9 @@ class Output
         Console.ForegroundColor = front;
     }
 
+    /// <summary>
+    /// method to print Khai Schedule title
+    /// </summary>
     public static void PrintKhai()
     {
         Console.Write("\n\n" + new string(' ', (Console.WindowWidth-18)/2) +"|");
