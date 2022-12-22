@@ -94,6 +94,8 @@ ConsoleColor ConsTextColor = ConsoleColor.Gray;
 
 while (true)
 {
+
+    // set the correct ukrainian language output
     Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
     Console.OutputEncoding = System.Text.Encoding.Unicode;
     Console.InputEncoding = System.Text.Encoding.GetEncoding(1251);
