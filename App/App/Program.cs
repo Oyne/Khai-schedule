@@ -756,6 +756,11 @@ class Output
         }
     }
 
+    /// <summary>
+    /// method to set color of a console
+    /// </summary>
+    /// <param name="back"> background color </param>
+    /// <param name="front"> foreground color </param>
     public static void SetColor(ConsoleColor back, ConsoleColor front)
     {
         Console.BackgroundColor = back;
