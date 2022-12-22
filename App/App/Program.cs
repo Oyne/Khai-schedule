@@ -358,6 +358,12 @@ class Output
 
     static string[] timeOfPairs = { "08:00 - 09:35", "09:50 - 11:25", "11:55 - 13:30", "13:45 - 15:20", "15:35 - 17:10" };
     static string[] daysOfWeek = { "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця" };
+
+    /// <summary>
+    /// method to print the schedule
+    /// </summary>
+    /// <param name="Schedule"> parsed variable with schedule data </param>
+    /// <returns> print schedule in console </returns>
     public async static Task Outputing(WeekSchedule Schedule)
     {
         ConsoleColor CurrentBackColor = Console.BackgroundColor;
