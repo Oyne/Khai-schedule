@@ -19,6 +19,9 @@ public class FileWork
         return 0;
     }
 
+    /// <summary>
+    /// Method for creating a file
+    /// </summary>
     public static void CreateAFile()
     {
         if (!Directory.Exists(_directoryPath))
