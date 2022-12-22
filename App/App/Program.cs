@@ -771,6 +771,9 @@ class Output
     }
 }
 
+/// <summary>
+/// class to change color theme
+/// </summary>
 class Theme
 {
     public static void SetColorTheme(ref ConsoleColor[] colors)
