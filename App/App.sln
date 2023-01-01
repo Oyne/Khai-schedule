@@ -7,7 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App", "App\App.csproj", "{9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KhaiClient", "..\Parsing\KhaiClient.csproj", "{7A25B56E-185B-4401-9DE5-4BBAAB60C9D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileWork", "FileWork\FileWork.csproj", "{8D936E7A-D665-47CD-9789-A6569F5877EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileWork", "FileWork\FileWork.csproj", "{8D936E7A-D665-47CD-9789-A6569F5877EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Themes", "Themes\Themes.csproj", "{AC8EF079-5C22-423A-BA7A-05CA2E4297A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSettings", "Settings\AppSettings.csproj", "{9482DF34-5431-4926-B329-57B4D372A2A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minimizing", "Minimize\Minimizing.csproj", "{8FF66BF5-D13C-46EC-B3CD-ECBA2F3B3C2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Locking", "Fixing\Locking.csproj", "{38244CCD-1E16-48CD-A0C0-A035F24BF962}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +35,22 @@ Global
 		{8D936E7A-D665-47CD-9789-A6569F5877EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D936E7A-D665-47CD-9789-A6569F5877EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D936E7A-D665-47CD-9789-A6569F5877EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC8EF079-5C22-423A-BA7A-05CA2E4297A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC8EF079-5C22-423A-BA7A-05CA2E4297A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC8EF079-5C22-423A-BA7A-05CA2E4297A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC8EF079-5C22-423A-BA7A-05CA2E4297A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9482DF34-5431-4926-B329-57B4D372A2A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9482DF34-5431-4926-B329-57B4D372A2A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9482DF34-5431-4926-B329-57B4D372A2A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9482DF34-5431-4926-B329-57B4D372A2A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FF66BF5-D13C-46EC-B3CD-ECBA2F3B3C2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FF66BF5-D13C-46EC-B3CD-ECBA2F3B3C2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FF66BF5-D13C-46EC-B3CD-ECBA2F3B3C2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FF66BF5-D13C-46EC-B3CD-ECBA2F3B3C2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38244CCD-1E16-48CD-A0C0-A035F24BF962}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38244CCD-1E16-48CD-A0C0-A035F24BF962}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38244CCD-1E16-48CD-A0C0-A035F24BF962}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38244CCD-1E16-48CD-A0C0-A035F24BF962}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

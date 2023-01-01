@@ -5,14 +5,15 @@ public class FileWork
 {
     private const string _directoryPath = "C://Khai";
     private const string _infoFilePath = "C://Khai/info.json";
-   
-    private static int CheckIsFileExist()
+    private const string _settingsFilePath = "C://Khai/settings.json";
+
+    private static int CheckIsFileExist(string filePath)
     {
         if (!Directory.Exists(_directoryPath))
             return -1;
             //throw new Exception("Directory is not existing");
 
-        if (!File.Exists(_infoFilePath))
+        if (!File.Exists(filePath))
             return -2;
             //throw new Exception("File is not existing");
 
@@ -22,36 +23,34 @@ public class FileWork
     /// <summary>
     /// Method for creating a file
     /// </summary>
-    public static void CreateAFile()
+    public static void CreateAFile(string file_name)
     {
         if (!Directory.Exists(_directoryPath))
             Directory.CreateDirectory(_directoryPath);
 
-        if (!File.Exists(_infoFilePath))
+        if (!File.Exists(file_name))
         {
-            var SchFile = File.Create(_infoFilePath);
-            SchFile.Close();
+            var file = File.Create(file_name);
+            file.Close();
         }         
     }
 
     public static void SaveSchduleToFile(WeekSchedule weekSchedule)
     {
-
-            if (CheckIsFileExist() == 0)
+            if (CheckIsFileExist(_infoFilePath) == 0)
             {
                 var json = JsonSerializer.Serialize(weekSchedule);
                 File.WriteAllText(_infoFilePath, json);
             }
-            else if(CheckIsFileExist() == -1) throw new DirectoryDoesNotExistException("Directory is not existing");
-            else throw new FileDoesNotExistException("File is not existing");
-        
+            else if(CheckIsFileExist(_infoFilePath) == -1) throw new DirectoryDoesNotExistException("Directory is not existing");
+            else throw new FileDoesNotExistException("File is not existing");      
     }
 
     public static void CleanFile()
     {
         try
         {
-            CheckIsFileExist();
+            CheckIsFileExist(_infoFilePath);
             File.WriteAllText(_infoFilePath, "");
         } catch {}
     }
@@ -60,7 +59,7 @@ public class FileWork
         WeekSchedule readed;
         try
         {
-            CheckIsFileExist();
+            CheckIsFileExist(_infoFilePath);
             var rowJSON = File.ReadAllText(_infoFilePath);
 
             if (rowJSON.Length == 0)
@@ -76,6 +75,45 @@ public class FileWork
 
         return readed;
     }
+
+    public static Settings ReadSettingsFromFile()
+    {
+        Settings readed;
+        try
+        {
+            CheckIsFileExist(_settingsFilePath);
+            var rowJSON = File.ReadAllText(_settingsFilePath);
+
+            if (rowJSON.Length == 0)
+                throw new ScheduleWasNotFoundException("Нет сохранённых настроек.");
+
+            readed = JsonSerializer.Deserialize<Settings>(rowJSON);
+        }
+        catch
+        {
+            readed = null;
+        }
+
+        if (readed == null)
+            throw new FileWasNotFoundException("Не удалось прочитать файл.");
+
+        return readed;
+    }
+
+    public static void SaveSettings(Settings settings)
+    {
+        if (CheckIsFileExist(_settingsFilePath) == 0)
+        {
+            var json = JsonSerializer.Serialize(settings);
+            File.WriteAllText(_settingsFilePath, json);
+        }
+        else
+        {
+            CreateAFile("C://Khai/settings.json");
+            var json = JsonSerializer.Serialize(settings);
+            File.WriteAllText(_settingsFilePath, json);
+        }
+    }
 }
 
  public class FileWasNotFoundException : Exception
@@ -87,6 +125,12 @@ public class FileWork
 public class ScheduleWasNotFoundException : Exception
 {
     public ScheduleWasNotFoundException(string message)
+        : base(message) { }
+}
+
+public class SettingsWasNotFoundException : Exception
+{
+    public SettingsWasNotFoundException(string message)
         : base(message) { }
 }
 

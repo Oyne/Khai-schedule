@@ -7,54 +7,23 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
+using Themes;
+using Minimizing;
+using Locking;
 
 //Console title
 Console.Title = "Khai schedule";
-
-// code to fix size of a console
-/*====================================================================*/
-const int MF_BYCOMMAND = 0x00000000;
-const int SC_MINIMIZE = 0xF020;
-const int SC_MAXIMIZE = 0xF030;
-const int SC_SIZE = 0xF000;
-
-[DllImport("user32.dll")]
-static extern int DeleteMenu(IntPtr hMenu, int nPosition, int wFlags);
-
-[DllImport("user32.dll")]
-static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
-
-[DllImport("kernel32.dll", ExactSpelling = true)]
-static extern IntPtr GetConsoleWindow();
-/*====================================================================*/
 
 int width = 150; // width of a console
 int height = 45; // heught of a console
 Console.SetWindowSize(width, height); // set console size
 
 // code to fix size of a concole
-DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_MINIMIZE, MF_BYCOMMAND);
-DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_MAXIMIZE, MF_BYCOMMAND);
-DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_SIZE, MF_BYCOMMAND);
-
-// code to minimize a console
-/*====================================================================*/
-const Int32 SW_MINIMIZE = 6;
-
-//[DllImport("Kernel32.dll", CallingConvention = CallingConvention.StdCall, SetLastError = true)]
-//static extern IntPtr GetConsoleWindow();
-
-[DllImport("User32.dll", CallingConvention = CallingConvention.StdCall, SetLastError = true)]
-[return: MarshalAs(UnmanagedType.Bool)]
-static extern bool ShowWindow([In] IntPtr hWnd, [In] Int32 nCmdShow);
-
-static void MinimizeConsoleWindow()
-{
-    IntPtr hWndConsole = GetConsoleWindow();
-    ShowWindow(hWndConsole, SW_MINIMIZE);
-}
-/*====================================================================*/
+Lock.DeleteMenu(Lock.GetSystemMenu(Lock.GetConsoleWindow(), false), Lock.SC_MINIMIZE, Lock.MF_BYCOMMAND);
+Lock.DeleteMenu(Lock.GetSystemMenu(Lock.GetConsoleWindow(), false), Lock.SC_MAXIMIZE, Lock.MF_BYCOMMAND);
+Lock.DeleteMenu(Lock.GetSystemMenu(Lock.GetConsoleWindow(), false), Lock.SC_SIZE, Lock.MF_BYCOMMAND);
 
 //Console.WriteLine("Arrow keys to resize, Enter to quit");
 //Console.CursorVisible = false;
@@ -86,11 +55,26 @@ static void MinimizeConsoleWindow()
 //    }
 //} while (keyInfo.Key != ConsoleKey.Enter);
 
+string settingsFilePath = "C://Khai/settings.json";
+string sattings;
+var options = new JsonSerializerOptions { WriteIndented = true };
+Settings settings = null;
+
+if (File.Exists(settingsFilePath))
+{
+    settings = FileWork.ReadSettingsFromFile();
+}
+else
+{
+    settings = new Settings();
+}
+
+Theme theme = settings.Theme;
 // set background and foreground colors of a console
-ConsoleColor DefaultConsBackColor = Console.BackgroundColor;
-ConsoleColor DefaultConsTextColor = Console.ForegroundColor;
-ConsoleColor ConsBackColor = ConsoleColor.Black;
-ConsoleColor ConsTextColor = ConsoleColor.Gray;
+ConsoleColor DefaultConsBackColor = ConsoleColor.Black;
+ConsoleColor DefaultConsTextColor = ConsoleColor.Gray;
+ConsoleColor ConsBackColor;
+ConsoleColor ConsTextColor;
 
 while (true)
 {
@@ -106,12 +90,14 @@ while (true)
     string exit = "";
     int choice;
     bool boolean;
-    WeekSchedule Schedule;
+    WeekSchedule Schedule = null;
 
 MenuCommand:
 
     boolean = true;
 
+    ConsBackColor = theme.Colors[0];
+    ConsTextColor = theme.Colors[5];
     Console.BackgroundColor = ConsBackColor;
     Console.ForegroundColor = ConsTextColor;
     Console.Clear();
@@ -120,11 +106,14 @@ MenuCommand:
 
     ConsoleKeyInfo keyInfo;
 
-    Console.Write("1. Поиск по группе <1>\n" +
-        "2. Поиск по имени <2>\n" +
-        "3. Считать расписание из файла <3>\n" +
-        "4. Выход <Esc>\n>>> "
-        );
+    Console.Write("""
+        1. Поиск по группе <1>
+        2. Поиск по имени <2>
+        3. Считать расписание из файла <3>
+        4. Настроить тему <4>
+        5. Выход <Esc>
+        >>> 
+        """);
 
     while (boolean)
     {
@@ -159,7 +148,7 @@ MenuCommand:
                     Console.Clear();
                     Output.PrintKhai();
                     Console.WriteLine(new string(' ', (Console.WindowWidth - 8 - group.Length) / 2) + $"Группа: {group}");
-                    await Task.Run(() => Output.Outputing(Schedule));
+                    await Task.Run(() => Output.Outputing(Schedule, theme.Colors));
                     //Output.Outputing(group, choice);
                     boolean = false;
                 }
@@ -194,7 +183,7 @@ MenuCommand:
                     Console.Clear();
                     Output.PrintKhai();
                     Console.WriteLine(new string(' ', (Console.WindowWidth - 9 - name.Length) / 2) + $"Студент: {name}");
-                    await Task.Run(() => Output.Outputing(Schedule));
+                    await Task.Run(() => Output.Outputing(Schedule, theme.Colors));
                     //Output.Outputing(name, choice);
                     boolean = false;
                 }
@@ -209,7 +198,7 @@ MenuCommand:
                         Console.ForegroundColor = ConsTextColor;
                         Console.Clear();
                         Output.PrintKhai();
-                        await Task.Run(() => Output.Outputing(Schedule));
+                        await Task.Run(() => Output.Outputing(Schedule, theme.Colors));
                         boolean = false;
                     }
                     catch (FileWasNotFoundException e)
@@ -239,11 +228,12 @@ MenuCommand:
                                 break;
                             case ConsoleKey.Tab:
                                 {
-                                    MinimizeConsoleWindow();
+                                    Minimize.MinimizeConsoleWindow();
                                 }
                                 break;
                             case ConsoleKey.Escape:
                                 {
+                                    FileWork.SaveSettings(settings);
                                     Environment.Exit(0);
                                 }
                                 break;
@@ -251,13 +241,28 @@ MenuCommand:
                     }
                 }
                 break;
+            case ConsoleKey.D4:
+                {
+                    Console.Clear();
+                    //ColorMenu.ColorSet(ref theme);
+                    int ret = Theme.SetColor(ref theme);
+                    if(ret == 1)
+                    {
+                        FileWork.SaveSettings(settings);
+                        Environment.Exit(0);
+                    }
+                    FileWork.SaveSettings(settings);
+                    goto MenuCommand;
+                }
+                break;
             case ConsoleKey.Tab:
                 {
-                    MinimizeConsoleWindow();
+                    Minimize.MinimizeConsoleWindow();
                 }
                 break;
             case ConsoleKey.Escape:
                 {
+                    FileWork.SaveSettings(settings);
                     Environment.Exit(0);
                 }
                 break;
@@ -283,7 +288,7 @@ MenuCommand:
                     catch (DirectoryDoesNotExistException e)
                     {
                         Console.WriteLine("Путь для сохранения файла не найден");
-                        FileWork.CreateAFile();
+                        FileWork.CreateAFile("C://Khai/info.json");
                         Console.WriteLine("Путь для сохранения файла создан \"C://Khai/\"");
                         Console.WriteLine("Файл с расписанием создан");
                         FileWork.SaveSchduleToFile(Schedule);
@@ -291,7 +296,7 @@ MenuCommand:
                     catch (FileDoesNotExistException e)
                     {
                         Console.WriteLine("Файл для сохранения не найден");
-                        FileWork.CreateAFile();
+                        FileWork.CreateAFile("C://Khai/info.json");
                         Console.WriteLine("Файл с расписанием создан по пути \"C://Khai/\"");
                         FileWork.SaveSchduleToFile(Schedule);
                     }
@@ -316,11 +321,12 @@ MenuCommand:
                                 break;
                             case ConsoleKey.Tab:
                                 {
-                                    MinimizeConsoleWindow();
+                                    Minimize.MinimizeConsoleWindow();
                                 }
                                 break;
                             case ConsoleKey.Escape:
                                 {
+                                    FileWork.SaveSettings(settings);
                                     Environment.Exit(0);
                                 }
                                 break;
@@ -336,11 +342,12 @@ MenuCommand:
                 break;
             case ConsoleKey.Tab:
                 {
-                    MinimizeConsoleWindow();
+                    Minimize.MinimizeConsoleWindow();
                 }
                 break;
             case ConsoleKey.Escape:
                 {
+                    FileWork.SaveSettings(settings);
                     Environment.Exit(0);
                 }
                 break;
@@ -370,20 +377,21 @@ class Output
     /// </summary>
     /// <param name="Schedule"> parsed variable with schedule data </param>
     /// <returns> print schedule in console </returns>
-    public async static Task Outputing(WeekSchedule Schedule)
+    public async static Task Outputing(WeekSchedule Schedule, ConsoleColor[] colors)
     {
-        ConsoleColor CurrentBackColor = Console.BackgroundColor;
-        ConsoleColor CurrentTextColor = Console.ForegroundColor;
-        ConsoleColor TableBackColor = CurrentBackColor;           // background color of the table
-        ConsoleColor TableTextColor = CurrentTextColor;           // font color of the table
-        ConsoleColor NumBackColor = ConsoleColor.Black;             // background color of the numerator
-        ConsoleColor NumTextColor = ConsoleColor.Gray;             // font color of the numerator
-        ConsoleColor DenBackColor = ConsoleColor.DarkYellow;          // background color of the denominator
-        ConsoleColor DenTextColor = ConsoleColor.Black;             // font color of the denominator
-        ConsoleColor TimeBackColor = ConsoleColor.Black;            // background color of the time field
-        ConsoleColor TimeTextColor = ConsoleColor.Gray;            // font color of the time field
-        ConsoleColor DayOfWeekBackColor = ConsoleColor.Black;       // background color of the day of week field
-        ConsoleColor DayOfWeekTextColor = ConsoleColor.Gray;       // font color of the day of week field
+
+        ConsoleColor CurrentBackColor = colors[0];
+        ConsoleColor TableBackColor = CurrentBackColor; // background color of the table
+        ConsoleColor NumBackColor = colors[1];        // background color of the numerator
+        ConsoleColor DenBackColor = colors[2];        // background color of the denominator
+        ConsoleColor TimeBackColor = colors[3];        // background color of the time field
+        ConsoleColor DayOfWeekBackColor = colors[4];        // background color of the day of week field
+        ConsoleColor CurrentTextColor = colors[5];
+        ConsoleColor TableTextColor = CurrentTextColor; // font color of the table         
+        ConsoleColor NumTextColor = colors[6];        // font color of the numerator         
+        ConsoleColor DenTextColor = colors[7];        // font color of the denominator       
+        ConsoleColor TimeTextColor = colors[8];        // font color of the time field        
+        ConsoleColor DayOfWeekTextColor = colors[9];        // font color of the day of week field 
         //ConsoleColor BlankBackColor = ConsoleColor.DarkBlue;
         //ConsoleColor BlankTextColor = ConsoleColor.White;
 
@@ -396,7 +404,7 @@ class Output
         {
             SetColor(TableBackColor, TableTextColor);
             Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
-            Console.Write(new string(' ', (Console.WindowWidth -TABLEWIDTH)/2) + "|");
+            Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
             SetColor(DayOfWeekBackColor, DayOfWeekTextColor);
             Console.Write(new string(' ', ((TABLEWIDTH - 2) - daysOfWeek[count].Length) / 2) + daysOfWeek[count] + new string(' ', (TABLEWIDTH - 2) - ((TABLEWIDTH - 2) - daysOfWeek[count].Length) / 2 - daysOfWeek[count].Length));
             SetColor(TableBackColor, TableTextColor);
@@ -412,7 +420,7 @@ class Output
                 {
                     Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                     SetColor(TimeBackColor, TimeTextColor);
-                    Console.Write(new string(' ', (TIMEWIDTH - timeOfPairs[j].Length) /2) + timeOfPairs[j] + new string(' ', TIMEWIDTH - timeOfPairs[j].Length - ((TIMEWIDTH - timeOfPairs[j].Length) / 2)));
+                    Console.Write(new string(' ', (TIMEWIDTH - timeOfPairs[j].Length) / 2) + timeOfPairs[j] + new string(' ', TIMEWIDTH - timeOfPairs[j].Length - ((TIMEWIDTH - timeOfPairs[j].Length) / 2)));
                     SetColor(TableBackColor, TableTextColor);
                     Console.Write("|");
                     if (day.Classes[j].Numerator.RoomNumber != null)
@@ -420,7 +428,7 @@ class Output
                         output += day.Classes[j].Numerator.RoomNumber + ", ";
                         num += day.Classes[j].Numerator.RoomNumber.Length + 2;
                     }
-                    if(day.Classes[j].Numerator.Name != null)
+                    if (day.Classes[j].Numerator.Name != null)
                     {
                         output += day.Classes[j].Numerator.Name;
                         num += day.Classes[j].Numerator.Name.Length;
@@ -433,7 +441,7 @@ class Output
                     SetColor(NumBackColor, NumTextColor);
                     if (num > SUBJECTWIDTH)
                     {
-                        int temp = (num/SUBJECTWIDTH);
+                        int temp = (num / SUBJECTWIDTH);
                         int counter = 0;
                         Console.Write(output.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
                         counter++;
@@ -447,7 +455,7 @@ class Output
                             SetColor(TableBackColor, TableTextColor);
                             Console.Write("|");
                             SetColor(NumBackColor, NumTextColor);
-                            Console.Write(output.Substring(SUBJECTWIDTH*counter, SUBJECTWIDTH));
+                            Console.Write(output.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
                             SetColor(TableBackColor, TableTextColor);
                             Console.WriteLine("|");
                             counter++;
@@ -515,7 +523,7 @@ class Output
                         Console.Write(new string(' ', (TIMEWIDTH - timeOfPairs[j].Length) / 2) + timeOfPairs[j] + new string(' ', TIMEWIDTH - timeOfPairs[j].Length - ((TIMEWIDTH - timeOfPairs[j].Length) / 2)));
                         SetColor(TableBackColor, TableTextColor);
                         Console.Write("|");
-                        Console.WriteLine(new string('-', SUBJECTWIDTH+1));
+                        Console.WriteLine(new string('-', SUBJECTWIDTH + 1));
                         Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);
                         Console.Write(new string(' ', TIMEWIDTH));
@@ -712,7 +720,7 @@ class Output
                         Console.Write(new string(' ', (TIMEWIDTH - timeOfPairs[j].Length) / 2) + timeOfPairs[j] + new string(' ', TIMEWIDTH - timeOfPairs[j].Length - ((TIMEWIDTH - timeOfPairs[j].Length) / 2)));
                         SetColor(TableBackColor, TableTextColor);
                         Console.Write("|");
-                        Console.WriteLine(new string('-', SUBJECTWIDTH+1));
+                        Console.WriteLine(new string('-', SUBJECTWIDTH + 1));
                         Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);
                         Console.Write(new string(' ', TIMEWIDTH));
@@ -778,21 +786,87 @@ class Output
     /// </summary>
     public static void PrintKhai()
     {
-        Console.Write("\n\n" + new string(' ', (Console.WindowWidth-18)/2) +"|");
+        Console.Write("\n\n" + new string(' ', (Console.WindowWidth - 18) / 2) + "|");
         Console.Write(" Расписание ХАИ ");
         Console.WriteLine("|");
         Console.WriteLine('\n');
     }
 }
 
-/// <summary>
-/// class to change color theme
-/// </summary>
-class Theme
-{
-    public static void SetColorTheme(ref ConsoleColor[] colors)
-    {
-        Console.BackgroundColor = colors[0];
-        Console.ForegroundColor = colors[1];
-    }
-}
+//class ColorMenu
+//{
+//    public static void ColorSet(ref Theme theme)
+//    {
+//        int ret = 0;
+//        bool boolean = true;
+//        ConsoleKeyInfo keyInfo;
+
+//    MenuColor:
+//        Console.Clear();
+
+//        Console.Write("\n\n" + new string(' ', (Console.WindowWidth - 18) / 2) + "|");
+//        Console.Write(" Настройки темы ");
+//        Console.WriteLine("|");
+//        Console.WriteLine('\n');
+
+//        Console.Write("""
+//                1. Изменить цвет фона <1>
+//                2. Изменить цвет текста <2>
+//                3. Изменить цвет фона знаменателя <3>
+//                4. Изменить цвет текста знаменателя <4>
+//                5. Установить тему по умолчанию <5>
+//                6. Сбросить все цвета <6>
+//                7. Вернуться в главное меню <7>
+//                8. Выход <Esc>
+//                >>> 
+//                """
+//        );
+
+//        while (boolean == true)
+//        {
+//            keyInfo = Console.ReadKey(true);
+//            switch (keyInfo.Key)
+//            {
+//                case ConsoleKey.D1:
+//                    {
+//                        theme.SetBackColor();
+//                        goto MenuColor;
+//                    }
+//                    break;
+//                case ConsoleKey.D2:
+//                    {
+//                        theme.SetFrontColor();
+//                        goto MenuColor;
+//                    }
+//                    break;
+//                case ConsoleKey.D3:
+//                    {
+//                        theme.SetDenBackColor();
+//                        goto MenuColor;
+//                    }
+//                    break;
+//                case ConsoleKey.D6:
+//                    {
+//                        theme.SetDefaultColors();
+//                        goto MenuColor;
+//                    }
+//                    break;
+//                case ConsoleKey.D7:
+//                    {
+//                        boolean = false;
+//                    }
+//                    break;
+//                case ConsoleKey.Tab:
+//                    {
+//                        MinimizeConsoleWindow();
+//                    }
+//                    break;
+//                case ConsoleKey.Escape:
+//                    {
+//                        FileWork.SaveSettings(settings);
+//                        Environment.Exit(0);
+//                    }
+//            }
+//        }
+//    }
+//}
