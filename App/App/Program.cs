@@ -111,10 +111,11 @@ MenuCommand:
 
     Console.Write("""
         1. Поиск по группе <1>
-        2. Поиск по имени <2>
-        3. Считать расписание из файла <3>
-        4. Настройки <4>
-        5. Выход <Esc>
+        2. Поиск по студенту <2>
+        3. Поиск по преподавателю <3>
+        4. Считать расписание из файла <4>
+        5. Настройки <5>
+        6. Выход <Esc>
         >>> 
         """);
 
@@ -134,8 +135,7 @@ MenuCommand:
                         if (group == "exit") Environment.Exit(0);
                         if (group == "back") goto MenuCommand;
                         try
-                        {
-                            //Schedule = await client.GetLecturerWeekSheduleAsync(group);
+                        {                           
                             Schedule = await client.GetGroupWeekSheduleAsync(group);
                         }
                         catch (NullReferenceException e)
@@ -192,6 +192,40 @@ MenuCommand:
                 break;
             case ConsoleKey.D3:
                 {
+                    while (Schedule == null)
+                    {
+                        Console.Write("Введите имя в формате babeschko-e-v-503, savchenko-n-v-405\n>>> ");
+                        name = Console.ReadLine();
+                        if (name == "exit") Environment.Exit(0);
+                        if (name == "back") goto MenuCommand;
+                        try
+                        {
+                            Schedule = await client.GetLecturerWeekSheduleAsync(name);
+                        }
+                        catch (NullReferenceException e)
+                        {
+                            Console.Write("Некорректный ввод или преподавателя не существует\n");
+                        }
+                        catch (System.Net.Http.HttpRequestException e)
+                        {
+                            Console.Write("Некорректный ввод или преподавателя не существует\n");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.Write("Очень некорректный ввод, преподавателя не существует или плохое интернет соединение\n");
+                        }
+                    }
+                    Console.BackgroundColor = ConsBackColor;
+                    Console.ForegroundColor = ConsTextColor;
+                    Console.Clear();
+                    Output.PrintKhai();
+                    Console.WriteLine(new string(' ', (Console.WindowWidth - 9 - name.Length) / 2) + $"Преподаватель: {name}");
+                    await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
+                    boolean = false;
+                }
+                break;
+            case ConsoleKey.D4:
+                {
                     try
                     {
                         Schedule = FileWork.ReadScheduleFromFile();
@@ -243,7 +277,7 @@ MenuCommand:
                     }
                 }
                 break;
-            case ConsoleKey.D4:
+            case ConsoleKey.D5:
                 {
                     SettingsMenu:
                     Console.Clear();
