@@ -149,13 +149,14 @@ namespace Themes
             ConsoleColor currentForeground = Console.ForegroundColor;
             ConsoleColor currentBackground = Console.BackgroundColor;
             ConsoleColor DenBackColor = colors[2];
+            ConsoleColor DenTextColor = colors[7];
 
             ConsoleKeyInfo keyInfo;
             bool enter = false;
 
             for (int i = 0; i <= 15; i++)
             {
-                if (examples[i] == currentForeground) continue;
+                if (examples[i] == currentForeground || (DenBackColor == currentBackground && examples[i] == DenTextColor)) continue;
                 Console.BackgroundColor = examples[i];
                 Console.Clear();
                 for (int j = 0; j < 5; j++)
@@ -175,9 +176,9 @@ namespace Themes
                     {
                         case ConsoleKey.LeftArrow:
                             {
-                                if (i > 1 && examples[i - 1] == currentForeground) i -= 3;
-                                else if (i == 1 && examples[i - 1] == currentForeground) i = 14;
-                                else if (i == 0 && examples[^1] == currentForeground) i = 13;
+                                if (i > 1 && (examples[i - 1] == currentForeground || examples[i-1] == DenTextColor)) i -= 3;
+                                else if (i == 1 && (examples[i - 1] == currentForeground || examples[i-1] == DenTextColor)) i = 14;
+                                else if (i == 0 && (examples[^1] == currentForeground || examples[^1] == DenTextColor)) i = 13;
                                 else if (i > 0) i -= 2;
                                 else i = 14;
                                 boolean = false;
@@ -417,6 +418,9 @@ namespace Themes
 
             string[] timeOfPairs = { "08:00 - 09:35", "09:50 - 11:25", "11:55 - 13:30", "13:45 - 15:20", "15:35 - 17:10" };
 
+            string output = "", out_num = "", out_den = "";
+            int den = 0, num = 0, count = 0;
+
             ConsoleColor CurrentBackColor = colors[0];
             ConsoleColor TableBackColor = CurrentBackColor; // background color of the table
             ConsoleColor NumBackColor = colors[1];        // background color of the numerator
@@ -432,7 +436,6 @@ namespace Themes
             //ConsoleColor BlankBackColor = ConsoleColor.DarkBlue;
             //ConsoleColor BlankTextColor = ConsoleColor.White;
 
-
             SetColor(TableBackColor, TableTextColor);
             Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
             Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
@@ -441,15 +444,58 @@ namespace Themes
             SetColor(TableBackColor, TableTextColor);
             Console.Write("|\n");
             Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
+
             Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
             SetColor(TimeBackColor, TimeTextColor);
             Console.Write(new string(' ', (TIMEWIDTH - timeOfPairs[0].Length) / 2) + timeOfPairs[0] + new string(' ', TIMEWIDTH - timeOfPairs[0].Length - ((TIMEWIDTH - timeOfPairs[0].Length) / 2)));
             SetColor(TableBackColor, TableTextColor);
             Console.Write("|");
-            Console.Write(new string(' ', (SUBJECTWIDTH - "233р, Технології програмування, лекція".Length) / 2) + "233р, Технології програмування, лекція" + new string(' ', SUBJECTWIDTH - "233р, Технології програмування, лекція".Length - ((SUBJECTWIDTH - "233р, Технології програмування, лекція".Length) / 2)));
+
+            output += "233р, Технології програмування, лекція";
+            num += "233р, Технології програмування, лекція".Length;
+            SetColor(NumBackColor, NumTextColor);
+            if (num > SUBJECTWIDTH)
+            {
+                int temp = (num / SUBJECTWIDTH);
+                int counter = 0;
+                Console.Write(output.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                counter++;
+                SetColor(TableBackColor, TableTextColor);
+                Console.WriteLine("|");
+                while (temp != 1)
+                {
+                    Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
+                    SetColor(TableBackColor, TableTextColor);
+                    Console.Write(new string(' ', TIMEWIDTH));
+                    SetColor(TableBackColor, TableTextColor);
+                    Console.Write("|");
+                    SetColor(NumBackColor, NumTextColor);
+                    Console.Write(output.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                    SetColor(TableBackColor, TableTextColor);
+                    Console.WriteLine("|");
+                    counter++;
+                    temp--;
+                }
+                Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
+                SetColor(TableBackColor, TableTextColor);
+                Console.Write(new string(' ', TIMEWIDTH));
+                SetColor(TableBackColor, TableTextColor);
+                Console.Write("|");
+                SetColor(NumBackColor, NumTextColor);
+                Console.Write(output.Substring(SUBJECTWIDTH * counter) + new string(' ', SUBJECTWIDTH - output.Substring(SUBJECTWIDTH * counter).Length));
+            }
+            else if (num == SUBJECTWIDTH) Console.Write(output);
+            else Console.Write(new string(' ', (SUBJECTWIDTH - num) / 2) + output + new string(' ', SUBJECTWIDTH - num - ((SUBJECTWIDTH - num) / 2)));
             SetColor(TableBackColor, TableTextColor);
             Console.Write("|\n");
             Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
+
+            num = 0;
+            den = 0;
+            out_num += "136ар, Комп'ютерна схемотехніка, лаб. практикум";
+            out_den += "210лк, Вища математика, лекція";
+            num += "136ар, Комп'ютерна схемотехніка, лаб. практикум".Length;
+            den += "210лк, Вища математика, лекція".Length;
 
             Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
             SetColor(TimeBackColor, TimeTextColor);
@@ -457,7 +503,39 @@ namespace Themes
             SetColor(TableBackColor, TableTextColor);
             Console.Write("|");
             SetColor(NumBackColor, NumTextColor);
-            Console.Write(new string(' ', (SUBJECTWIDTH - "136ар, Комп'ютерна схемотехніка, лаб. практикум".Length) / 2) + "136ар, Комп'ютерна схемотехніка, лаб. практикум" + new string(' ', SUBJECTWIDTH - "136ар, Комп'ютерна схемотехніка, лаб. практикум".Length - ((SUBJECTWIDTH - "136ар, Комп'ютерна схемотехніка, лаб. практикум".Length) / 2)));
+            if (num > SUBJECTWIDTH)
+            {
+                int temp = (num / SUBJECTWIDTH);
+                int counter = 0;
+                Console.Write(out_num.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                counter++;
+                SetColor(TableBackColor, TableTextColor);
+                Console.WriteLine("|");
+                while (temp != 1)
+                {
+                    Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
+                    SetColor(TableBackColor, TableTextColor);
+                    Console.Write(new string(' ', TIMEWIDTH));
+                    SetColor(TableBackColor, TableTextColor);
+                    Console.Write("|");
+                    SetColor(NumBackColor, NumTextColor);
+                    Console.Write(out_num.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                    SetColor(TableBackColor, TableTextColor);
+                    Console.WriteLine("|");
+                    counter++;
+                    temp--;
+                }
+                Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
+                SetColor(TableBackColor, TableTextColor);
+                Console.Write(new string(' ', TIMEWIDTH));
+                SetColor(TableBackColor, TableTextColor);
+                Console.Write("|");
+                SetColor(NumBackColor, NumTextColor);
+                Console.Write(out_num.Substring(SUBJECTWIDTH * counter) + new string(' ', SUBJECTWIDTH - out_num.Substring(SUBJECTWIDTH * counter).Length));
+            }
+            else if (num == SUBJECTWIDTH) Console.Write(out_num);
+            else Console.Write(new string(' ', (SUBJECTWIDTH - num) / 2) + out_num + new string(' ', SUBJECTWIDTH - num - ((SUBJECTWIDTH - num) / 2)));
+            SetColor(TableBackColor, TableTextColor);
             Console.Write("|\n");
             Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
             SetColor(TimeBackColor, TimeTextColor);
@@ -471,22 +549,60 @@ namespace Themes
             SetColor(TableBackColor, TableTextColor);
             Console.Write("|");
             SetColor(DenBackColor, DenTextColor);
-            Console.Write(new string(' ', (SUBJECTWIDTH - "210лк, Вища математика, лекція".Length) / 2) + "210лк, Вища математика, лекція" + new string(' ', SUBJECTWIDTH - "210лк, Вища математика, лекція".Length - ((SUBJECTWIDTH - "210лк, Вища математика, лекція".Length) / 2)));
+            if (den > SUBJECTWIDTH)
+            {
+                int temp = (den / SUBJECTWIDTH);
+                int counter = 0;
+                Console.Write(out_den.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                counter++;
+                SetColor(TableBackColor, TableTextColor);
+                Console.WriteLine("|");
+                while (temp != 1)
+                {
+                    Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
+                    SetColor(TableBackColor, TableTextColor);
+                    Console.Write(new string(' ', TIMEWIDTH));
+                    SetColor(TableBackColor, TableTextColor);
+                    Console.Write("|");
+                    SetColor(NumBackColor, NumTextColor);
+                    Console.Write(out_den.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                    SetColor(TableBackColor, TableTextColor);
+                    Console.WriteLine("|");
+                    counter++;
+                    temp--;
+                }
+                Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
+                SetColor(TableBackColor, TableTextColor);
+                Console.Write(new string(' ', TIMEWIDTH));
+                SetColor(TableBackColor, TableTextColor);
+                Console.Write("|");
+                SetColor(NumBackColor, NumTextColor);
+                Console.Write(out_den.Substring(SUBJECTWIDTH * counter) + new string(' ', SUBJECTWIDTH - out_den.Substring(SUBJECTWIDTH * counter).Length));
+            }
+            else if (den == SUBJECTWIDTH) Console.Write(out_den);
+            else Console.Write(new string(' ', (SUBJECTWIDTH - den) / 2) + out_den + new string(' ', SUBJECTWIDTH - den - ((SUBJECTWIDTH - den) / 2)));
             SetColor(TableBackColor, TableTextColor);
             Console.Write("|\n");
             Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
+
+            den = 0;
+            output = "";
+            output += "207аг, Філософія, практика";
+            den += "207аг, Філософія, практика".Length;
 
             Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
             SetColor(TimeBackColor, TimeTextColor);
             Console.Write(new string(' ', TIMEWIDTH));
             SetColor(TableBackColor, TableTextColor);
             Console.Write("|");
-            SetColor(NumBackColor, NumTextColor);
+            //Console.BackgroundColor = BlankBackColor;
+            //Console.ForegroundColor = BlankTextColor;
             Console.Write(new string(' ', (SUBJECTWIDTH - 19) / 2) + "*******************" + new string(' ', SUBJECTWIDTH - 19 - (SUBJECTWIDTH - 19) / 2));
+            SetColor(TableBackColor, TableTextColor);
             Console.Write("|\n");
             Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
             SetColor(TimeBackColor, TimeTextColor);
-            Console.Write(new string(' ', (TIMEWIDTH - timeOfPairs[1].Length) / 2) + timeOfPairs[1] + new string(' ', TIMEWIDTH - timeOfPairs[1].Length - ((TIMEWIDTH - timeOfPairs[1].Length) / 2)));
+            Console.Write(new string(' ', (TIMEWIDTH - timeOfPairs[2].Length) / 2) + timeOfPairs[2] + new string(' ', TIMEWIDTH - timeOfPairs[2].Length - ((TIMEWIDTH - timeOfPairs[2].Length) / 2)));
             SetColor(TableBackColor, TableTextColor);
             Console.Write("|");
             Console.WriteLine(new string('-', SUBJECTWIDTH + 1));
@@ -496,10 +612,46 @@ namespace Themes
             SetColor(TableBackColor, TableTextColor);
             Console.Write("|");
             SetColor(DenBackColor, DenTextColor);
-            Console.Write(new string(' ', (SUBJECTWIDTH - "207аг, Філософія, практика".Length) / 2) + "207аг, Філософія, практика" + new string(' ', SUBJECTWIDTH - "207аг, Філософія, практика".Length - ((SUBJECTWIDTH - "207аг, Філософія, практика".Length) / 2)));
+            if (den > SUBJECTWIDTH)
+            {
+                int temp = (den / SUBJECTWIDTH);
+                int counter = 0;
+                Console.Write(output.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                counter++;
+                SetColor(TableBackColor, TableTextColor);
+                Console.WriteLine("|");
+                while (temp != 1)
+                {
+                    Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
+                    SetColor(TableBackColor, TableTextColor);
+                    Console.Write(new string(' ', TIMEWIDTH));
+                    SetColor(TableBackColor, TableTextColor);
+                    Console.Write("|");
+                    SetColor(NumBackColor, NumTextColor);
+                    Console.Write(output.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                    SetColor(TableBackColor, TableTextColor);
+                    Console.WriteLine("|");
+                    counter++;
+                    temp--;
+                }
+                Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
+                SetColor(TableBackColor, TableTextColor);
+                Console.Write(new string(' ', TIMEWIDTH));
+                SetColor(TableBackColor, TableTextColor);
+                Console.Write("|");
+                SetColor(NumBackColor, NumTextColor);
+                Console.Write(output.Substring(SUBJECTWIDTH * counter) + new string(' ', SUBJECTWIDTH - output.Substring(SUBJECTWIDTH * counter).Length));
+            }
+            else if (den == SUBJECTWIDTH) Console.Write(output);
+            else Console.Write(new string(' ', (SUBJECTWIDTH - den) / 2) + output + new string(' ', SUBJECTWIDTH - den - ((SUBJECTWIDTH - den) / 2)));
             SetColor(TableBackColor, TableTextColor);
             Console.Write("|\n");
             Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
+
+            num = 0;
+            output = "";
+            output += "Фізичне виховання";
+            num += "Фізичне виховання".Length;
 
             Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
             SetColor(TimeBackColor, TimeTextColor);
@@ -507,11 +659,43 @@ namespace Themes
             SetColor(TableBackColor, TableTextColor);
             Console.Write("|");
             SetColor(NumBackColor, NumTextColor);
-            Console.Write(new string(' ', (SUBJECTWIDTH - "Фізичне виховання".Length) / 2) + "Фізичне виховання" + new string(' ', SUBJECTWIDTH - "Фізичне виховання".Length - ((SUBJECTWIDTH - "Фізичне виховання".Length) / 2)));
+            if (num > SUBJECTWIDTH)
+            {
+                int temp = (num / SUBJECTWIDTH);
+                int counter = 0;
+                Console.Write(output.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                counter++;
+                SetColor(TableBackColor, TableTextColor);
+                Console.WriteLine("|");
+                while (temp != 1)
+                {
+                    Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
+                    SetColor(TableBackColor, TableTextColor);
+                    Console.Write(new string(' ', TIMEWIDTH));
+                    SetColor(TableBackColor, TableTextColor);
+                    Console.Write("|");
+                    SetColor(NumBackColor, NumTextColor);
+                    Console.Write(output.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
+                    SetColor(TableBackColor, TableTextColor);
+                    Console.WriteLine("|");
+                    counter++;
+                    temp--;
+                }
+                Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
+                SetColor(TableBackColor, TableTextColor);
+                Console.Write(new string(' ', TIMEWIDTH));
+                SetColor(TableBackColor, TableTextColor);
+                Console.Write("|");
+                SetColor(NumBackColor, NumTextColor);
+                Console.Write(output.Substring(SUBJECTWIDTH * counter) + new string(' ', SUBJECTWIDTH - output.Substring(SUBJECTWIDTH * counter).Length));
+            }
+            else if (num == SUBJECTWIDTH) Console.Write(output);
+            else Console.Write(new string(' ', (SUBJECTWIDTH - num) / 2) + output + new string(' ', SUBJECTWIDTH - num - ((SUBJECTWIDTH - num) / 2)));
+            SetColor(TableBackColor, TableTextColor);
             Console.Write("|\n");
             Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
             SetColor(TimeBackColor, TimeTextColor);
-            Console.Write(new string(' ', (TIMEWIDTH - timeOfPairs[1].Length) / 2) + timeOfPairs[1] + new string(' ', TIMEWIDTH - timeOfPairs[1].Length - ((TIMEWIDTH - timeOfPairs[1].Length) / 2)));
+            Console.Write(new string(' ', (TIMEWIDTH - timeOfPairs[3].Length) / 2) + timeOfPairs[3] + new string(' ', TIMEWIDTH - timeOfPairs[3].Length - ((TIMEWIDTH - timeOfPairs[3].Length) / 2)));
             SetColor(TableBackColor, TableTextColor);
             Console.Write("|");
             Console.WriteLine(new string('-', SUBJECTWIDTH + 1));
@@ -520,6 +704,8 @@ namespace Themes
             Console.Write(new string(' ', TIMEWIDTH));
             SetColor(TableBackColor, TableTextColor);
             Console.Write("|");
+            //Console.BackgroundColor = BlankBackColor;
+            //Console.ForegroundColor = BlankTextColor;
             SetColor(DenBackColor, DenTextColor);
             Console.Write(new string(' ', (SUBJECTWIDTH - 19) / 2) + "*******************" + new string(' ', SUBJECTWIDTH - 19 - (SUBJECTWIDTH - 19) / 2));
             SetColor(TableBackColor, TableTextColor);
