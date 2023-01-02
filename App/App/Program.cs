@@ -135,6 +135,7 @@ MenuCommand:
                         if (group == "back") goto MenuCommand;
                         try
                         {
+                            //Schedule = await client.GetLecturerWeekSheduleAsync(group);
                             Schedule = await client.GetGroupWeekSheduleAsync(group);
                         }
                         catch (NullReferenceException e)
@@ -152,7 +153,6 @@ MenuCommand:
                     Output.PrintKhai();
                     Console.WriteLine(new string(' ', (Console.WindowWidth - 8 - group.Length) / 2) + $"Группа: {group}");
                     await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
-                    //Output.Outputing(group, choice);
                     boolean = false;
                 }
                 break;
@@ -187,7 +187,6 @@ MenuCommand:
                     Output.PrintKhai();
                     Console.WriteLine(new string(' ', (Console.WindowWidth - 9 - name.Length) / 2) + $"Студент: {name}");
                     await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
-                    //Output.Outputing(name, choice);
                     boolean = false;
                 }
                 break;
@@ -505,6 +504,11 @@ class Output
                         output += ", " + day.Classes[j].Numerator.Type;
                         num += day.Classes[j].Numerator.Type.Length + 2;
                     }
+                    if(day.Classes[j].Numerator.Teacher != null)
+                    {
+                        output += ", " + day.Classes[j].Numerator.Teacher;
+                        num += day.Classes[j].Numerator.Teacher.Length + 2;
+                    }
                     SetColor(NumBackColor, NumTextColor);
                     if (num > SUBJECTWIDTH)
                     {
@@ -574,6 +578,11 @@ class Output
                         {
                             output += ", " + day.Classes[j].Denominator.Type;
                             den += day.Classes[j].Denominator.Type.Length + 2;
+                        }
+                        if (day.Classes[j].Denominator.Teacher != null)
+                        {
+                            output += ", " + day.Classes[j].Denominator.Teacher;
+                            den += day.Classes[j].Denominator.Teacher.Length + 2;
                         }
                         Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);
@@ -649,6 +658,11 @@ class Output
                         {
                             output += ", " + day.Classes[j].Numerator.Type;
                             num += day.Classes[j].Numerator.Type.Length + 2;
+                        }
+                        if (day.Classes[j].Numerator.Teacher != null)
+                        {
+                            output += ", " + day.Classes[j].Numerator.Teacher;
+                            num += day.Classes[j].Numerator.Teacher.Length + 2;
                         }
                         Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);
@@ -727,6 +741,11 @@ class Output
                             out_num += ", " + day.Classes[j].Numerator.Type;
                             num += day.Classes[j].Numerator.Type.Length + 2;
                         }
+                        if (day.Classes[j].Numerator.Teacher != null)
+                        {
+                            out_num += ", " + day.Classes[j].Numerator.Teacher;
+                            num += day.Classes[j].Numerator.Teacher.Length + 2;
+                        }
                         if (day.Classes[j].Denominator.RoomNumber != null)
                         {
                             out_den += day.Classes[j].Denominator.RoomNumber + ", ";
@@ -741,6 +760,11 @@ class Output
                         {
                             out_den += ", " + day.Classes[j].Denominator.Type;
                             den += day.Classes[j].Denominator.Type.Length + 2;
+                        }
+                        if (day.Classes[j].Denominator.Teacher != null)
+                        {
+                            out_den += ", " + day.Classes[j].Denominator.Teacher;
+                            den += day.Classes[j].Denominator.Teacher.Length + 2;
                         }
                         Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);
