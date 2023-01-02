@@ -110,7 +110,7 @@ MenuCommand:
         1. Поиск по группе <1>
         2. Поиск по имени <2>
         3. Считать расписание из файла <3>
-        4. Настроить тему <4>
+        4. Настройки <4>
         5. Выход <Esc>
         >>> 
         """);
@@ -244,15 +244,63 @@ MenuCommand:
             case ConsoleKey.D4:
                 {
                     Console.Clear();
-                    //ColorMenu.ColorSet(ref theme);
-                    int ret = Theme.SetColor(ref theme);
-                    if(ret == 1)
+
+                    Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки  ".Length) / 2) + "|");
+                    Console.Write(" Настройки ");
+                    Console.WriteLine("|");
+                    Console.WriteLine('\n');
+
+                    Console.Write("""
+                             1. Настройки темы <1>
+                             2. Настройки размера консоли <2>
+                             3. Вернуться в главное меню <3>
+                             4. Выход <Esc>
+                             >>> 
+                             """);
+
+                    while (true)
                     {
-                        FileWork.SaveSettings(settings);
-                        Environment.Exit(0);
+                        keyInfo = Console.ReadKey(true);
+
+                        switch (keyInfo.Key)
+                        {
+                            case ConsoleKey.D1:
+                                {
+                                    Console.Clear();
+                                    int ret = Theme.SetColor(ref theme);
+                                    if (ret == 1)
+                                    {
+                                        FileWork.SaveSettings(settings);
+                                        Environment.Exit(0);
+                                    }
+                                    FileWork.SaveSettings(settings);
+                                    goto MenuCommand;
+                                }
+                                break;
+                            case ConsoleKey.D2:
+                                {
+                                    //Console.Clear();
+                                    goto MenuCommand;
+                                }
+                            case ConsoleKey.D3:
+                                {
+                                    Console.Clear();
+                                    goto MenuCommand;
+                                }
+                                break;
+                            case ConsoleKey.Tab:
+                                {
+                                    Minimize.MinimizeConsoleWindow();
+                                }
+                                break;
+                            case ConsoleKey.Escape:
+                                {
+                                    FileWork.SaveSettings(settings);
+                                    Environment.Exit(0);
+                                }
+                                break;
+                        }
                     }
-                    FileWork.SaveSettings(settings);
-                    goto MenuCommand;
                 }
                 break;
             case ConsoleKey.Tab:
@@ -792,81 +840,3 @@ class Output
         Console.WriteLine('\n');
     }
 }
-
-//class ColorMenu
-//{
-//    public static void ColorSet(ref Theme theme)
-//    {
-//        int ret = 0;
-//        bool boolean = true;
-//        ConsoleKeyInfo keyInfo;
-
-//    MenuColor:
-//        Console.Clear();
-
-//        Console.Write("\n\n" + new string(' ', (Console.WindowWidth - 18) / 2) + "|");
-//        Console.Write(" Настройки темы ");
-//        Console.WriteLine("|");
-//        Console.WriteLine('\n');
-
-//        Console.Write("""
-//                1. Изменить цвет фона <1>
-//                2. Изменить цвет текста <2>
-//                3. Изменить цвет фона знаменателя <3>
-//                4. Изменить цвет текста знаменателя <4>
-//                5. Установить тему по умолчанию <5>
-//                6. Сбросить все цвета <6>
-//                7. Вернуться в главное меню <7>
-//                8. Выход <Esc>
-//                >>> 
-//                """
-//        );
-
-//        while (boolean == true)
-//        {
-//            keyInfo = Console.ReadKey(true);
-//            switch (keyInfo.Key)
-//            {
-//                case ConsoleKey.D1:
-//                    {
-//                        theme.SetBackColor();
-//                        goto MenuColor;
-//                    }
-//                    break;
-//                case ConsoleKey.D2:
-//                    {
-//                        theme.SetFrontColor();
-//                        goto MenuColor;
-//                    }
-//                    break;
-//                case ConsoleKey.D3:
-//                    {
-//                        theme.SetDenBackColor();
-//                        goto MenuColor;
-//                    }
-//                    break;
-//                case ConsoleKey.D6:
-//                    {
-//                        theme.SetDefaultColors();
-//                        goto MenuColor;
-//                    }
-//                    break;
-//                case ConsoleKey.D7:
-//                    {
-//                        boolean = false;
-//                    }
-//                    break;
-//                case ConsoleKey.Tab:
-//                    {
-//                        MinimizeConsoleWindow();
-//                    }
-//                    break;
-//                case ConsoleKey.Escape:
-//                    {
-//                        FileWork.SaveSettings(settings);
-//                        Environment.Exit(0);
-//                    }
-//            }
-//        }
-//    }
-//}

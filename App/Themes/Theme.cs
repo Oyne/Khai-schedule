@@ -91,6 +91,12 @@ namespace Themes
                             goto MenuCommand;
                         }
                         break;
+                    case ConsoleKey.D4:
+                        {
+                            theme.SetDenTextColor();
+                            goto MenuCommand;
+                        }
+                        break;
                     case ConsoleKey.D5:
                         {
                             theme.SetDefaultTheme();
@@ -178,7 +184,6 @@ namespace Themes
                             break;
                         case ConsoleKey.Enter:
                             {
-                                colors[0] = examples[i];
                                 enter = true;
                                 boolean = false;
                             }
@@ -240,7 +245,6 @@ namespace Themes
                             break;
                         case ConsoleKey.Enter:
                             {
-                                colors[5] = examples[i];
                                 enter = true;
                                 boolean = false;
                             }
@@ -258,13 +262,13 @@ namespace Themes
 
         public void SetDenBackColor()
         {
-            ConsoleColor currentForeground = colors[7];
+            ConsoleColor currentDenTextColor = colors[7];
             ConsoleKeyInfo keyInfo;
             bool enter = false;
 
             for (int i = 0; i <= 15; i++)
             {
-                if (examples[i] == currentForeground) continue;
+                if (examples[i] == currentDenTextColor) continue;
                 Console.Clear();
 
                 colors[2] = examples[i];
@@ -281,9 +285,9 @@ namespace Themes
                     {
                         case ConsoleKey.LeftArrow:
                             {
-                                if (i > 1 && examples[i - 1] == currentForeground) i -= 3;
-                                else if (i == 1 && examples[i - 1] == currentForeground) i = 14;
-                                else if (i == 0 && examples[^1] == currentForeground) i = 13;
+                                if (i > 1 && examples[i - 1] == currentDenTextColor) i -= 3;
+                                else if (i == 1 && examples[i - 1] == currentDenTextColor) i = 14;
+                                else if (i == 0 && examples[^1] == currentDenTextColor) i = 13;
                                 else if (i > 0) i -= 2;
                                 else i = 14;
                                 boolean = false;
@@ -297,7 +301,6 @@ namespace Themes
                             break;
                         case ConsoleKey.Enter:
                             {
-                                colors[2] = examples[i];
                                 enter = true;
                                 boolean = false;
                             }
@@ -313,9 +316,60 @@ namespace Themes
             }
         }
 
-        public void SetDenFrontColor()
+        public void SetDenTextColor()
         {
+            ConsoleColor currentDenBackColor = colors[2];
+            ConsoleKeyInfo keyInfo;
+            bool enter = false;
 
+            for (int i = 0; i <= 15; i++)
+            {
+                if (examples[i] == currentDenBackColor) continue;
+                Console.Clear();
+
+                colors[7] = examples[i];
+
+                Console.WriteLine("\n");
+                Console.WriteLine(new string(' ', (Console.WindowWidth - "Выберите цвет текста знаменателя".Length) / 2) + "Выберите цвет текста знаменателя\n\n");
+                Instuction();
+                PrintTable(colors);
+                bool boolean = true;
+                while (boolean == true && enter == false)
+                {
+                    keyInfo = Console.ReadKey(true);
+                    switch (keyInfo.Key)
+                    {
+                        case ConsoleKey.LeftArrow:
+                            {
+                                if (i > 1 && examples[i - 1] == currentDenBackColor) i -= 3;
+                                else if (i == 1 && examples[i - 1] == currentDenBackColor) i = 14;
+                                else if (i == 0 && examples[^1] == currentDenBackColor) i = 13;
+                                else if (i > 0) i -= 2;
+                                else i = 14;
+                                boolean = false;
+                            }
+                            break;
+                        case ConsoleKey.RightArrow:
+                            {
+                                if (i == 15) i = -1;
+                                boolean = false;
+                            }
+                            break;
+                        case ConsoleKey.Enter:
+                            {
+                                enter = true;
+                                boolean = false;
+                            }
+                            break;
+                        case ConsoleKey.Escape:
+                            {
+                                Environment.Exit(0);
+                            }
+                            break;
+                    }
+                }
+                if (enter) break;
+            }
         }
 
         public void SetDefaultTheme()
