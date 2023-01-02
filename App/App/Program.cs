@@ -19,7 +19,6 @@ Console.Title = "Khai schedule";
 
 // settings deserializing
 string settingsFilePath = "C://Khai/settings.json";
-string sattings;
 var options = new JsonSerializerOptions { WriteIndented = true };
 Settings settings = null;
 
@@ -41,36 +40,6 @@ Console.SetWindowSize(width, height); // set console size
 Lock.DeleteMenu(Lock.GetSystemMenu(Lock.GetConsoleWindow(), false), Lock.SC_MINIMIZE, Lock.MF_BYCOMMAND);
 Lock.DeleteMenu(Lock.GetSystemMenu(Lock.GetConsoleWindow(), false), Lock.SC_MAXIMIZE, Lock.MF_BYCOMMAND);
 Lock.DeleteMenu(Lock.GetSystemMenu(Lock.GetConsoleWindow(), false), Lock.SC_SIZE, Lock.MF_BYCOMMAND);
-
-//Console.WriteLine("Arrow keys to resize, Enter to quit");
-//Console.CursorVisible = false;
-//Console.ForegroundColor = ConsoleColor.Red;
-//ConsoleKeyInfo keyInfo;
-
-//do
-//{
-//    Console.CursorLeft = 0;
-//    Console.CursorTop = 1;
-//    Console.Write("({0}x{1}) ", Console.WindowWidth, Console.WindowHeight);
-
-//    keyInfo = Console.ReadKey();
-
-//    switch (keyInfo.Key)
-//    {
-//        case ConsoleKey.LeftArrow:
-//            Console.WindowWidth = Math.Max(Console.WindowWidth - 1, 20);
-//            break;
-//        case ConsoleKey.RightArrow:
-//            Console.WindowWidth = Math.Min(Console.WindowWidth + 1, 100);
-//            break;
-//        case ConsoleKey.UpArrow:
-//            Console.WindowHeight = Math.Max(Console.WindowHeight - 1, 20);
-//            break;
-//        case ConsoleKey.DownArrow:
-//            Console.WindowHeight = Math.Min(Console.WindowHeight + 1, 48);
-//            break;
-//    }
-//} while (keyInfo.Key != ConsoleKey.Enter);
 
 Theme theme = settings.Theme;
 // set background and foreground colors of a console
