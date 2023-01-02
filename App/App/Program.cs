@@ -12,12 +12,29 @@ using System.Threading;
 using Themes;
 using Minimizing;
 using Locking;
+using Sizing;
 
 //Console title
 Console.Title = "Khai schedule";
 
-int width = 150; // width of a console
-int height = 45; // heught of a console
+// settings deserializing
+string settingsFilePath = "C://Khai/settings.json";
+string sattings;
+var options = new JsonSerializerOptions { WriteIndented = true };
+Settings settings = null;
+
+if (File.Exists(settingsFilePath))
+{
+    settings = FileWork.ReadSettingsFromFile();
+}
+else
+{
+    settings = new Settings();
+}
+
+// size of a console
+int width = settings.Width; // width of a console
+int height = settings.Height; // heught of a console
 Console.SetWindowSize(width, height); // set console size
 
 // code to fix size of a concole
@@ -54,20 +71,6 @@ Lock.DeleteMenu(Lock.GetSystemMenu(Lock.GetConsoleWindow(), false), Lock.SC_SIZE
 //            break;
 //    }
 //} while (keyInfo.Key != ConsoleKey.Enter);
-
-string settingsFilePath = "C://Khai/settings.json";
-string sattings;
-var options = new JsonSerializerOptions { WriteIndented = true };
-Settings settings = null;
-
-if (File.Exists(settingsFilePath))
-{
-    settings = FileWork.ReadSettingsFromFile();
-}
-else
-{
-    settings = new Settings();
-}
 
 Theme theme = settings.Theme;
 // set background and foreground colors of a console
@@ -148,7 +151,7 @@ MenuCommand:
                     Console.Clear();
                     Output.PrintKhai();
                     Console.WriteLine(new string(' ', (Console.WindowWidth - 8 - group.Length) / 2) + $"Группа: {group}");
-                    await Task.Run(() => Output.Outputing(Schedule, theme.Colors));
+                    await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
                     //Output.Outputing(group, choice);
                     boolean = false;
                 }
@@ -183,7 +186,7 @@ MenuCommand:
                     Console.Clear();
                     Output.PrintKhai();
                     Console.WriteLine(new string(' ', (Console.WindowWidth - 9 - name.Length) / 2) + $"Студент: {name}");
-                    await Task.Run(() => Output.Outputing(Schedule, theme.Colors));
+                    await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
                     //Output.Outputing(name, choice);
                     boolean = false;
                 }
@@ -198,7 +201,7 @@ MenuCommand:
                         Console.ForegroundColor = ConsTextColor;
                         Console.Clear();
                         Output.PrintKhai();
-                        await Task.Run(() => Output.Outputing(Schedule, theme.Colors));
+                        await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
                         boolean = false;
                     }
                     catch (FileWasNotFoundException e)
@@ -243,6 +246,7 @@ MenuCommand:
                 break;
             case ConsoleKey.D4:
                 {
+                    SettingsMenu:
                     Console.Clear();
 
                     Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки  ".Length) / 2) + "|");
@@ -253,8 +257,9 @@ MenuCommand:
                     Console.Write("""
                              1. Настройки темы <1>
                              2. Настройки размера консоли <2>
-                             3. Вернуться в главное меню <3>
-                             4. Выход <Esc>
+                             3. Настройки размера таблицы расписания <3>                     
+                             4. Вернуться в главное меню <4>
+                             5. Выход <Esc>
                              >>> 
                              """);
 
@@ -273,18 +278,29 @@ MenuCommand:
                                         FileWork.SaveSettings(settings);
                                         Environment.Exit(0);
                                     }
-                                    FileWork.SaveSettings(settings);
-                                    goto MenuCommand;
+                                    else if (ret == 2)
+                                    {
+                                        FileWork.SaveSettings(settings);
+                                        goto SettingsMenu;
+                                    }
+                                    else
+                                    {
+                                        FileWork.SaveSettings(settings);
+                                        goto MenuCommand;
+                                    }
                                 }
                                 break;
                             case ConsoleKey.D2:
                                 {
-                                    //Console.Clear();
-                                    goto MenuCommand;
+                                    int[] arr = Sizing.Size.SetSize(theme.Colors, settings.TableWidth);
+                                    settings.Width = arr[0];
+                                    settings.Height = arr[1];
+                                    FileWork.SaveSettings(settings);
+                                    goto SettingsMenu;
                                 }
-                            case ConsoleKey.D3:
+                                break;
+                            case ConsoleKey.D4:
                                 {
-                                    Console.Clear();
                                     goto MenuCommand;
                                 }
                                 break;
@@ -412,9 +428,9 @@ MenuCommand:
 /// </summary>
 class Output
 {
-    const int TABLEWIDTH = 110; // set general table size (default: 101)
-    const int TIMEWIDTH = 23; // set general time field size (default: 23  (!!!!  NOT LESS THAN 13  !!!!))
-    const int SUBJECTWIDTH = TABLEWIDTH - TIMEWIDTH - 3; // set general subject field size (default: 75 (TABLEWIDTH - TIMEWIDTH - 3))
+    //int const TABLEWIDTH = 110; // set general table size (default: 101)
+    //int const TIMEWIDTH = 23; // set general time field size (default: 23  (!!!!  NOT LESS THAN 13  !!!!))
+    //int const SUBJECTWIDTH = TABLEWIDTH - TIMEWIDTH - 3; // set general subject field size (default: 75 (TABLEWIDTH - TIMEWIDTH - 3))
 
 
     static string[] timeOfPairs = { "08:00 - 09:35", "09:50 - 11:25", "11:55 - 13:30", "13:45 - 15:20", "15:35 - 17:10" };
@@ -425,8 +441,11 @@ class Output
     /// </summary>
     /// <param name="Schedule"> parsed variable with schedule data </param>
     /// <returns> print schedule in console </returns>
-    public async static Task Outputing(WeekSchedule Schedule, ConsoleColor[] colors)
+    public async static Task Outputing(WeekSchedule Schedule, ConsoleColor[] colors, int tableWidth, int timeWidth)
     {
+        int TABLEWIDTH = tableWidth; // set general table size (default: 101)
+        int TIMEWIDTH = timeWidth; // set general time field size (default: 23  (!!!!  NOT LESS THAN 13  !!!!))
+        int SUBJECTWIDTH = TABLEWIDTH - TIMEWIDTH - 3; // set general subject field size (default: 75 (TABLEWIDTH - TIMEWIDTH - 3))
 
         ConsoleColor CurrentBackColor = colors[0];
         ConsoleColor TableBackColor = CurrentBackColor; // background color of the table

@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minimizing", "Minimize\Mini
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Locking", "Fixing\Locking.csproj", "{38244CCD-1E16-48CD-A0C0-A035F24BF962}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sizing", "Sizing\Sizing.csproj", "{183E3532-C9A5-4FD4-AEFE-1F82C567AE9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{38244CCD-1E16-48CD-A0C0-A035F24BF962}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38244CCD-1E16-48CD-A0C0-A035F24BF962}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38244CCD-1E16-48CD-A0C0-A035F24BF962}.Release|Any CPU.Build.0 = Release|Any CPU
+		{183E3532-C9A5-4FD4-AEFE-1F82C567AE9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{183E3532-C9A5-4FD4-AEFE-1F82C567AE9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{183E3532-C9A5-4FD4-AEFE-1F82C567AE9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{183E3532-C9A5-4FD4-AEFE-1F82C567AE9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
