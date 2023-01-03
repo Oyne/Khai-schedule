@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -26,6 +26,7 @@
     <ProjectReference Include="..\..\Parsing\KhaiClient.csproj" />
     <ProjectReference Include="..\FileWork\FileWork.csproj" />
     <ProjectReference Include="..\Fixing\Locking.csproj" />
+    <ProjectReference Include="..\Maximizing\Maximizing.csproj" />
     <ProjectReference Include="..\Settings\AppSettings.csproj" />
     <ProjectReference Include="..\Sizing\Sizing.csproj" />
     <ProjectReference Include="..\TableSizes\TableSizes.csproj" />

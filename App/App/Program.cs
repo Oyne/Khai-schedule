@@ -28,9 +28,18 @@ else
 }
 
 // size of a console
-int width = settings.Width; // width of a console
-int height = settings.Height; // heught of a console
-Console.SetWindowSize(width, height); // set console size
+if(settings.Width > 211 && settings.Height > 49)
+{
+    Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+    Maximize.ShowWindow(Maximize.Ret1(), Maximize.Ret2());
+}
+else
+{
+    int width = settings.Width; // width of a console
+    int height = settings.Height; // heught of a console
+    Console.SetWindowSize(width, height); // set console size
+}
+
 
 // code to fix size of a concole
 Lock.DeleteMenu(Lock.GetSystemMenu(Lock.GetConsoleWindow(), false), Lock.SC_MINIMIZE, Lock.MF_BYCOMMAND);
@@ -290,11 +299,65 @@ MenuCommand:
                                 break;
                             case ConsoleKey.D2:
                                 {
-                                    int[] arr = Khai.Size.SetSize(theme.Colors, settings.TableWidth, settings.TimeWidth);
-                                    settings.Width = arr[0];
-                                    settings.Height = arr[1];
-                                    FileWork.SaveSettings(settings);
-                                    goto SettingsMenu;
+                                    Console.Clear();
+                                    Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки размера консоли  ".Length) / 2) + "|");
+                                    Console.Write(" Настройки размера консоли ");
+                                    Console.WriteLine("|");
+                                    Console.WriteLine('\n');
+                                    Console.Write("""
+                                            1. Настройка размера консоли вручную <1>
+                                            2. Открывать консоль во весь экран по умолчанию <2>
+                                            3. Вернуться в предыдущее меню <3>                    
+                                            4. Вернуться в главное меню <4>
+                                            5. Выход <Esc>
+                                            >>> 
+                                            """);
+                                    while (true)
+                                    {
+                                        keyInfo = Console.ReadKey(true);
+                                        switch (keyInfo.Key)
+                                        {
+                                            case ConsoleKey.D1:
+                                                {
+                                                    int[] arr = Khai.Size.SetSize(theme.Colors, settings.TableWidth, settings.TimeWidth);
+                                                    settings.Width = arr[0];
+                                                    settings.Height = arr[1];
+                                                    FileWork.SaveSettings(settings);
+                                                    goto SettingsMenu;
+                                                }
+                                                break;
+                                            case ConsoleKey.D2:
+                                                {
+                                                    Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+                                                    Maximize.ShowWindow(Maximize.Ret1(), Maximize.Ret2());
+                                                    settings.Width = 212;
+                                                    settings.Height = 50;
+                                                    FileWork.SaveSettings(settings);
+                                                }
+                                                break;
+                                            case ConsoleKey.D3:
+                                                {
+                                                    goto SettingsMenu;
+                                                }
+                                                break;
+                                            case ConsoleKey.D4:
+                                                {
+                                                    goto MenuCommand;
+                                                }
+                                                break;
+                                            case ConsoleKey.Tab:
+                                                {
+                                                    Minimize.MinimizeConsoleWindow();
+                                                }
+                                                break;
+                                            case ConsoleKey.Escape:
+                                                {
+                                                    FileWork.SaveSettings(settings);
+                                                    Environment.Exit(0);
+                                                }
+                                                break;
+                                        }
+                                    }
                                 }
                                 break;
                             case ConsoleKey.D3:
@@ -307,8 +370,7 @@ MenuCommand:
                                 }
                                 break;
                             case ConsoleKey.D4:
-                                {
-                                    
+                                {                                
                                     goto MenuCommand;
                                 }
                                 break;
