@@ -56,7 +56,7 @@ public class TableSize
         Console.Write(new string(' ', (Console.WindowWidth - "↓-изменение длины области времени".Length) / 2));
         Console.WriteLine("↓");
         Console.Write(new string(' ', (Console.WindowWidth - "← → - изменение общей длины таблицы".Length) / 2));
-        Console.WriteLine("← → - изменение общей длины таблицы");
+        Console.WriteLine("← → - изменение общей длины таблицы\n");
         Console.Write(new string(' ', (Console.WindowWidth - "Enter - выбор".Length) / 2));
         Console.WriteLine("Enter - выбор\n\n");
     }
