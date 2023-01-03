@@ -2,6 +2,9 @@
 
 namespace Khai;
 
+/// <summary>
+/// class for maximizing console
+/// </summary>
 public class Maximize
 {
     [DllImport("kernel32.dll", ExactSpelling = true)]

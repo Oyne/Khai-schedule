@@ -4,10 +4,25 @@ namespace Khai;
 
 public class Settings
 {
+    /// <summary>
+    /// theme of console
+    /// </summary>
     Theme theme;
+    /// <summary>
+    /// width of console
+    /// </summary>
     int width;
+    /// <summary>
+    /// height of console
+    /// </summary>
     int height;
+    /// <summary>
+    /// width of schedule table
+    /// </summary>
     int tableWidth;
+    /// <summary>
+    /// heigth of schedule table
+    /// </summary>
     int timeWidth;
 
     public Theme Theme
@@ -40,6 +55,9 @@ public class Settings
         set { this.timeWidth = value; }
     }
 
+    /// <summary>
+    /// constructor for setting default settings
+    /// </summary>
     public Settings()
     {
         Theme = new Theme();

@@ -5,11 +5,23 @@ using System.Runtime.CompilerServices;
 
 namespace Khai;
 
+/// <summary>
+/// class for setting color theme
+/// </summary>
 public class Theme
 {
+    /// <summary>
+    /// array of colors of a theme
+    /// </summary>
     ConsoleColor[] colors;
-    ConsoleColor[] examples = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
-    int tableWidth, timeWidth;
+    /// <summary>
+    /// arary of all colors
+    /// </summary>
+    readonly ConsoleColor[] examples = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
+    /// <summary>
+    /// schedule table dimensions
+    /// </summary>
+    readonly int tableWidth, timeWidth;
 
     public ConsoleColor[] Colors
     {
@@ -23,6 +35,9 @@ public class Theme
         }
     }
 
+    /// <summary>
+    /// constructor that creats default theme
+    /// </summary>
     public Theme()
     {
         this.colors = new ConsoleColor[10];
@@ -38,11 +53,22 @@ public class Theme
         colors[7] = ConsoleColor.Black;
     }
 
+    /// <summary>
+    /// constructor that creates theme with colors from "colors" array
+    /// </summary>
+    /// <param name="colors">array of colors</param>
     public Theme(ConsoleColor[] colors)
     {
         this.colors = colors;
     }
 
+    /// <summary>
+    /// method for setting theme for console
+    /// </summary>
+    /// <param name="theme">array of colors</param>
+    /// <param name="tableWidth">table width value</param>
+    /// <param name="timeWidth">time field width value</param>
+    /// <returns></returns>
     public static int SetColor(ref Theme theme, int tableWidth, int timeWidth)
     {
         int ret = 0;
@@ -138,14 +164,23 @@ public class Theme
         }
         return ret;
     }
+
+    /// <summary>
+    /// outputing instruction how to choose colors
+    /// </summary>
     public static void Instuction()
     {
         Console.Write(new string(' ', (Console.WindowWidth - "  ← → - вперёд/назад".Length) / 2));
-        Console.WriteLine(" ← →  - вперёд/назад");
+        Console.WriteLine(" ← →  - вперёд/назад\n");
         Console.Write(new string(' ', (Console.WindowWidth - "Enter - выбор цвета".Length) / 2));
         Console.WriteLine("Enter - выбор цвета\n\n");
     }
 
+    /// <summary>
+    /// setting background color of console
+    /// </summary>
+    /// <param name="tableWidth">table width value</param>
+    /// <param name="timeWidth">time field width value</param>
     public void SetBackColor(int tableWidth, int timeWidth)
     {
         ConsoleColor currentForeground = Console.ForegroundColor;
@@ -209,6 +244,11 @@ public class Theme
         }
     }
 
+    /// <summary>
+    /// setting foreground color of console
+    /// </summary>
+    /// <param name="tableWidth">table width value</param>
+    /// <param name="timeWidth">time field width value</param>
     public void SetFrontColor(int tableWidth, int timeWidth)
     {
         ConsoleColor currentForeground = Console.ForegroundColor;
@@ -270,6 +310,11 @@ public class Theme
         }
     }
 
+    /// <summary>
+    /// setting denominator background color
+    /// </summary>
+    /// <param name="tableWidth">table width value</param>
+    /// <param name="timeWidth">time field width value</param>
     public void SetDenBackColor(int tableWidth, int timeWidth)
     {
         ConsoleColor currentDenTextColor = colors[7];
@@ -326,6 +371,11 @@ public class Theme
         }
     }
 
+    /// <summary>
+    /// setting denominator foreground color
+    /// </summary>
+    /// <param name="tableWidth">table width value</param>
+    /// <param name="timeWidth">time field width value</param>
     public void SetDenTextColor(int tableWidth, int timeWidth)
     {
         ConsoleColor currentDenBackColor = colors[2];
@@ -382,6 +432,9 @@ public class Theme
         }
     }
 
+    /// <summary>
+    /// setting default theme
+    /// </summary>
     public void SetDefaultTheme()
     {
         for (int i = 0; i < 5; i++)
@@ -398,6 +451,9 @@ public class Theme
         Console.ForegroundColor = colors[5];
     }
 
+    /// <summary>
+    /// setting all colors to default
+    /// </summary>
     public void SetDefaultColors()
     {
         for (int i = 0; i < 5; i++)
@@ -412,6 +468,12 @@ public class Theme
         Console.ForegroundColor = colors[5];
     }
 
+    /// <summary>
+    /// method for printing schedule table
+    /// </summary>
+    /// <param name="colors">array of colors of a theme</param>
+    /// <param name="tableWidth">table width value</param>
+    /// <param name="timeWidth">time field width value</param>
     public static void PrintTable(ConsoleColor[] colors, int tableWidth, int timeWidth)
     {
         int TABLEWIDTH = tableWidth; // set general table size (default: 101)
@@ -714,6 +776,12 @@ public class Theme
         Console.Write("|\n");
         Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
     }
+
+    /// <summary>
+    /// setting background and foreground colors
+    /// </summary>
+    /// <param name="back"> background color </param>
+    /// <param name="front"> foreground color </param>
     public static void SetColor(ConsoleColor back, ConsoleColor front)
     {
         Console.BackgroundColor = back;

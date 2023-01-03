@@ -1,5 +1,8 @@
 ﻿namespace Khai;
 
+/// <summary>
+/// class for setting size of a schedule table
+/// </summary>
 public class TableSize
 {
     public static int[] SetTableSize(ConsoleColor[] colors, int tableWidth, int timeWidth)

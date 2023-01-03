@@ -13,11 +13,10 @@ using System.Threading;
 //Console title
 Console.Title = "Khai schedule";
 
-// settings deserializing
+// settings deserialization
 string settingsFilePath = "C://Khai/settings.json";
 var options = new JsonSerializerOptions { WriteIndented = true };
 Settings settings = null;
-
 if (File.Exists(settingsFilePath))
 {
     settings = FileWork.ReadSettingsFromFile();
@@ -27,7 +26,7 @@ else
     settings = new Settings();
 }
 
-// size of a console
+// setting size of console
 if(settings.Width > 211 && settings.Height > 49)
 {
     Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
@@ -35,28 +34,22 @@ if(settings.Width > 211 && settings.Height > 49)
 }
 else
 {
-    int width = settings.Width; // width of a console
-    int height = settings.Height; // heught of a console
+    int width = settings.Width; // width of console
+    int height = settings.Height; // height of console
     Console.SetWindowSize(width, height); // set console size
 }
-
 
 // code to fix size of a concole
 Lock.DeleteMenu(Lock.GetSystemMenu(Lock.GetConsoleWindow(), false), Lock.SC_MINIMIZE, Lock.MF_BYCOMMAND);
 Lock.DeleteMenu(Lock.GetSystemMenu(Lock.GetConsoleWindow(), false), Lock.SC_MAXIMIZE, Lock.MF_BYCOMMAND);
 Lock.DeleteMenu(Lock.GetSystemMenu(Lock.GetConsoleWindow(), false), Lock.SC_SIZE, Lock.MF_BYCOMMAND);
 
+// initializing color theme of console
 Theme theme = settings.Theme;
-// set background and foreground colors of a console
-ConsoleColor DefaultConsBackColor = ConsoleColor.Black;
-ConsoleColor DefaultConsTextColor = ConsoleColor.Gray;
-ConsoleColor ConsBackColor;
-ConsoleColor ConsTextColor;
 
 while (true)
 {
-
-    // set the correct ukrainian language output
+    // setting the correct ukrainian language output
     Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
     Console.OutputEncoding = System.Text.Encoding.Unicode;
     Console.InputEncoding = System.Text.Encoding.GetEncoding(1251);
@@ -73,8 +66,8 @@ MenuCommand:
 
     boolean = true;
 
-    ConsBackColor = theme.Colors[0];
-    ConsTextColor = theme.Colors[5];
+    ConsoleColor ConsBackColor = theme.Colors[0];
+    ConsoleColor ConsTextColor = theme.Colors[5];
     Console.BackgroundColor = ConsBackColor;
     Console.ForegroundColor = ConsTextColor;
     Console.Clear();
@@ -193,7 +186,7 @@ MenuCommand:
                     Console.ForegroundColor = ConsTextColor;
                     Console.Clear();
                     Output.PrintKhai();
-                    Console.WriteLine(new string(' ', (Console.WindowWidth - 9 - name.Length) / 2) + $"Преподаватель: {name}");
+                    Console.WriteLine(new string(' ', (Console.WindowWidth - 15 - name.Length) / 2) + $"Преподаватель: {name}");
                     await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
                     boolean = false;
                 }
@@ -224,8 +217,7 @@ MenuCommand:
                         Console.WriteLine("Произошло что-то очень плохое\n");
                     }
                     Console.Write("1. Вернуться в главное меню <1>\n2. Выход <Esc>\n>>> ");
-                    boolean = true;
-                    while (boolean)
+                    while (true)
                     {
                         keyInfo = Console.ReadKey(true);
                         switch (keyInfo.Key)
@@ -299,6 +291,7 @@ MenuCommand:
                                 break;
                             case ConsoleKey.D2:
                                 {
+                                    SizeMenu:
                                     Console.Clear();
                                     Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки размера консоли  ".Length) / 2) + "|");
                                     Console.Write(" Настройки размера консоли ");
@@ -323,7 +316,7 @@ MenuCommand:
                                                     settings.Width = arr[0];
                                                     settings.Height = arr[1];
                                                     FileWork.SaveSettings(settings);
-                                                    goto SettingsMenu;
+                                                    goto SizeMenu;
                                                 }
                                                 break;
                                             case ConsoleKey.D2:

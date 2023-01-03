@@ -1,10 +1,12 @@
 ﻿using System.Runtime.InteropServices;
 
 namespace Khai;
+
+/// <summary>
+/// class for minimizing console
+/// </summary>
 public class Minimize
 {
-    // code to minimize a console
-    /*====================================================================*/
     const Int32 SW_MINIMIZE = 6;
 
     [DllImport("Kernel32.dll", CallingConvention = CallingConvention.StdCall, SetLastError = true)]
@@ -19,5 +21,4 @@ public class Minimize
         IntPtr hWndConsole = GetConsoleWindow();
         ShowWindow(hWndConsole, SW_MINIMIZE);
     }
-    /*====================================================================*/
 }
