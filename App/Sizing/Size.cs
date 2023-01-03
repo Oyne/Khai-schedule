@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel;
-using Themes;
 
-namespace Sizing
-{
+namespace Khai;
+
     public class Size
     {
-        public static int[] SetSize(ConsoleColor[] colors, int tableWidth)
+        public static int[] SetSize(ConsoleColor[] colors, int tableWidth, int timeWidth)
         {
             int[] arr = new int[2];
             arr[0] = Console.WindowWidth;
@@ -24,7 +23,7 @@ namespace Sizing
                 Instuction();
 
                 Console.Write(new string(' ', (Console.WindowWidth - "Текущий размер: {0} x {1}".Length) / 2) + "Текущий размер: {0} x {1}\n\n", Console.WindowWidth, Console.WindowHeight);
-                Theme.PrintTable(colors);
+                Theme.PrintTable(colors, tableWidth, timeWidth);
 
                 keyInfo = Console.ReadKey();
 
@@ -64,4 +63,3 @@ namespace Sizing
             Console.WriteLine("Enter - выбор\n\n");
         }
     }
-}

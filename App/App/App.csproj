@@ -28,6 +28,7 @@
     <ProjectReference Include="..\Fixing\Locking.csproj" />
     <ProjectReference Include="..\Settings\AppSettings.csproj" />
     <ProjectReference Include="..\Sizing\Sizing.csproj" />
+    <ProjectReference Include="..\TableSizes\TableSizes.csproj" />
     <ProjectReference Include="..\Themes\Themes.csproj" />
   </ItemGroup>
 

@@ -9,10 +9,6 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
-using Themes;
-using Minimizing;
-using Locking;
-using Sizing;
 
 //Console title
 Console.Title = "Khai schedule";
@@ -274,7 +270,7 @@ MenuCommand:
                             case ConsoleKey.D1:
                                 {
                                     Console.Clear();
-                                    int ret = Theme.SetColor(ref theme);
+                                    int ret = Theme.SetColor(ref theme, settings.TableWidth, settings.TimeWidth);
                                     if (ret == 1)
                                     {
                                         FileWork.SaveSettings(settings);
@@ -294,15 +290,25 @@ MenuCommand:
                                 break;
                             case ConsoleKey.D2:
                                 {
-                                    int[] arr = Sizing.Size.SetSize(theme.Colors, settings.TableWidth);
+                                    int[] arr = Khai.Size.SetSize(theme.Colors, settings.TableWidth, settings.TimeWidth);
                                     settings.Width = arr[0];
                                     settings.Height = arr[1];
                                     FileWork.SaveSettings(settings);
                                     goto SettingsMenu;
                                 }
                                 break;
+                            case ConsoleKey.D3:
+                                {
+                                    int[] arr = TableSize.SetTableSize(theme.Colors, settings.TableWidth, settings.TimeWidth);
+                                    settings.TableWidth = arr[0];
+                                    settings.TimeWidth = arr[1];
+                                    FileWork.SaveSettings(settings);
+                                    goto SettingsMenu;
+                                }
+                                break;
                             case ConsoleKey.D4:
                                 {
+                                    
                                     goto MenuCommand;
                                 }
                                 break;
@@ -447,7 +453,7 @@ class Output
     {
         int TABLEWIDTH = tableWidth; // set general table size (default: 101)
         int TIMEWIDTH = timeWidth; // set general time field size (default: 23  (!!!!  NOT LESS THAN 13  !!!!))
-        int SUBJECTWIDTH = TABLEWIDTH - TIMEWIDTH - 3; // set general subject field size (default: 75 (TABLEWIDTH - TIMEWIDTH - 3))
+        int SUBJECTWIDTH = TABLEWIDTH - TIMEWIDTH - 3; // set general subject field size (default: 75 (TABLEWIDTH - TIMEWIDTH - 3)) (!!!!  NOT LESS THAN 19  !!!!))
 
         ConsoleColor CurrentBackColor = colors[0];
         ConsoleColor TableBackColor = CurrentBackColor; // background color of the table
