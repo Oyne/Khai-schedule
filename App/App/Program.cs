@@ -692,7 +692,7 @@ class Output
                                 Console.Write(new string(' ', TIMEWIDTH));
                                 SetColor(TableBackColor, TableTextColor);
                                 Console.Write("|");
-                                SetColor(NumBackColor, NumTextColor);
+                                SetColor(DenBackColor, DenTextColor);
                                 Console.Write(output.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
                                 SetColor(TableBackColor, TableTextColor);
                                 Console.WriteLine("|");
@@ -704,7 +704,7 @@ class Output
                             Console.Write(new string(' ', TIMEWIDTH));
                             SetColor(TableBackColor, TableTextColor);
                             Console.Write("|");
-                            SetColor(NumBackColor, NumTextColor);
+                            SetColor(DenBackColor, DenTextColor);
                             Console.Write(output.Substring(SUBJECTWIDTH * counter) + new string(' ', SUBJECTWIDTH - output.Substring(SUBJECTWIDTH * counter).Length));
                         }
                         else if (den == SUBJECTWIDTH) Console.Write(output);
@@ -904,7 +904,7 @@ class Output
                                 Console.Write(new string(' ', TIMEWIDTH));
                                 SetColor(TableBackColor, TableTextColor);
                                 Console.Write("|");
-                                SetColor(NumBackColor, NumTextColor);
+                                SetColor(DenBackColor, DenTextColor);
                                 Console.Write(out_den.Substring(SUBJECTWIDTH * counter, SUBJECTWIDTH));
                                 SetColor(TableBackColor, TableTextColor);
                                 Console.WriteLine("|");
@@ -916,7 +916,7 @@ class Output
                             Console.Write(new string(' ', TIMEWIDTH));
                             SetColor(TableBackColor, TableTextColor);
                             Console.Write("|");
-                            SetColor(NumBackColor, NumTextColor);
+                            SetColor(DenBackColor, DenTextColor);
                             Console.Write(out_den.Substring(SUBJECTWIDTH * counter) + new string(' ', SUBJECTWIDTH - out_den.Substring(SUBJECTWIDTH * counter).Length));
                         }
                         else if (den == SUBJECTWIDTH) Console.Write(out_den);
