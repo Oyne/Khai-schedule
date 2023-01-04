@@ -214,7 +214,8 @@ public class Theme
                     case ConsoleKey.LeftArrow:
                         {
                             if (i > 1 && (examples[i - 1] == currentForeground || examples[i-1] == DenTextColor)) i -= 3;
-                            else if (i == 1 && ((examples[i - 1] == currentForeground && examples[^1] == DenTextColor) || (examples[^1] == currentForeground && examples[i - 1] == DenTextColor))) i = 13;
+                            else if (i == 1 && ((examples[i - 1] == currentForeground && examples[^1] == DenTextColor) || (examples[^1] == currentForeground && examples[i - 1] == DenTextColor && DenBackColor == currentBackground))) i = 13;
+                            else if (i == 1 && ((examples[i - 1] == currentForeground && examples[^1] == DenTextColor) || (examples[^1] == currentForeground && examples[i - 1] == DenTextColor && DenBackColor != currentBackground))) i = -1;
                             else if (i == 1 && (examples[i - 1] == currentForeground || examples[i - 1] == DenTextColor)) i = 14;
                             else if (i == 0 && (examples[^1] == currentForeground || examples[^1] == DenTextColor)) i = 13;
                             else if (i > 0) i -= 2;
@@ -354,7 +355,8 @@ public class Theme
                         break;
                     case ConsoleKey.RightArrow:
                         {
-                            if (i == 15) i = -1;
+                            if (i == 14 && examples[i+1] == currentDenTextColor) i = -1;
+                            else if (i == 15) i = -1;
                             boolean = false;
                         }
                         break;
