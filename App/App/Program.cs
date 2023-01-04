@@ -216,7 +216,7 @@ MenuCommand:
                     {
                         Console.WriteLine("Произошло что-то очень плохое\n");
                     }
-                    Console.Write("1. Вернуться в главное меню <1>\n2. Выход <Esc>\n>>> ");
+                    Console.Write("› Вернуться в главное меню <1>\n› Выход <Esc>\n>>> ");
                     while (true)
                     {
                         keyInfo = Console.ReadKey(true);
@@ -433,7 +433,7 @@ MenuCommand:
                         Environment.Exit(0);
                     }
                     Console.WriteLine("Расписание успешно сохранено\n");
-                    Console.Write("1. Вернуться в главное меню <1>\n2. Выход <Esc>\n>>> ");
+                    Console.Write("› Вернуться в главное меню <1>\n› Выход <Esc>\n>>> ");
                     boolean  = true;
                     while (boolean)
                     {
