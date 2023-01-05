@@ -17,7 +17,7 @@ public class Theme
     /// <summary>
     /// arary of all colors
     /// </summary>
-    readonly ConsoleColor[] examples = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
+    public static readonly ConsoleColor[] examples = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
     /// <summary>
     /// schedule table dimensions
     /// </summary>
@@ -72,81 +72,50 @@ public class Theme
     public static int SetColor(ref Theme theme, int tableWidth, int timeWidth)
     {
         int ret = 0;
+        int menu_item = 0;
         bool boolean = true;
         ConsoleKeyInfo keyInfo;
+        string[] theme_menu = {"› Изменить цвет фона",
+                               "› Изменить цвет текста ",
+                               "› Изменить цвет фона знаменателя ",
+                               "› Изменить цвет текста знаменателя ",
+                               "› Установить тему по умолчанию ",
+                               "› Сбросить все цвета",
+                               "› Вернуться в предыдущее меню",
+                               "› Вернуться в главное меню",
+                               "› Выход "};
 
     MenuCommand:
-        Console.Clear();
 
-        Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки темы  ".Length) / 2) + "|");
-        Console.Write(" Настройки темы ");
-        Console.WriteLine("|");
-        Console.WriteLine('\n');
-
-        Console.Write("""
-            › Изменить цвет фона <1>
-            › Изменить цвет текста <2>
-            › Изменить цвет фона знаменателя <3>
-            › Изменить цвет текста знаменателя <4>
-            › Установить тему по умолчанию <5>
-            › Сбросить все цвета <6>
-            › Вернуться в предыдущее меню <7>
-            › Вернуться в главное меню <8>
-            › Выход <Esc>
-            >>> 
-            """
-        );
-
-        while (boolean == true)
+        do
         {
-            keyInfo = Console.ReadKey(true);
+            Console.Clear();
+            Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки темы  ".Length) / 2) + "|");
+            Console.Write(" Настройки темы ");
+            Console.WriteLine("|");
+            Console.WriteLine('\n');
+            PrintMenu(theme_menu, menu_item, theme);
+
+            keyInfo = Console.ReadKey();
+
             switch (keyInfo.Key)
             {
-                case ConsoleKey.D1:
+                case ConsoleKey.UpArrow:
                     {
-                        theme.SetBackColor(tableWidth, timeWidth);
-                        goto MenuCommand;
+                        if (menu_item == 0)
+                        {
+                            menu_item = theme_menu.Length - 1;
+                        }
+                        else menu_item--;
                     }
                     break;
-                case ConsoleKey.D2:
+                case ConsoleKey.DownArrow:
                     {
-                        theme.SetFrontColor(tableWidth, timeWidth);
-                        goto MenuCommand;
-                    }
-                    break;
-                case ConsoleKey.D3:
-                    {
-                        theme.SetDenBackColor(tableWidth, timeWidth);
-                        goto MenuCommand;
-                    }
-                    break;
-                case ConsoleKey.D4:
-                    {
-                        theme.SetDenTextColor(tableWidth, timeWidth);
-                        goto MenuCommand;
-                    }
-                    break;
-                case ConsoleKey.D5:
-                    {
-                        theme.SetDefaultTheme();
-                        goto MenuCommand;
-                    }
-                    break;
-                case ConsoleKey.D6:
-                    {
-                        theme.SetDefaultColors();
-                        goto MenuCommand;
-                    }
-                    break;
-                case ConsoleKey.D7:
-                    {
-                        ret = 2;
-                        boolean = false;
-                    }
-                    break;
-                case ConsoleKey.D8:
-                    {                            
-                        boolean = false;
+                        if (menu_item == theme_menu.Length - 1)
+                        {
+                            menu_item = 0;
+                        }
+                        else menu_item++;
                     }
                     break;
                 case ConsoleKey.Tab:
@@ -155,6 +124,66 @@ public class Theme
                     }
                     break;
                 case ConsoleKey.Escape:
+                    {
+                        Environment.Exit(0);
+                    }
+                    break;
+            }
+
+        } while (keyInfo.Key != ConsoleKey.Enter);
+
+        while (boolean == true)
+        {
+            switch (menu_item)
+            {
+                case 0:
+                    {
+                        theme.SetBackColor(tableWidth, timeWidth);
+                        goto MenuCommand;
+                    }
+                    break;
+                case 1:
+                    {
+                        theme.SetFrontColor(tableWidth, timeWidth);
+                        goto MenuCommand;
+                    }
+                    break;
+                case 2:
+                    {
+                        theme.SetDenBackColor(tableWidth, timeWidth);
+                        goto MenuCommand;
+                    }
+                    break;
+                case 3:
+                    {
+                        theme.SetDenTextColor(tableWidth, timeWidth);
+                        goto MenuCommand;
+                    }
+                    break;
+                case 4:
+                    {
+                        theme.SetDefaultTheme();
+                        goto MenuCommand;
+                    }
+                    break;
+                case 5:
+                    {
+                        theme.SetDefaultColors();
+                        goto MenuCommand;
+                    }
+                    break;
+                case 6:
+                    {
+                        ret = 2;
+                        boolean = false;
+                    }
+                    break;
+                case 7:
+                    {
+                        boolean = false;
+                    }
+                    break;
+                case 8:
                     {
                         ret = 1;
                         boolean = false;
@@ -213,11 +242,13 @@ public class Theme
                 {
                     case ConsoleKey.LeftArrow:
                         {
-                            if (i > 1 && (examples[i - 1] == currentForeground || examples[i-1] == DenTextColor)) i -= 3;
-                            else if (i == 1 && ((examples[i - 1] == currentForeground && examples[^1] == DenTextColor) || (examples[^1] == currentForeground && examples[i - 1] == DenTextColor && DenBackColor == currentBackground))) i = 13;
-                            else if (i == 1 && ((examples[i - 1] == currentForeground && examples[^1] == DenTextColor) || (examples[^1] == currentForeground && examples[i - 1] == DenTextColor && DenBackColor != currentBackground))) i = -1;
-                            else if (i == 1 && (examples[i - 1] == currentForeground || examples[i - 1] == DenTextColor)) i = 14;
-                            else if (i == 0 && (examples[^1] == currentForeground || examples[^1] == DenTextColor)) i = 13;
+                            if (i > 2 && ((examples[i - 1] == currentForeground && (DenBackColor == currentBackground && examples[i - 2] == DenTextColor)) || (examples[i - 2] == currentForeground && (DenBackColor == currentBackground && examples[i - 1] == DenTextColor)))) i -= 4;
+                            else if (i == 2 && ((examples[i - 1] == currentForeground && (DenBackColor == currentBackground && examples[i - 2] == DenTextColor)) || (examples[i - 2] == currentForeground && (DenBackColor == currentBackground && examples[i - 1] == DenTextColor)))) i = 14;
+                            else if (i == 1 && ((examples[i - 1] == currentForeground && (DenBackColor == currentBackground && examples[^1] == DenTextColor)) || (examples[^1] == currentForeground && (DenBackColor == currentBackground && examples[i - 1] == DenTextColor)))) i = 13;
+                            else if (i == 0 && ((examples[^1] == currentForeground && (DenBackColor == currentBackground && examples[^2] == DenTextColor)) || (examples[^2] == currentForeground && (DenBackColor == currentBackground && examples[^1] == DenTextColor)))) i = 12;
+                            else if (i > 1 && (examples[i - 1] == currentForeground || (DenBackColor == currentBackground && examples[i - 1] == DenTextColor))) i -= 3;
+                            else if (i == 1 && (examples[i - 1] == currentForeground || (DenBackColor == currentBackground && examples[i - 1] == DenTextColor))) i = 14;
+                            else if (i == 0 && (examples[^1] == currentForeground || (DenBackColor == currentBackground && examples[^1] == DenTextColor))) i = 13;
                             else if (i > 0) i -= 2;
                             else i = 14;
                             boolean = false;
@@ -225,9 +256,13 @@ public class Theme
                         break;
                     case ConsoleKey.RightArrow:
                         {
-                            if (i < 14 && (examples[i + 1] == currentForeground || examples[i + 1] == DenTextColor)) i += 1;
-                            else if (i == 14 && (examples[i + 1] == currentForeground || examples[i + 1] == DenTextColor)) i = -1;
-                            else if (i == 15 && (examples[0] == currentForeground || examples[0] == DenTextColor)) i = 0;
+                            if (i < 13 && ((examples[i + 1] == currentForeground && (DenBackColor == currentBackground && examples[i + 2] == DenTextColor)) || (examples[i + 2] == currentForeground && (DenBackColor == currentBackground && examples[i + 1] == DenTextColor)))) i += 2;
+                            else if (i == 13 && ((examples[i + 1] == currentForeground && (DenBackColor == currentBackground && examples[i + 2] == DenTextColor)) || (examples[i + 2] == currentForeground && (DenBackColor == currentBackground && examples[i + 1] == DenTextColor)))) i = -1;
+                            else if (i == 14 && ((examples[i + 1] == currentForeground && (DenBackColor == currentBackground && examples[0] == DenTextColor)) || (examples[0] == currentForeground && (DenBackColor == currentBackground && examples[i + 1] == DenTextColor)))) i = 0;
+                            else if (i == 15 && ((examples[0] == currentForeground && (DenBackColor == currentBackground && examples[1] == DenTextColor)) || (examples[1] == currentForeground && (DenBackColor == currentBackground && examples[0] == DenTextColor)))) i = 1;
+                            else if (i < 14 && (examples[i + 1] == currentForeground || (DenBackColor == currentBackground && examples[i + 1] == DenTextColor))) i += 1;
+                            else if (i == 14 && (examples[i + 1] == currentForeground || (DenBackColor == currentBackground && examples[i + 1] == DenTextColor))) i = -1;
+                            else if (i == 15 && (examples[0] == currentForeground || (DenBackColor == currentBackground && examples[0] == DenTextColor))) i = 0;
                             else if (i == 15) i = -1;
                             boolean = false;
                         }
@@ -355,7 +390,7 @@ public class Theme
                         break;
                     case ConsoleKey.RightArrow:
                         {
-                            if (i == 14 && examples[i+1] == currentDenTextColor) i = -1;
+                            if (i == 14 && examples[i + 1] == currentDenTextColor) i = -1;
                             else if (i == 15) i = -1;
                             boolean = false;
                         }
@@ -792,5 +827,34 @@ public class Theme
     {
         Console.BackgroundColor = back;
         Console.ForegroundColor = front;
+    }
+
+    public static void PrintMenu(string[] menu, int menu_item, Theme theme)
+    {
+        ConsoleColor ConsBackColor = theme.Colors[0];
+        ConsoleColor ConsTextColor = theme.Colors[5];
+        SetColor(ConsBackColor, ConsTextColor);
+
+        for (int i = 0; i < menu.Length; i++)
+        {
+            if (menu_item == i)
+            {
+                if (Array.IndexOf(examples, ConsTextColor) < 7 || Array.IndexOf(examples, ConsTextColor) == 8)
+                {
+                    if (ConsBackColor != examples[7]) SetColor(examples[7], ConsTextColor);
+                    else SetColor(examples[14], ConsTextColor);
+                    Console.WriteLine(menu[i]);
+                    SetColor(ConsBackColor, ConsTextColor);
+                }
+                else
+                {
+                    if (ConsBackColor != examples[8]) SetColor(examples[8], ConsTextColor);
+                    else SetColor(examples[0], ConsTextColor);
+                    Console.WriteLine(menu[i]);
+                    SetColor(ConsBackColor, ConsTextColor);
+                }
+            }
+            else Console.WriteLine(menu[i]);
+        }
     }
 }
