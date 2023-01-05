@@ -17,7 +17,7 @@ public class Theme
     /// <summary>
     /// arary of all colors
     /// </summary>
-    readonly ConsoleColor[] examples = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
+    public static readonly ConsoleColor[] examples = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
     /// <summary>
     /// schedule table dimensions
     /// </summary>
@@ -74,28 +74,64 @@ public class Theme
         int ret = 0;
         bool boolean = true;
         ConsoleKeyInfo keyInfo;
+        string[] theme_menu = {"› Изменить цвет фона",
+                               "› Изменить цвет текста ",
+                               "› Изменить цвет фона знаменателя ",
+                               "› Изменить цвет текста знаменателя ",
+                               "› Установить тему по умолчанию ",
+                               "› Сбросить все цвета",
+                               "› Вернуться в предыдущее меню",
+                               "› Вернуться в главное меню",
+                               "› Выход "};
 
     MenuCommand:
-        Console.Clear();
 
-        Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки темы  ".Length) / 2) + "|");
-        Console.Write(" Настройки темы ");
-        Console.WriteLine("|");
-        Console.WriteLine('\n');
+        int menu_item = 0;
+        do
+        {
+            Console.Clear();
+            Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки темы  ".Length) / 2) + "|");
+            Console.Write(" Настройки темы ");
+            Console.WriteLine("|");
+            Console.WriteLine('\n');
+            PrintMenu(theme_menu, menu_item, theme);
 
-        Console.Write("""
-            › Изменить цвет фона <1>
-            › Изменить цвет текста <2>
-            › Изменить цвет фона знаменателя <3>
-            › Изменить цвет текста знаменателя <4>
-            › Установить тему по умолчанию <5>
-            › Сбросить все цвета <6>
-            › Вернуться в предыдущее меню <7>
-            › Вернуться в главное меню <8>
-            › Выход <Esc>
-            >>> 
-            """
-        );
+            keyInfo = Console.ReadKey();
+
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.UpArrow:
+                    {
+                        if (menu_item == 0)
+                        {
+                            menu_item = theme_menu.Length - 1;
+                        }
+                        else menu_item--;
+                    }
+                    break;
+                case ConsoleKey.DownArrow:
+                    {
+                        if (menu_item == theme_menu.Length - 1)
+                        {
+                            menu_item = 0;
+                        }
+                        else menu_item++;
+                    }
+                    break;
+                case ConsoleKey.Tab:
+                    {
+                        Minimize.MinimizeConsoleWindow();
+                    }
+                    break;
+                case ConsoleKey.Escape:
+                    {
+                        FileWork.SaveSettings(settings);
+                        Environment.Exit(0);
+                    }
+                    break;
+            }
+
+        } while (keyInfo.Key != ConsoleKey.Enter);
 
         while (boolean == true)
         {
@@ -798,5 +834,32 @@ public class Theme
     {
         Console.BackgroundColor = back;
         Console.ForegroundColor = front;
+    }
+
+    public static void PrintMenu(string[] menu, int menu_item, Theme theme)
+    {
+        ConsoleColor ConsBackColor = theme.Colors[0];
+        ConsoleColor ConsTextColor = theme.Colors[5];
+        SetColor(ConsBackColor, ConsTextColor);
+
+        for (int i = 0; i < menu.Length; i++)
+        {
+            if (menu_item == i)
+            {
+                if (Array.IndexOf(Theme.examples, ConsTextColor) < 7)
+                {
+                    SetColor(Theme.examples[7], ConsTextColor);
+                    Console.WriteLine(menu[i]);
+                    SetColor(ConsBackColor, ConsTextColor);
+                }
+                else
+                {
+                    SetColor(Theme.examples[8], ConsTextColor);
+                    Console.WriteLine(menu[i]);
+                    SetColor(ConsBackColor, ConsTextColor);
+                }
+            }
+            else Console.WriteLine(menu[i]);
+        }
     }
 }
