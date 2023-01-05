@@ -946,6 +946,7 @@ class Output
         Console.WriteLine("|");
         Console.WriteLine('\n');
     }
+<<<<<<< HEAD
     
     /// <summary>
     /// method to print menu
@@ -953,6 +954,9 @@ class Output
     /// <param name="menu"> items of menu </param>
     /// <param name="menu_item"> current item </param>
     /// <param name="theme"> theme of console </param>
+=======
+
+>>>>>>> parent of 474e339 (comment added)
     public static void PrintMenu(string[] menu, int menu_item, Theme theme)
     {
         ConsoleColor ConsBackColor = theme.Colors[0];
