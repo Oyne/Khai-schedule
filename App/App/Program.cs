@@ -947,6 +947,7 @@ class Output
         Console.WriteLine('\n');
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     /// <summary>
     /// method to print menu
@@ -954,6 +955,9 @@ class Output
     /// <param name="menu"> items of menu </param>
     /// <param name="menu_item"> current item </param>
     /// <param name="theme"> theme of console </param>
+=======
+
+>>>>>>> parent of 474e339 (comment added)
 =======
 
 >>>>>>> parent of 474e339 (comment added)
