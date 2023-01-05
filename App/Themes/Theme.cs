@@ -75,7 +75,7 @@ public class Theme
         int menu_item = 0;
         bool boolean = true;
         ConsoleKeyInfo keyInfo;
-        string[] theme_menu = {"› Изменить цвет фона",
+        string[] theme_menu = {"› Изменить цвет фона ",
                                "› Изменить цвет текста ",
                                "› Изменить цвет фона знаменателя ",
                                "› Изменить цвет текста знаменателя ",

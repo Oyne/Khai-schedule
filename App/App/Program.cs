@@ -77,7 +77,7 @@ while (true)
                      "› Вернуться в главное меню ",
                      "› Выход "};
     string[] before_file_menu = {new string('\t',(Console.WindowWidth - "› Сохранить расписание в текстовый файл".Length)/16) +
-                     "› Сохранить расписание в текстовый файл  ",
+                     "› Сохранить расписание в текстовый файл ",
                      new string('\t',(Console.WindowWidth - "› Сохранить расписание в текстовый файл".Length)/16) +
                      "› Вернуться в главное меню ",
                      new string('\t',(Console.WindowWidth - "› Сохранить расписание в текстовый файл".Length)/16) +
@@ -105,36 +105,6 @@ MenuCommand:
     Output.PrintKhai();
 
     ConsoleKeyInfo keyInfo;
-
-    //for(int i = 0; i < menu.Length; i++)
-    //{
-    //    if(menu_item== i)
-    //    {
-    //        if (Array.IndexOf(Theme.examples, ConsTextColor) < 7)
-    //        {
-    //            Output.SetColor(Theme.examples[7], ConsTextColor);
-    //            Console.WriteLine(menu[i]);
-    //            Output.SetColor(ConsBackColor, ConsTextColor);
-    //        }
-    //        else
-    //        {
-    //            Output.SetColor(Theme.examples[8], ConsTextColor);
-    //            Console.WriteLine(menu[i]);
-    //            Output.SetColor(ConsBackColor, ConsTextColor);
-    //        }
-    //    }
-    //    else Console.WriteLine(menu[i]);
-    //}
-    //Console.Write(">>>");
-    //Console.Write("""
-    //    › Поиск по группе <1>
-    //    › Поиск по студенту <2>
-    //    › Поиск по преподавателю <3>
-    //    › Считать расписание из файла <4>
-    //    › Настройки <5>
-    //    › Выход <Esc>
-    //    >>> 
-    //    """);
 
     while (boolean)
     {
@@ -210,6 +180,7 @@ MenuCommand:
                     Console.WriteLine("\n\n\n\n\n\n");
                     Console.WriteLine(new string(' ', (Console.WindowWidth - 8 - group.Length) / 2) + $"Группа: {group}");
                     await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
+                    Console.SetCursorPosition(0, 0);
                     boolean = false;
                 }
                 break;
@@ -245,6 +216,7 @@ MenuCommand:
                     Console.WriteLine("\n\n\n\n\n\n");
                     Console.WriteLine(new string(' ', (Console.WindowWidth - 9 - name.Length) / 2) + $"Студент: {name}");
                     await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
+                    Console.SetCursorPosition(0, 0);
                     boolean = false;
                 }
                 break;
@@ -280,6 +252,7 @@ MenuCommand:
                     Console.WriteLine("\n\n\n\n\n\n");
                     Console.WriteLine(new string(' ', (Console.WindowWidth - 15 - name.Length) / 2) + $"Преподаватель: {name}");
                     await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
+                    Console.SetCursorPosition(0, 0);
                     boolean = false;
                 }
                 break;
@@ -296,6 +269,7 @@ MenuCommand:
                         Output.PrintKhai();
                         Console.WriteLine("\n\n\n");
                         await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
+                        Console.SetCursorPosition(0, 0);
                         boolean = false;
                     }
                     catch (FileWasNotFoundException e)
