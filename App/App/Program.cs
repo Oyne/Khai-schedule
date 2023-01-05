@@ -946,4 +946,39 @@ class Output
         Console.WriteLine("|");
         Console.WriteLine('\n');
     }
+    
+    /// <summary>
+    /// method to print menu
+    /// </summary>
+    /// <param name="menu"> items of menu </param>
+    /// <param name="menu_item"> current item </param>
+    /// <param name="theme"> theme of console </param>
+    public static void PrintMenu(string[] menu, int menu_item, Theme theme)
+    {
+        ConsoleColor ConsBackColor = theme.Colors[0];
+        ConsoleColor ConsTextColor = theme.Colors[5];
+        SetColor(ConsBackColor, ConsTextColor);
+
+        for (int i = 0; i < menu.Length; i++)
+        {
+            if (menu_item == i)
+            {
+                if (Array.IndexOf(Theme.examples, ConsTextColor) < 7 || Array.IndexOf(Theme.examples, ConsTextColor) == 8)
+                {
+                    if (ConsBackColor != Theme.examples[7]) SetColor(Theme.examples[7], ConsTextColor);
+                    else SetColor(Theme.examples[14], ConsTextColor);
+                    Console.WriteLine(menu[i]);
+                    SetColor(ConsBackColor, ConsTextColor);
+                }
+                else
+                {
+                    if (ConsBackColor != Theme.examples[8]) SetColor(Theme.examples[8], ConsTextColor);
+                    else SetColor(Theme.examples[0], ConsTextColor);
+                    Console.WriteLine(menu[i]);
+                    SetColor(ConsBackColor, ConsTextColor);
+                }
+            }
+            else Console.WriteLine(menu[i]);
+        }
+    }
 }
