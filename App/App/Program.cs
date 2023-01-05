@@ -27,7 +27,7 @@ else
 }
 
 // setting size of console
-if(settings.Width > 211 && settings.Height > 49)
+if (settings.Width > 211 && settings.Height > 49)
 {
     Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
     Maximize.ShowWindow(Maximize.Ret1(), Maximize.Ret2());
@@ -58,51 +58,143 @@ while (true)
     string group = "";
     string name = "";
     string exit = "";
-    int choice;
+    int choice, menu_item;
     bool boolean;
-    WeekSchedule Schedule = null;
+    string[] menu = {"› Поиск по группе ",
+                     "› Поиск по студенту ",
+                     "› Поиск по преподавателю ",
+                     "› Считать расписание из файла ",
+                     "› Настройки ",
+                     "› Выход "};
+    string[] settings_menu = {"› Настройки темы ",
+                     "› Настройки размера консоли ",
+                     "› Настройки размера таблицы расписания ",
+                     "› Вернуться в главное меню ",
+                     "› Выход "};
+    string[] console_size_menu = {"› Настройка размера консоли вручную ",
+                     "› Открывать консоль во весь экран по умолчанию ",
+                     "› Вернуться в предыдущее меню ",
+                     "› Вернуться в главное меню ",
+                     "› Выход "};
+    string[] before_file_menu = {new string('\t',(Console.WindowWidth - "› Сохранить расписание в текстовый файл".Length)/16) +
+                     "› Сохранить расписание в текстовый файл  ",
+                     new string('\t',(Console.WindowWidth - "› Сохранить расписание в текстовый файл".Length)/16) +
+                     "› Вернуться в главное меню ",
+                     new string('\t',(Console.WindowWidth - "› Сохранить расписание в текстовый файл".Length)/16) +
+                     "› Выход "};
+    string[] after_file_menu = {new string('\t',(Console.WindowWidth - "› Вернуться в главное меню".Length)/16) +
+                     "› Вернуться в главное меню ",
+                     new string('\t',(Console.WindowWidth - "› Вернуться в главное меню".Length)/16) +
+                     "› Выход "};
+    string[] no_file_menu = {
+                     "› Вернуться в главное меню ",
+                     "› Выход "};
+
 
 MenuCommand:
 
+    Console.CursorVisible = false;
+    WeekSchedule Schedule = null;
     boolean = true;
-
+    menu_item = 0;
     ConsoleColor ConsBackColor = theme.Colors[0];
     ConsoleColor ConsTextColor = theme.Colors[5];
     Console.BackgroundColor = ConsBackColor;
     Console.ForegroundColor = ConsTextColor;
     Console.Clear();
-
     Output.PrintKhai();
 
     ConsoleKeyInfo keyInfo;
 
-    Console.Write("""
-        › Поиск по группе <1>
-        › Поиск по студенту <2>
-        › Поиск по преподавателю <3>
-        › Считать расписание из файла <4>
-        › Настройки <5>
-        › Выход <Esc>
-        >>> 
-        """);
+    //for(int i = 0; i < menu.Length; i++)
+    //{
+    //    if(menu_item== i)
+    //    {
+    //        if (Array.IndexOf(Theme.examples, ConsTextColor) < 7)
+    //        {
+    //            Output.SetColor(Theme.examples[7], ConsTextColor);
+    //            Console.WriteLine(menu[i]);
+    //            Output.SetColor(ConsBackColor, ConsTextColor);
+    //        }
+    //        else
+    //        {
+    //            Output.SetColor(Theme.examples[8], ConsTextColor);
+    //            Console.WriteLine(menu[i]);
+    //            Output.SetColor(ConsBackColor, ConsTextColor);
+    //        }
+    //    }
+    //    else Console.WriteLine(menu[i]);
+    //}
+    //Console.Write(">>>");
+    //Console.Write("""
+    //    › Поиск по группе <1>
+    //    › Поиск по студенту <2>
+    //    › Поиск по преподавателю <3>
+    //    › Считать расписание из файла <4>
+    //    › Настройки <5>
+    //    › Выход <Esc>
+    //    >>> 
+    //    """);
+
 
     while (boolean)
     {
-        keyInfo = Console.ReadKey(true);
-        Schedule = null;
-
-        switch (keyInfo.Key)
+        do
         {
-            case ConsoleKey.D1:
+            Console.Clear();
+            Output.PrintKhai();
+            Output.PrintMenu(menu, menu_item, theme);
+
+            keyInfo = Console.ReadKey();
+
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.UpArrow:
+                    {
+                        if (menu_item == 0)
+                        {
+                            menu_item = menu.Length - 1;
+                        }
+                        else menu_item--;
+                    }
+                    break;
+                case ConsoleKey.DownArrow:
+                    {
+                        if (menu_item == menu.Length - 1)
+                        {
+                            menu_item = 0;
+                        }
+                        else menu_item++;
+                    }
+                    break;
+                case ConsoleKey.Tab:
+                    {
+                        Minimize.MinimizeConsoleWindow();
+                    }
+                    break;
+                case ConsoleKey.Escape:
+                    {
+                        FileWork.SaveSettings(settings);
+                        Environment.Exit(0);
+                    }
+                    break;
+            }
+
+        } while (keyInfo.Key != ConsoleKey.Enter);
+
+        switch (menu_item)
+        {
+            case 0:
                 {
                     while (Schedule == null)
                     {
+                        Console.CursorVisible = true;
                         Console.Write("Введите группу в формате 325, 525v (525в), 116i1, 430st (430ст), 555vm-2 (555вм/2)\n>>> ");
                         group = Console.ReadLine();
                         if (group == "exit") Environment.Exit(0);
                         if (group == "back") goto MenuCommand;
                         try
-                        {                           
+                        {
                             Schedule = await client.GetGroupWeekSheduleAsync(group);
                         }
                         catch (NullReferenceException e)
@@ -114,19 +206,20 @@ MenuCommand:
                             Console.Write("Очень некорректный ввод, группы не существует или плохое интернет соединение\n");
                         }
                     }
-                    Console.BackgroundColor = ConsBackColor;
-                    Console.ForegroundColor = ConsTextColor;
+                    Console.CursorVisible = false;
                     Console.Clear();
                     Output.PrintKhai();
+                    Console.WriteLine("\n\n\n\n\n\n");
                     Console.WriteLine(new string(' ', (Console.WindowWidth - 8 - group.Length) / 2) + $"Группа: {group}");
                     await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
                     boolean = false;
                 }
                 break;
-            case ConsoleKey.D2:
+            case 1:
                 {
                     while (Schedule == null)
                     {
+                        Console.CursorVisible = true;
                         Console.Write("Введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
                         name = Console.ReadLine();
                         if (name == "exit") Environment.Exit(0);
@@ -148,19 +241,20 @@ MenuCommand:
                             Console.Write("Очень некорректный ввод, студента не существует или плохое интернет соединение\n");
                         }
                     }
-                    Console.BackgroundColor = ConsBackColor;
-                    Console.ForegroundColor = ConsTextColor;
+                    Console.CursorVisible = false;
                     Console.Clear();
                     Output.PrintKhai();
+                    Console.WriteLine("\n\n\n\n\n\n");
                     Console.WriteLine(new string(' ', (Console.WindowWidth - 9 - name.Length) / 2) + $"Студент: {name}");
                     await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
                     boolean = false;
                 }
                 break;
-            case ConsoleKey.D3:
+            case 2:
                 {
                     while (Schedule == null)
                     {
+                        Console.CursorVisible = true;
                         Console.Write("Введите имя в формате babeschko-e-v-503, savchenko-n-v-405\n>>> ");
                         name = Console.ReadLine();
                         if (name == "exit") Environment.Exit(0);
@@ -182,17 +276,18 @@ MenuCommand:
                             Console.Write("Очень некорректный ввод, преподавателя не существует или плохое интернет соединение\n");
                         }
                     }
-                    Console.BackgroundColor = ConsBackColor;
-                    Console.ForegroundColor = ConsTextColor;
+                    Console.CursorVisible = false;
                     Console.Clear();
                     Output.PrintKhai();
+                    Console.WriteLine("\n\n\n\n\n\n");
                     Console.WriteLine(new string(' ', (Console.WindowWidth - 15 - name.Length) / 2) + $"Преподаватель: {name}");
                     await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
                     boolean = false;
                 }
                 break;
-            case ConsoleKey.D4:
+            case 3:
                 {
+                    int file = 0;
                     try
                     {
                         Schedule = FileWork.ReadScheduleFromFile();
@@ -201,31 +296,61 @@ MenuCommand:
                         Console.ForegroundColor = ConsTextColor;
                         Console.Clear();
                         Output.PrintKhai();
+                        Console.WriteLine("\n\n\n");
                         await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
                         boolean = false;
                     }
                     catch (FileWasNotFoundException e)
                     {
                         Console.WriteLine("Не удалось прочитать файл.\n");
+                        file = 1;
                     }
                     catch (ScheduleWasNotFoundException e)
                     {
                         Console.WriteLine("Нет сохранённого расписания.\n");
+                        file = 1;
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine("Произошло что-то очень плохое\n");
+                        file = 1;
                     }
-                    Console.Write("› Вернуться в главное меню <1>\n› Выход <Esc>\n>>> ");
-                    while (true)
+                    menu_item = 0;
+                    do
                     {
-                        keyInfo = Console.ReadKey(true);
+                        string[] Menu;
+                        if (file == 1)
+                        {
+                            Menu = no_file_menu;
+                            Console.SetCursorPosition(0, 13);
+                        }
+                        else
+                        {
+                            Menu = after_file_menu;
+                            Console.SetCursorPosition(0, 5);
+                        }
+                        Output.PrintMenu(Menu, menu_item, theme);
+
+                        keyInfo = Console.ReadKey();
+
                         switch (keyInfo.Key)
                         {
-                            case ConsoleKey.D1:
+                            case ConsoleKey.UpArrow:
                                 {
-                                    Console.Clear();
-                                    goto MenuCommand;
+                                    if (menu_item == 0)
+                                    {
+                                        menu_item = Menu.Length - 1;
+                                    }
+                                    else menu_item--;
+                                }
+                                break;
+                            case ConsoleKey.DownArrow:
+                                {
+                                    if (menu_item == Menu.Length - 1)
+                                    {
+                                        menu_item = 0;
+                                    }
+                                    else menu_item++;
                                 }
                                 break;
                             case ConsoleKey.Tab:
@@ -240,35 +365,84 @@ MenuCommand:
                                 }
                                 break;
                         }
-                    }
-                }
-                break;
-            case ConsoleKey.D5:
-                {
-                    SettingsMenu:
-                    Console.Clear();
 
-                    Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки  ".Length) / 2) + "|");
-                    Console.Write(" Настройки ");
-                    Console.WriteLine("|");
-                    Console.WriteLine('\n');
-
-                    Console.Write("""
-                             › Настройки темы <1>
-                             › Настройки размера консоли <2>
-                             › Настройки размера таблицы расписания <3>                     
-                             › Вернуться в главное меню <4>
-                             › Выход <Esc>
-                             >>> 
-                             """);
+                    } while (keyInfo.Key != ConsoleKey.Enter);
 
                     while (true)
                     {
-                        keyInfo = Console.ReadKey(true);
+                        switch (menu_item)
+                        {
+                            case 0:
+                                {
+                                    Console.Clear();
+                                    goto MenuCommand;
+                                }
+                                break;
+                            case 1:
+                                {
+                                    FileWork.SaveSettings(settings);
+                                    Environment.Exit(0);
+                                }
+                                break;
+                        }
+                    }
+                }
+                break;
+            case 4:
+                {
+                SettingsMenu:
+                    menu_item = 0;
+                    do
+                    {
+                        Console.Clear();
+                        Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки  ".Length) / 2) + "|");
+                        Console.Write(" Настройки ");
+                        Console.WriteLine("|");
+                        Console.WriteLine('\n');
+                        Output.PrintMenu(settings_menu, menu_item, theme);
+
+                        keyInfo = Console.ReadKey();
 
                         switch (keyInfo.Key)
                         {
-                            case ConsoleKey.D1:
+                            case ConsoleKey.UpArrow:
+                                {
+                                    if (menu_item == 0)
+                                    {
+                                        menu_item = settings_menu.Length - 1;
+                                    }
+                                    else menu_item--;
+                                }
+                                break;
+                            case ConsoleKey.DownArrow:
+                                {
+                                    if (menu_item == settings_menu.Length - 1)
+                                    {
+                                        menu_item = 0;
+                                    }
+                                    else menu_item++;
+                                }
+                                break;
+                            case ConsoleKey.Tab:
+                                {
+                                    Minimize.MinimizeConsoleWindow();
+                                }
+                                break;
+                            case ConsoleKey.Escape:
+                                {
+                                    FileWork.SaveSettings(settings);
+                                    Environment.Exit(0);
+                                }
+                                break;
+                        }
+
+                    } while (keyInfo.Key != ConsoleKey.Enter);
+
+                    while (true)
+                    {
+                        switch (menu_item)
+                        {
+                            case 0:
                                 {
                                     Console.Clear();
                                     int ret = Theme.SetColor(ref theme, settings.TableWidth, settings.TimeWidth);
@@ -289,53 +463,39 @@ MenuCommand:
                                     }
                                 }
                                 break;
-                            case ConsoleKey.D2:
+                            case 1:
                                 {
-                                    SizeMenu:
-                                    Console.Clear();
-                                    Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки размера консоли  ".Length) / 2) + "|");
-                                    Console.Write(" Настройки размера консоли ");
-                                    Console.WriteLine("|");
-                                    Console.WriteLine('\n');
-                                    Console.Write("""
-                                            › Настройка размера консоли вручную <1>
-                                            › Открывать консоль во весь экран по умолчанию <2>
-                                            › Вернуться в предыдущее меню <3>                    
-                                            › Вернуться в главное меню <4>
-                                            › Выход <Esc>
-                                            >>> 
-                                            """);
-                                    while (true)
+                                    menu_item = 0;
+                                SizeMenu:
+                                    do
                                     {
-                                        keyInfo = Console.ReadKey(true);
+                                        Console.Clear();
+                                        Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки размера консоли  ".Length) / 2) + "|");
+                                        Console.Write(" Настройки размера консоли ");
+                                        Console.WriteLine("|");
+                                        Console.WriteLine('\n');
+                                        Output.PrintMenu(console_size_menu, menu_item, theme);
+
+                                        keyInfo = Console.ReadKey();
+
                                         switch (keyInfo.Key)
                                         {
-                                            case ConsoleKey.D1:
+                                            case ConsoleKey.UpArrow:
                                                 {
-                                                    int[] arr = Khai.Size.SetSize(theme.Colors, settings.TableWidth, settings.TimeWidth);
-                                                    settings.Width = arr[0];
-                                                    settings.Height = arr[1];
-                                                    FileWork.SaveSettings(settings);
-                                                    goto SizeMenu;
+                                                    if (menu_item == 0)
+                                                    {
+                                                        menu_item = console_size_menu.Length - 1;
+                                                    }
+                                                    else menu_item--;
                                                 }
                                                 break;
-                                            case ConsoleKey.D2:
+                                            case ConsoleKey.DownArrow:
                                                 {
-                                                    Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
-                                                    Maximize.ShowWindow(Maximize.Ret1(), Maximize.Ret2());
-                                                    settings.Width = 212;
-                                                    settings.Height = 50;
-                                                    FileWork.SaveSettings(settings);
-                                                }
-                                                break;
-                                            case ConsoleKey.D3:
-                                                {
-                                                    goto SettingsMenu;
-                                                }
-                                                break;
-                                            case ConsoleKey.D4:
-                                                {
-                                                    goto MenuCommand;
+                                                    if (menu_item == console_size_menu.Length - 1)
+                                                    {
+                                                        menu_item = 0;
+                                                    }
+                                                    else menu_item++;
                                                 }
                                                 break;
                                             case ConsoleKey.Tab:
@@ -350,10 +510,53 @@ MenuCommand:
                                                 }
                                                 break;
                                         }
+
+                                    } while (keyInfo.Key != ConsoleKey.Enter);
+
+                                    while (true)
+                                    {
+                                        switch (menu_item)
+                                        {
+                                            case 0:
+                                                {
+                                                    int[] arr = Khai.Size.SetSize(theme.Colors, settings.TableWidth, settings.TimeWidth);
+                                                    settings.Width = arr[0];
+                                                    settings.Height = arr[1];
+                                                    FileWork.SaveSettings(settings);
+                                                    goto SizeMenu;
+                                                }
+                                                break;
+                                            case 1:
+                                                {
+                                                    Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+                                                    Maximize.ShowWindow(Maximize.Ret1(), Maximize.Ret2());
+                                                    settings.Width = 212;
+                                                    settings.Height = 50;
+                                                    FileWork.SaveSettings(settings);
+                                                    goto SizeMenu;
+                                                }
+                                                break;
+                                            case 2:
+                                                {
+                                                    goto SettingsMenu;
+                                                }
+                                                break;
+                                            case 3:
+                                                {
+                                                    goto MenuCommand;
+                                                }
+                                                break;
+                                            case 4:
+                                                {
+                                                    FileWork.SaveSettings(settings);
+                                                    Environment.Exit(0);
+                                                }
+                                                break;
+                                        }
                                     }
                                 }
                                 break;
-                            case ConsoleKey.D3:
+                            case 2:
                                 {
                                     int[] arr = TableSize.SetTableSize(theme.Colors, settings.TableWidth, settings.TimeWidth);
                                     settings.TableWidth = arr[0];
@@ -362,17 +565,12 @@ MenuCommand:
                                     goto SettingsMenu;
                                 }
                                 break;
-                            case ConsoleKey.D4:
-                                {                                
+                            case 3:
+                                {
                                     goto MenuCommand;
                                 }
                                 break;
-                            case ConsoleKey.Tab:
-                                {
-                                    Minimize.MinimizeConsoleWindow();
-                                }
-                                break;
-                            case ConsoleKey.Escape:
+                            case 4:
                                 {
                                     FileWork.SaveSettings(settings);
                                     Environment.Exit(0);
@@ -382,12 +580,7 @@ MenuCommand:
                     }
                 }
                 break;
-            case ConsoleKey.Tab:
-                {
-                    Minimize.MinimizeConsoleWindow();
-                }
-                break;
-            case ConsoleKey.Escape:
+            case 5:
                 {
                     FileWork.SaveSettings(settings);
                     Environment.Exit(0);
@@ -396,17 +589,54 @@ MenuCommand:
         }
     }
 
-    //Thread.Sleep(1000);
-    Console.Write("› Сохранить расписание в текстовый файл <1>\n" +
-        "› Вернуться в главное меню <2>\n" +
-        "› Выход <Esc>\n>>> ");
     while (true)
     {
-        keyInfo = Console.ReadKey(true);
-
-        switch (keyInfo.Key)
+        menu_item = 0;
+        do
         {
-            case ConsoleKey.D1:
+            Console.SetCursorPosition(0, 5);
+            Output.PrintMenu(before_file_menu, menu_item, theme);
+
+            keyInfo = Console.ReadKey();
+
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.UpArrow:
+                    {
+                        if (menu_item == 0)
+                        {
+                            menu_item = before_file_menu.Length - 1;
+                        }
+                        else menu_item--;
+                    }
+                    break;
+                case ConsoleKey.DownArrow:
+                    {
+                        if (menu_item == before_file_menu.Length - 1)
+                        {
+                            menu_item = 0;
+                        }
+                        else menu_item++;
+                    }
+                    break;
+                case ConsoleKey.Tab:
+                    {
+                        Minimize.MinimizeConsoleWindow();
+                    }
+                    break;
+                case ConsoleKey.Escape:
+                    {
+                        FileWork.SaveSettings(settings);
+                        Environment.Exit(0);
+                    }
+                    break;
+            }
+
+        } while (keyInfo.Key != ConsoleKey.Enter);
+        int tmp = 0;
+        switch (menu_item)
+        {
+            case 0:
                 {
                     try
                     {
@@ -414,44 +644,99 @@ MenuCommand:
                     }
                     catch (DirectoryDoesNotExistException e)
                     {
-                        Console.WriteLine("Путь для сохранения файла не найден");
+                        Console.SetCursorPosition(0, 5);
+                        tmp = 1;
+                        Console.Write(new string(' ', (Console.WindowWidth - "Файл для сохранения не найден   ".Length) / 2));
+                        Console.WriteLine("Путь для сохранения файла не найден   ");
                         FileWork.CreateAFile("C://Khai/info.json");
-                        Console.WriteLine("Путь для сохранения файла создан \"C://Khai/\"");
+                        Console.Write(new string(' ', (Console.WindowWidth - "Файл для сохранения не найден   ".Length) / 2));
+                        Console.WriteLine("Путь для сохранения файла создан \"C://Khai/\"   ");
+                        Console.Write(new string(' ', (Console.WindowWidth - "Файл для сохранения не найден   ".Length) / 2));
                         Console.WriteLine("Файл с расписанием создан");
                         FileWork.SaveSchduleToFile(Schedule);
                     }
                     catch (FileDoesNotExistException e)
                     {
-                        Console.WriteLine("Файл для сохранения не найден");
+                        Console.SetCursorPosition(0, 5);
+                        tmp = 1;
+                        Console.Write(new string(' ', (Console.WindowWidth - "Файл для сохранения не найден   ".Length) / 2));
+                        Console.WriteLine("Файл для сохранения не найден   ");
                         FileWork.CreateAFile("C://Khai/info.json");
-                        Console.WriteLine("Файл с расписанием создан по пути \"C://Khai/\"");
+                        Console.Write(new string(' ', (Console.WindowWidth - "Файл для сохранения не найден   ".Length) / 2));
+                        Console.WriteLine("Файл с расписанием создан по пути \"C://Khai/\"   ");
                         FileWork.SaveSchduleToFile(Schedule);
                     }
                     catch (Exception e)
                     {
+                        Console.Clear();
+                        Console.SetCursorPosition(0, 5);
+                        Console.WriteLine(new string(' ', (Console.WindowWidth - "Файл для сохранения не найден   ".Length) / 2));
                         Console.WriteLine("\nПроизошло что-то очень плохое");
+                        Thread.Sleep(5000);
                         Environment.Exit(0);
                     }
-                    Console.WriteLine("Расписание успешно сохранено\n");
-                    Console.Write("› Вернуться в главное меню <1>\n› Выход <Esc>\n>>> ");
-                    boolean  = true;
+                    if (tmp == 0) Console.SetCursorPosition(0, 5);
+                    else Console.SetCursorPosition(0, 7);
+                    Console.Write(new string(' ', (Console.WindowWidth - "Файл для сохранения не найден   ".Length) / 2));
+                    Console.WriteLine("Расписание успешно сохранено      ");
+                    Console.WriteLine(new string(' ', Console.WindowWidth * 2));
+
+                    boolean = true;
                     while (boolean)
                     {
-                        keyInfo = Console.ReadKey(true);
-                        switch (keyInfo.Key)
+                        menu_item = 0;
+                        do
                         {
-                            case ConsoleKey.D1:
+                            if (tmp == 0) Console.SetCursorPosition(0, 7);
+                            else Console.SetCursorPosition(0, 9);
+                            Output.PrintMenu(after_file_menu, menu_item, theme);
+
+                            keyInfo = Console.ReadKey();
+
+                            switch (keyInfo.Key)
+                            {
+                                case ConsoleKey.UpArrow:
+                                    {
+                                        if (menu_item == 0)
+                                        {
+                                            menu_item = after_file_menu.Length - 1;
+                                        }
+                                        else menu_item--;
+                                    }
+                                    break;
+                                case ConsoleKey.DownArrow:
+                                    {
+                                        if (menu_item == after_file_menu.Length - 1)
+                                        {
+                                            menu_item = 0;
+                                        }
+                                        else menu_item++;
+                                    }
+                                    break;
+                                case ConsoleKey.Tab:
+                                    {
+                                        Minimize.MinimizeConsoleWindow();
+                                    }
+                                    break;
+                                case ConsoleKey.Escape:
+                                    {
+                                        FileWork.SaveSettings(settings);
+                                        Environment.Exit(0);
+                                    }
+                                    break;
+                            }
+
+                        } while (keyInfo.Key != ConsoleKey.Enter);
+
+                        switch (menu_item)
+                        {
+                            case 0:
                                 {
                                     Console.Clear();
                                     goto MenuCommand;
                                 }
                                 break;
-                            case ConsoleKey.Tab:
-                                {
-                                    Minimize.MinimizeConsoleWindow();
-                                }
-                                break;
-                            case ConsoleKey.Escape:
+                            case 1:
                                 {
                                     FileWork.SaveSettings(settings);
                                     Environment.Exit(0);
@@ -461,18 +746,13 @@ MenuCommand:
                     }
                 }
                 break;
-            case ConsoleKey.D2:
+            case 1:
                 {
                     Console.Clear();
                     goto MenuCommand;
                 }
                 break;
-            case ConsoleKey.Tab:
-                {
-                    Minimize.MinimizeConsoleWindow();
-                }
-                break;
-            case ConsoleKey.Escape:
+            case 2:
                 {
                     FileWork.SaveSettings(settings);
                     Environment.Exit(0);
@@ -480,7 +760,7 @@ MenuCommand:
                 break;
         }
     }
-   
+
 
     Debugger.Break();
 
@@ -568,7 +848,7 @@ class Output
                         output += ", " + day.Classes[j].Numerator.Type;
                         num += day.Classes[j].Numerator.Type.Length + 2;
                     }
-                    if(day.Classes[j].Numerator.Teacher != null)
+                    if (day.Classes[j].Numerator.Teacher != null)
                     {
                         output += ", " + day.Classes[j].Numerator.Teacher;
                         num += day.Classes[j].Numerator.Teacher.Length + 2;
@@ -946,7 +1226,7 @@ class Output
         Console.WriteLine("|");
         Console.WriteLine('\n');
     }
-    
+
     /// <summary>
     /// method to print menu
     /// </summary>
