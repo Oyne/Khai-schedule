@@ -346,7 +346,6 @@ MenuCommand:
                         {
                             case 0:
                                 {
-                                    Console.Clear();
                                     goto MenuCommand;
                                 }
                                 break;
@@ -568,7 +567,7 @@ MenuCommand:
         menu_item = 0;
         do
         {
-            Console.SetCursorPosition(0, 5);
+            Console.SetCursorPosition(0, 6);
             Output.PrintMenu(before_file_menu, menu_item, theme);
 
             keyInfo = Console.ReadKey();
@@ -653,7 +652,8 @@ MenuCommand:
                     else Console.SetCursorPosition(0, 7);
                     Console.Write(new string(' ', (Console.WindowWidth - "Файл для сохранения не найден   ".Length) / 2));
                     Console.WriteLine("Расписание успешно сохранено      ");
-                    Console.WriteLine(new string(' ', Console.WindowWidth * 2));
+                    Console.WriteLine(new string(' ', Console.WindowWidth * 3));
+
 
                     boolean = true;
                     while (boolean)

@@ -66,7 +66,13 @@ public class FileWork
                 throw new ScheduleWasNotFoundException("Немає збереженого розкладу.");
 
              readed = JsonSerializer.Deserialize<Khai.WeekSchedule>(rowJSON);
-        } catch {
+        }
+        catch (ScheduleWasNotFoundException ex)
+        {
+            throw new ScheduleWasNotFoundException("Немає збереженого розкладу.");
+        }
+        catch
+        {
             readed = null;
         }
 
@@ -85,7 +91,7 @@ public class FileWork
             var rowJSON = File.ReadAllText(_settingsFilePath);
 
             if (rowJSON.Length == 0)
-                throw new ScheduleWasNotFoundException("Нет сохранённых настроек.");
+                throw new SettingsWasNotFoundException("Нет сохранённых настроек.");
 
             readed = JsonSerializer.Deserialize<Settings>(rowJSON);
         }
