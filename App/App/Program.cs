@@ -137,13 +137,23 @@ MenuCommand:
     //    """);
 
 
+    Console.Write("""
+        › Поиск по группе 
+        › Поиск по студенту 
+        › Поиск по преподавателю 
+        › Считать расписание из файла 
+        › Настройки 
+        › Выход 
+        """);
+
     while (boolean)
     {
         do
         {
-            Console.Clear();
-            Output.PrintKhai();
-            Output.PrintMenu(menu, menu_item, theme);
+
+
+
+            Output.PrintMenu(menu, menu_item, theme, 1);
 
             keyInfo = Console.ReadKey();
 
@@ -329,7 +339,7 @@ MenuCommand:
                             Menu = after_file_menu;
                             Console.SetCursorPosition(0, 5);
                         }
-                        Output.PrintMenu(Menu, menu_item, theme);
+                        Output.PrintMenu(Menu, menu_item, theme, 2);
 
                         keyInfo = Console.ReadKey();
 
@@ -399,7 +409,7 @@ MenuCommand:
                         Console.Write(" Настройки ");
                         Console.WriteLine("|");
                         Console.WriteLine('\n');
-                        Output.PrintMenu(settings_menu, menu_item, theme);
+                        Output.PrintMenu(settings_menu, menu_item, theme, 3);
 
                         keyInfo = Console.ReadKey();
 
@@ -474,7 +484,7 @@ MenuCommand:
                                         Console.Write(" Настройки размера консоли ");
                                         Console.WriteLine("|");
                                         Console.WriteLine('\n');
-                                        Output.PrintMenu(console_size_menu, menu_item, theme);
+                                        Output.PrintMenu(console_size_menu, menu_item, theme, 4);
 
                                         keyInfo = Console.ReadKey();
 
@@ -595,7 +605,7 @@ MenuCommand:
         do
         {
             Console.SetCursorPosition(0, 5);
-            Output.PrintMenu(before_file_menu, menu_item, theme);
+            Output.PrintMenu(before_file_menu, menu_item, theme, 5);
 
             keyInfo = Console.ReadKey();
 
@@ -689,7 +699,7 @@ MenuCommand:
                         {
                             if (tmp == 0) Console.SetCursorPosition(0, 7);
                             else Console.SetCursorPosition(0, 9);
-                            Output.PrintMenu(after_file_menu, menu_item, theme);
+                            Output.PrintMenu(after_file_menu, menu_item, theme, 6);
 
                             keyInfo = Console.ReadKey();
 
@@ -1233,32 +1243,95 @@ class Output
     /// <param name="menu"> items of menu </param>
     /// <param name="menu_item"> current item </param>
     /// <param name="theme"> theme of console </param>
-    public static void PrintMenu(string[] menu, int menu_item, Theme theme)
+    public static void PrintMenu(string[] menu, int menu_item, Theme theme, int menu_type)
     {
         ConsoleColor ConsBackColor = theme.Colors[0];
         ConsoleColor ConsTextColor = theme.Colors[5];
         SetColor(ConsBackColor, ConsTextColor);
 
-        for (int i = 0; i < menu.Length; i++)
+        if(menu_type == 1)
         {
-            if (menu_item == i)
+            if (menu_item == 0)
             {
                 if (Array.IndexOf(Theme.examples, ConsTextColor) < 7 || Array.IndexOf(Theme.examples, ConsTextColor) == 8)
                 {
+                    Console.SetCursorPosition(0, 5 + menu_item);
                     if (ConsBackColor != Theme.examples[7]) SetColor(Theme.examples[7], ConsTextColor);
                     else SetColor(Theme.examples[14], ConsTextColor);
-                    Console.WriteLine(menu[i]);
+                    Console.WriteLine(menu[menu_item]);
                     SetColor(ConsBackColor, ConsTextColor);
+                    Console.SetCursorPosition(0, 5 + menu.Length-1);
+                    Console.WriteLine(menu[^1]);
+                    Console.SetCursorPosition(0, 5 + 1);
+                    Console.WriteLine(menu[1]);
                 }
                 else
                 {
+                    Console.SetCursorPosition(0, 5 + menu_item);
                     if (ConsBackColor != Theme.examples[8]) SetColor(Theme.examples[8], ConsTextColor);
                     else SetColor(Theme.examples[0], ConsTextColor);
-                    Console.WriteLine(menu[i]);
+                    Console.WriteLine(menu[menu_item]);
                     SetColor(ConsBackColor, ConsTextColor);
+                    Console.SetCursorPosition(0, 5 + menu.Length - 1);
+                    Console.WriteLine(menu[^1]);
+                    Console.SetCursorPosition(0, 5 + 1);
+                    Console.WriteLine(menu[1]);
                 }
             }
-            else Console.WriteLine(menu[i]);
+            else if (menu_item == menu.Length - 1)
+            {
+                if (Array.IndexOf(Theme.examples, ConsTextColor) < 7 || Array.IndexOf(Theme.examples, ConsTextColor) == 8)
+                {
+                    Console.SetCursorPosition(0, 5 + menu_item);
+                    if (ConsBackColor != Theme.examples[7]) SetColor(Theme.examples[7], ConsTextColor);
+                    else SetColor(Theme.examples[14], ConsTextColor);
+                    Console.WriteLine(menu[menu_item]);
+                    SetColor(ConsBackColor, ConsTextColor);
+                    Console.SetCursorPosition(0, 5);
+                    Console.WriteLine(menu[0]);
+                    Console.SetCursorPosition(0, 5 + menu.Length - 2);
+                    Console.WriteLine(menu[^2]);
+                }
+                else
+                {
+                    Console.SetCursorPosition(0, 5 + menu_item);
+                    if (ConsBackColor != Theme.examples[8]) SetColor(Theme.examples[8], ConsTextColor);
+                    else SetColor(Theme.examples[0], ConsTextColor);
+                    Console.WriteLine(menu[menu_item]);
+                    SetColor(ConsBackColor, ConsTextColor);
+                    Console.SetCursorPosition(0, 5);
+                    Console.WriteLine(menu[0]);
+                    Console.SetCursorPosition(0, 5 + menu.Length - 2);
+                    Console.WriteLine(menu[^2]);
+                }
+            }
+            else
+            {
+                if (Array.IndexOf(Theme.examples, ConsTextColor) < 7 || Array.IndexOf(Theme.examples, ConsTextColor) == 8)
+                {
+                    Console.SetCursorPosition(0, 5 + menu_item);
+                    if (ConsBackColor != Theme.examples[7]) SetColor(Theme.examples[7], ConsTextColor);
+                    else SetColor(Theme.examples[14], ConsTextColor);
+                    Console.WriteLine(menu[menu_item]);
+                    SetColor(ConsBackColor, ConsTextColor);
+                    Console.SetCursorPosition(0, 5 + menu_item - 1);
+                    Console.WriteLine(menu[menu_item - 1]);
+                    Console.SetCursorPosition(0, 5 + menu_item + 1);
+                    Console.WriteLine(menu[menu_item + 1]);
+                }
+                else
+                {
+                    Console.SetCursorPosition(0, 5 + menu_item);
+                    if (ConsBackColor != Theme.examples[8]) SetColor(Theme.examples[8], ConsTextColor);
+                    else SetColor(Theme.examples[0], ConsTextColor);
+                    Console.WriteLine(menu[menu_item]);
+                    SetColor(ConsBackColor, ConsTextColor);
+                    Console.SetCursorPosition(0, 5 + menu_item - 1);
+                    Console.WriteLine(menu[menu_item - 1]);
+                    Console.SetCursorPosition(0, 5 + menu_item + 1);
+                    Console.WriteLine(menu[menu_item + 1]);
+                }
+            }
         }
     }
 }
