@@ -80,20 +80,20 @@ public class Theme
                                "› Изменить цвет фона знаменателя ",
                                "› Изменить цвет текста знаменателя ",
                                "› Установить тему по умолчанию ",
-                               "› Сбросить все цвета",
-                               "› Вернуться в предыдущее меню",
-                               "› Вернуться в главное меню",
+                               "› Сбросить все цвета ",
+                               "› Вернуться в предыдущее меню ",
+                               "› Вернуться в главное меню ",
                                "› Выход "};
 
     MenuCommand:
-
+        Console.Clear();
+        Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки темы  ".Length) / 2) + "|");
+        Console.Write(" Настройки темы ");
+        Console.WriteLine("|");
+        Console.WriteLine('\n');
         do
         {
-            Console.Clear();
-            Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки темы  ".Length) / 2) + "|");
-            Console.Write(" Настройки темы ");
-            Console.WriteLine("|");
-            Console.WriteLine('\n');
+            Console.SetCursorPosition(0, 5);
             PrintMenu(theme_menu, menu_item, theme);
 
             keyInfo = Console.ReadKey();

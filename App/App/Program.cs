@@ -136,13 +136,11 @@ MenuCommand:
     //    >>> 
     //    """);
 
-
     while (boolean)
     {
         do
         {
-            Console.Clear();
-            Output.PrintKhai();
+            Console.SetCursorPosition(0, 5);
             Output.PrintMenu(menu, menu_item, theme);
 
             keyInfo = Console.ReadKey();
@@ -392,13 +390,14 @@ MenuCommand:
                 {
                 SettingsMenu:
                     menu_item = 0;
+                    Console.Clear();
+                    Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки  ".Length) / 2) + "|");
+                    Console.Write(" Настройки ");
+                    Console.WriteLine("|");
+                    Console.WriteLine('\n');
                     do
                     {
-                        Console.Clear();
-                        Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки  ".Length) / 2) + "|");
-                        Console.Write(" Настройки ");
-                        Console.WriteLine("|");
-                        Console.WriteLine('\n');
+                        Console.SetCursorPosition(0, 5);
                         Output.PrintMenu(settings_menu, menu_item, theme);
 
                         keyInfo = Console.ReadKey();
@@ -467,13 +466,14 @@ MenuCommand:
                                 {
                                     menu_item = 0;
                                 SizeMenu:
+                                    Console.Clear();
+                                    Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки размера консоли  ".Length) / 2) + "|");
+                                    Console.Write(" Настройки размера консоли ");
+                                    Console.WriteLine("|");
+                                    Console.WriteLine('\n');
                                     do
                                     {
-                                        Console.Clear();
-                                        Console.Write("\n\n" + new string(' ', (Console.WindowWidth - "  Настройки размера консоли  ".Length) / 2) + "|");
-                                        Console.Write(" Настройки размера консоли ");
-                                        Console.WriteLine("|");
-                                        Console.WriteLine('\n');
+                                        Console.SetCursorPosition(0, 5);
                                         Output.PrintMenu(console_size_menu, menu_item, theme);
 
                                         keyInfo = Console.ReadKey();
