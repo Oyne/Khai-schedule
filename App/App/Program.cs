@@ -93,6 +93,7 @@ while (true)
 
 MenuCommand:
 
+    Console.CursorVisible = false;
     WeekSchedule Schedule = null;
     boolean = true;
     menu_item = 0;
@@ -187,6 +188,7 @@ MenuCommand:
                 {
                     while (Schedule == null)
                     {
+                        Console.CursorVisible = true;
                         Console.Write("Введите группу в формате 325, 525v (525в), 116i1, 430st (430ст), 555vm-2 (555вм/2)\n>>> ");
                         group = Console.ReadLine();
                         if (group == "exit") Environment.Exit(0);
@@ -204,8 +206,7 @@ MenuCommand:
                             Console.Write("Очень некорректный ввод, группы не существует или плохое интернет соединение\n");
                         }
                     }
-                    Console.BackgroundColor = ConsBackColor;
-                    Console.ForegroundColor = ConsTextColor;
+                    Console.CursorVisible = false;
                     Console.Clear();
                     Output.PrintKhai();
                     Console.WriteLine("\n\n\n\n\n\n");
@@ -218,6 +219,7 @@ MenuCommand:
                 {
                     while (Schedule == null)
                     {
+                        Console.CursorVisible = true;
                         Console.Write("Введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
                         name = Console.ReadLine();
                         if (name == "exit") Environment.Exit(0);
@@ -239,8 +241,7 @@ MenuCommand:
                             Console.Write("Очень некорректный ввод, студента не существует или плохое интернет соединение\n");
                         }
                     }
-                    Console.BackgroundColor = ConsBackColor;
-                    Console.ForegroundColor = ConsTextColor;
+                    Console.CursorVisible = false;
                     Console.Clear();
                     Output.PrintKhai();
                     Console.WriteLine("\n\n\n\n\n\n");
@@ -253,6 +254,7 @@ MenuCommand:
                 {
                     while (Schedule == null)
                     {
+                        Console.CursorVisible = true;
                         Console.Write("Введите имя в формате babeschko-e-v-503, savchenko-n-v-405\n>>> ");
                         name = Console.ReadLine();
                         if (name == "exit") Environment.Exit(0);
@@ -274,8 +276,7 @@ MenuCommand:
                             Console.Write("Очень некорректный ввод, преподавателя не существует или плохое интернет соединение\n");
                         }
                     }
-                    Console.BackgroundColor = ConsBackColor;
-                    Console.ForegroundColor = ConsTextColor;
+                    Console.CursorVisible = false;
                     Console.Clear();
                     Output.PrintKhai();
                     Console.WriteLine("\n\n\n\n\n\n");
@@ -464,8 +465,8 @@ MenuCommand:
                                 break;
                             case 1:
                                 {
-                                SizeMenu:
                                     menu_item = 0;
+                                SizeMenu:
                                     do
                                     {
                                         Console.Clear();
@@ -532,6 +533,7 @@ MenuCommand:
                                                     settings.Width = 212;
                                                     settings.Height = 50;
                                                     FileWork.SaveSettings(settings);
+                                                    goto SizeMenu;
                                                 }
                                                 break;
                                             case 2:
@@ -1235,15 +1237,17 @@ class Output
         {
             if (menu_item == i)
             {
-                if (Array.IndexOf(Theme.examples, ConsTextColor) < 7)
+                if (Array.IndexOf(Theme.examples, ConsTextColor) < 7 || Array.IndexOf(Theme.examples, ConsTextColor) == 8)
                 {
-                    SetColor(Theme.examples[7], ConsTextColor);
+                    if (ConsBackColor != Theme.examples[7]) SetColor(Theme.examples[7], ConsTextColor);
+                    else SetColor(Theme.examples[14], ConsTextColor);
                     Console.WriteLine(menu[i]);
                     SetColor(ConsBackColor, ConsTextColor);
                 }
                 else
                 {
-                    SetColor(Theme.examples[8], ConsTextColor);
+                    if (ConsBackColor != Theme.examples[8]) SetColor(Theme.examples[8], ConsTextColor);
+                    else SetColor(Theme.examples[0], ConsTextColor);
                     Console.WriteLine(menu[i]);
                     SetColor(ConsBackColor, ConsTextColor);
                 }

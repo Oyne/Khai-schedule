@@ -72,6 +72,7 @@ public class Theme
     public static int SetColor(ref Theme theme, int tableWidth, int timeWidth)
     {
         int ret = 0;
+        int menu_item = 0;
         bool boolean = true;
         ConsoleKeyInfo keyInfo;
         string[] theme_menu = {"› Изменить цвет фона",
@@ -86,7 +87,6 @@ public class Theme
 
     MenuCommand:
 
-        int menu_item = 0;
         do
         {
             Console.Clear();
@@ -125,7 +125,6 @@ public class Theme
                     break;
                 case ConsoleKey.Escape:
                     {
-                        FileWork.SaveSettings(settings);
                         Environment.Exit(0);
                     }
                     break;
@@ -135,62 +134,56 @@ public class Theme
 
         while (boolean == true)
         {
-            keyInfo = Console.ReadKey(true);
-            switch (keyInfo.Key)
+            switch (menu_item)
             {
-                case ConsoleKey.D1:
+                case 0:
                     {
                         theme.SetBackColor(tableWidth, timeWidth);
                         goto MenuCommand;
                     }
                     break;
-                case ConsoleKey.D2:
+                case 1:
                     {
                         theme.SetFrontColor(tableWidth, timeWidth);
                         goto MenuCommand;
                     }
                     break;
-                case ConsoleKey.D3:
+                case 2:
                     {
                         theme.SetDenBackColor(tableWidth, timeWidth);
                         goto MenuCommand;
                     }
                     break;
-                case ConsoleKey.D4:
+                case 3:
                     {
                         theme.SetDenTextColor(tableWidth, timeWidth);
                         goto MenuCommand;
                     }
                     break;
-                case ConsoleKey.D5:
+                case 4:
                     {
                         theme.SetDefaultTheme();
                         goto MenuCommand;
                     }
                     break;
-                case ConsoleKey.D6:
+                case 5:
                     {
                         theme.SetDefaultColors();
                         goto MenuCommand;
                     }
                     break;
-                case ConsoleKey.D7:
+                case 6:
                     {
                         ret = 2;
                         boolean = false;
                     }
                     break;
-                case ConsoleKey.D8:
+                case 7:
                     {                            
                         boolean = false;
                     }
                     break;
-                case ConsoleKey.Tab:
-                    {
-                        Minimize.MinimizeConsoleWindow();
-                    }
-                    break;
-                case ConsoleKey.Escape:
+                case 8:
                     {
                         ret = 1;
                         boolean = false;
@@ -846,15 +839,17 @@ public class Theme
         {
             if (menu_item == i)
             {
-                if (Array.IndexOf(Theme.examples, ConsTextColor) < 7)
+                if (Array.IndexOf(examples, ConsTextColor) < 7 || Array.IndexOf(examples, ConsTextColor) == 8)
                 {
-                    SetColor(Theme.examples[7], ConsTextColor);
+                    if (ConsBackColor != examples[7]) SetColor(examples[7], ConsTextColor);
+                    else SetColor(examples[14], ConsTextColor);
                     Console.WriteLine(menu[i]);
                     SetColor(ConsBackColor, ConsTextColor);
                 }
                 else
                 {
-                    SetColor(Theme.examples[8], ConsTextColor);
+                    if (ConsBackColor != examples[8]) SetColor(examples[8], ConsTextColor);
+                    else SetColor(examples[0], ConsTextColor);
                     Console.WriteLine(menu[i]);
                     SetColor(ConsBackColor, ConsTextColor);
                 }
