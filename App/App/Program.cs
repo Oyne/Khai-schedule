@@ -1227,6 +1227,12 @@ class Output
         Console.WriteLine('\n');
     }
 
+    /// <summary>
+    /// method to print menu
+    /// </summary>
+    /// <param name="menu"> items of menu </param>
+    /// <param name="menu_item"> current item </param>
+    /// <param name="theme"> theme of console </param>
     public static void PrintMenu(string[] menu, int menu_item, Theme theme)
     {
         ConsoleColor ConsBackColor = theme.Colors[0];
