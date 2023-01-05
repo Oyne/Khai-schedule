@@ -150,9 +150,6 @@ MenuCommand:
     {
         do
         {
-
-
-
             Output.PrintMenu(menu, menu_item, theme, 1);
 
             keyInfo = Console.ReadKey();
@@ -198,6 +195,7 @@ MenuCommand:
                 {
                     while (Schedule == null)
                     {
+                        Console.SetCursorPosition(0, 11);
                         Console.CursorVisible = true;
                         Console.Write("Введите группу в формате 325, 525v (525в), 116i1, 430st (430ст), 555vm-2 (555вм/2)\n>>> ");
                         group = Console.ReadLine();
@@ -229,6 +227,7 @@ MenuCommand:
                 {
                     while (Schedule == null)
                     {
+                        Console.SetCursorPosition(0, 11);
                         Console.CursorVisible = true;
                         Console.Write("Введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
                         name = Console.ReadLine();
@@ -264,6 +263,7 @@ MenuCommand:
                 {
                     while (Schedule == null)
                     {
+                        Console.SetCursorPosition(0, 11);
                         Console.CursorVisible = true;
                         Console.Write("Введите имя в формате babeschko-e-v-503, savchenko-n-v-405\n>>> ");
                         name = Console.ReadLine();
