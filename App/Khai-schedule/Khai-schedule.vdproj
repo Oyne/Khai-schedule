@@ -176,7 +176,7 @@
         {
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_505FF03F2924487B80F1E1A692E93F28"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFilesFolder]\\[ProductName]\\App"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -236,7 +236,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Khai Schedule"
         "ProductCode" = "8:{925DA492-4A88-425F-860F-4C2760844EB2}"
-        "PackageCode" = "8:{A8396CAF-6EF2-4B99-B241-DADF0F2A929F}"
+        "PackageCode" = "8:{06FAC174-20B9-4084-9F80-AF6B7742BF23}"
         "UpgradeCode" = "8:{080FF90D-7AE1-438F-9023-4D2A74F00563}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

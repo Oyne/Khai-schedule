@@ -9,6 +9,11 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
+using System.Net;
+//using System.Windows.Forms;
+
+//WebClient webclient = new WebClient();
+//MessageBox.Show();
 
 //Console title
 Console.Title = "Khai schedule";
