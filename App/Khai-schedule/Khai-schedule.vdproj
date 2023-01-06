@@ -15,7 +15,7 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_62B435DC1A5F43F58919B01D4B5F7B46"
+        "MsmKey" = "8:_1F1B113D0D0A41EE9FD06EBFC244944C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -88,6 +88,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -120,7 +128,7 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_62B435DC1A5F43F58919B01D4B5F7B46"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1F1B113D0D0A41EE9FD06EBFC244944C"
             {
             "SourcePath" = "8:..\\..\\Icon.ico"
             "TargetName" = "8:Icon.ico"
@@ -228,7 +236,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Khai Schedule"
         "ProductCode" = "8:{925DA492-4A88-425F-860F-4C2760844EB2}"
-        "PackageCode" = "8:{A8396CAF-6EF2-4B99-B241-DADF0F2A929F}"
+        "PackageCode" = "8:{15BB4AF7-4260-4B98-825C-05E49ED9332E}"
         "UpgradeCode" = "8:{080FF90D-7AE1-438F-9023-4D2A74F00563}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -348,20 +356,6 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_86E79FA2C1944E46A3D9BC668B713021"
-            {
-            "Name" = "8:Khai Schedule"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_B0DBC76152CE4129B1DE970B476D66A5"
-            "Folder" = "8:_E2B0AA25CFF4412B864C53A5CAD6BDBC"
-            "WorkingFolder" = "8:_505FF03F2924487B80F1E1A692E93F28"
-            "Icon" = "8:_62B435DC1A5F43F58919B01D4B5F7B46"
-            "Feature" = "8:"
-            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_B0437951422B42958964931A1F5DEA67"
             {
             "Name" = "8:uninstall"
@@ -373,7 +367,21 @@
             "Target" = "8:_C99B521ECB7B4ECD96BE8150BE1C69AB"
             "Folder" = "8:_9E920D2CCC8A425F81D28EE2E5391F97"
             "WorkingFolder" = "8:_DF09BBCCD4974FDF824962A49DE768CC"
-            "Icon" = "8:_62B435DC1A5F43F58919B01D4B5F7B46"
+            "Icon" = "8:_1F1B113D0D0A41EE9FD06EBFC244944C"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_FCEB7173F2AB4F098EE819D485D2AD0C"
+            {
+            "Name" = "8:Khai Schedule"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_B0DBC76152CE4129B1DE970B476D66A5"
+            "Folder" = "8:_E2B0AA25CFF4412B864C53A5CAD6BDBC"
+            "WorkingFolder" = "8:_505FF03F2924487B80F1E1A692E93F28"
+            "Icon" = "8:_1F1B113D0D0A41EE9FD06EBFC244944C"
             "Feature" = "8:"
             }
         }
@@ -777,7 +785,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B0DBC76152CE4129B1DE970B476D66A5"
             {
-            "SourcePath" = "8:..\\App\\obj\\Debug\\net7.0\\apphost.exe"
+            "SourcePath" = "8:..\\App\\obj\\Release\\net7.0\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_505FF03F2924487B80F1E1A692E93F28"
