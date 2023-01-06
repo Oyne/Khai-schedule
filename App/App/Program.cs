@@ -11,21 +11,13 @@ using System.Text.Json;
 using System.Threading;
 using System.Net;
 using System.Windows.Forms;
+using System.Runtime.CompilerServices;
 
 //Console title
 Console.Title = "Khai schedule";
 
-WebClient webClient = new WebClient();
-//MessageBox.Show();
-
-try
-{
-    if(!webClient.DownloadString("").Contains("2.2"))
-}
-catch
-{
-
-}
+//Check the udates
+Update.CheckUpdate();
 
 // settings deserialization
 string settingsFilePath = "C://Khai/settings.json";
@@ -1280,6 +1272,29 @@ class Output
                 }
                 else Console.WriteLine(menu[i]);
             }
+        }
+    }
+}
+
+class Update
+{
+    public static void CheckUpdate()
+    {
+        WebClient webClient = new WebClient();
+
+        try
+        {
+            if (!webClient.DownloadString("https://github.com/Oyne/Khai-schedule/raw/Updater/current_version.txt").Contains("2.2"))
+            {
+                if (MessageBox.Show("Доступна новая версия! Хотите установить её прямо сейчас?", "Khai-schedule Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) using (var client = new WebClient())
+                    {
+                        Process.Start("Updater.exe");
+                    }
+            }
+        }
+        catch
+        {
+
         }
     }
 }
