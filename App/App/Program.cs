@@ -76,15 +76,15 @@ while (true)
                      "› Вернуться в предыдущее меню ",
                      "› Вернуться в главное меню ",
                      "› Выход "};
-    string[] before_file_menu = {new string('\t',(Console.WindowWidth - "› Сохранить расписание в текстовый файл".Length)/16) +
+    string[] before_file_menu = {new string(' ',(Console.WindowWidth - "› Сохранить расписание в текстовый файл".Length)/2) +
                      "› Сохранить расписание в текстовый файл ",
-                     new string('\t',(Console.WindowWidth - "› Сохранить расписание в текстовый файл".Length)/16) +
+                     new string(' ',(Console.WindowWidth - "› Сохранить расписание в текстовый файл".Length)/2) +
                      "› Вернуться в главное меню ",
-                     new string('\t',(Console.WindowWidth - "› Сохранить расписание в текстовый файл".Length)/16) +
+                     new string(' ',(Console.WindowWidth - "› Сохранить расписание в текстовый файл".Length)/2) +
                      "› Выход "};
-    string[] after_file_menu = {new string('\t',(Console.WindowWidth - "› Вернуться в главное меню".Length)/16) +
+    string[] after_file_menu = {new string(' ',(Console.WindowWidth - "› Вернуться в главное меню".Length)/2) +
                      "› Вернуться в главное меню ",
-                     new string('\t',(Console.WindowWidth - "› Вернуться в главное меню".Length)/16) +
+                     new string(' ',(Console.WindowWidth - "› Вернуться в главное меню".Length)/2) +
                      "› Выход "};
     string[] no_file_menu = {
                      "› Вернуться в главное меню ",
@@ -1213,26 +1213,59 @@ class Output
         ConsoleColor ConsTextColor = theme.Colors[5];
         SetColor(ConsBackColor, ConsTextColor);
 
-        for (int i = 0; i < menu.Length; i++)
+        if((menu.Length == 2 || menu.Length == 3) && menu[0].IndexOf("    ") != -1)
         {
-            if (menu_item == i)
+            for (int i = 0; i < menu.Length; i++)
             {
-                if (Array.IndexOf(Theme.examples, ConsTextColor) < 7 || Array.IndexOf(Theme.examples, ConsTextColor) == 8)
+                if (menu_item == i)
                 {
-                    if (ConsBackColor != Theme.examples[7]) SetColor(Theme.examples[7], ConsTextColor);
-                    else SetColor(Theme.examples[14], ConsTextColor);
-                    Console.WriteLine(menu[i]);
-                    SetColor(ConsBackColor, ConsTextColor);
+                    if (Array.IndexOf(Theme.examples, ConsTextColor) < 7 || Array.IndexOf(Theme.examples, ConsTextColor) == 8)
+                    {
+                        SetColor(ConsBackColor, ConsTextColor);
+                        if (menu.Length == 3) Console.Write(new string(' ', (Console.WindowWidth - "› Сохранить расписание в текстовый файл".Length) / 2));
+                        else Console.Write(new string(' ', (Console.WindowWidth - "› Вернуться в главное меню".Length) / 2));
+                        if (ConsBackColor != Theme.examples[7]) SetColor(Theme.examples[7], ConsTextColor);
+                        else SetColor(Theme.examples[14], ConsTextColor);
+                        Console.WriteLine(menu[i].Trim() + ' ');
+                        SetColor(ConsBackColor, ConsTextColor);
+                    }
+                    else
+                    {
+                        SetColor(ConsBackColor, ConsTextColor);
+                        if (menu.Length == 3) Console.Write(new string(' ', (Console.WindowWidth - "› Сохранить расписание в текстовый файл".Length) / 2));
+                        else Console.Write(new string(' ', (Console.WindowWidth - "› Вернуться в главное меню".Length) / 2));
+                        if (ConsBackColor != Theme.examples[8]) SetColor(Theme.examples[8], ConsTextColor);
+                        else SetColor(Theme.examples[0], ConsTextColor);
+                        Console.WriteLine(menu[i].Trim() + ' ');
+                        SetColor(ConsBackColor, ConsTextColor);
+                    }
                 }
-                else
-                {
-                    if (ConsBackColor != Theme.examples[8]) SetColor(Theme.examples[8], ConsTextColor);
-                    else SetColor(Theme.examples[0], ConsTextColor);
-                    Console.WriteLine(menu[i]);
-                    SetColor(ConsBackColor, ConsTextColor);
-                }
+                else Console.WriteLine(menu[i]);
             }
-            else Console.WriteLine(menu[i]);
+        }
+        else
+        {
+            for (int i = 0; i < menu.Length; i++)
+            {
+                if (menu_item == i)
+                {
+                    if (Array.IndexOf(Theme.examples, ConsTextColor) < 7 || Array.IndexOf(Theme.examples, ConsTextColor) == 8)
+                    {
+                        if (ConsBackColor != Theme.examples[7]) SetColor(Theme.examples[7], ConsTextColor);
+                        else SetColor(Theme.examples[14], ConsTextColor);
+                        Console.WriteLine(menu[i]);
+                        SetColor(ConsBackColor, ConsTextColor);
+                    }
+                    else
+                    {
+                        if (ConsBackColor != Theme.examples[8]) SetColor(Theme.examples[8], ConsTextColor);
+                        else SetColor(Theme.examples[0], ConsTextColor);
+                        Console.WriteLine(menu[i]);
+                        SetColor(ConsBackColor, ConsTextColor);
+                    }
+                }
+                else Console.WriteLine(menu[i]);
+            }
         }
     }
 }
