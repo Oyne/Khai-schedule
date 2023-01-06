@@ -5,10 +5,17 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App", "App\App.csproj", "{965B92D4-04D1-4AC1-983B-417AD4EE5ABC}"
 EndProject
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsing", "..\Parsing\Parsing.csproj", "{AD5C7A51-8C4D-41CF-A097-E1E2B497B547}"
+=======
+>>>>>>> Stashed changes
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KhaiClient", "..\Parsing\KhaiClient.csproj", "{7A25B56E-185B-4401-9DE5-4BBAAB60C9D1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileWork", "FileWork\FileWork.csproj", "{8D936E7A-D665-47CD-9789-A6569F5877EF}"
 EndProject
+<<<<<<< Updated upstream
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Themes", "Themes\Themes.csproj", "{AC8EF079-5C22-423A-BA7A-05CA2E4297A3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSettings", "Settings\AppSettings.csproj", "{9482DF34-5431-4926-B329-57B4D372A2A5}"
@@ -22,6 +29,24 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableSizes", "TableSizes\TableSizes.csproj", "{69358103-3DCC-4F9F-828E-FB1488D4338D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maximizing", "Maximizing\Maximizing.csproj", "{48142CDC-B414-4AD7-89D9-F667D43F334F}"
+=======
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Themes", "Themes\Themes.csproj", "{AC8EF079-5C22-423A-BA7A-05CA2E4297A3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppSettings", "Settings\AppSettings.csproj", "{9482DF34-5431-4926-B329-57B4D372A2A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minimizing", "Minimize\Minimizing.csproj", "{8FF66BF5-D13C-46EC-B3CD-ECBA2F3B3C2B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Locking", "Fixing\Locking.csproj", "{38244CCD-1E16-48CD-A0C0-A035F24BF962}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sizing", "Sizing\Sizing.csproj", "{183E3532-C9A5-4FD4-AEFE-1F82C567AE9C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TableSizes", "TableSizes\TableSizes.csproj", "{69358103-3DCC-4F9F-828E-FB1488D4338D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maximizing", "Maximizing\Maximizing.csproj", "{48142CDC-B414-4AD7-89D9-F667D43F334F}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Khai-schedule", "Khai-schedule\Khai-schedule.vdproj", "{8F95774C-783E-4AA7-A68E-5348B9C59767}"
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +54,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+		{185A76F1-BB87-49DF-B07E-CCBF4D4E9339}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{185A76F1-BB87-49DF-B07E-CCBF4D4E9339}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{185A76F1-BB87-49DF-B07E-CCBF4D4E9339}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{185A76F1-BB87-49DF-B07E-CCBF4D4E9339}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD5C7A51-8C4D-41CF-A097-E1E2B497B547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD5C7A51-8C4D-41CF-A097-E1E2B497B547}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD5C7A51-8C4D-41CF-A097-E1E2B497B547}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD5C7A51-8C4D-41CF-A097-E1E2B497B547}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+>>>>>>> Stashed changes
 		{965B92D4-04D1-4AC1-983B-417AD4EE5ABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{965B92D4-04D1-4AC1-983B-417AD4EE5ABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{965B92D4-04D1-4AC1-983B-417AD4EE5ABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,6 +107,12 @@ Global
 		{48142CDC-B414-4AD7-89D9-F667D43F334F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48142CDC-B414-4AD7-89D9-F667D43F334F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48142CDC-B414-4AD7-89D9-F667D43F334F}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< Updated upstream
+=======
+		{8F95774C-783E-4AA7-A68E-5348B9C59767}.Debug|Any CPU.ActiveCfg = Debug
+		{8F95774C-783E-4AA7-A68E-5348B9C59767}.Release|Any CPU.ActiveCfg = Release
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
