@@ -10,13 +10,22 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Net;
-//using System.Windows.Forms;
-
-//WebClient webclient = new WebClient();
-//MessageBox.Show();
+using System.Windows.Forms;
 
 //Console title
 Console.Title = "Khai schedule";
+
+WebClient webClient = new WebClient();
+//MessageBox.Show();
+
+try
+{
+    if(!webClient.DownloadString("").Contains("2.2"))
+}
+catch
+{
+
+}
 
 // settings deserialization
 string settingsFilePath = "C://Khai/settings.json";

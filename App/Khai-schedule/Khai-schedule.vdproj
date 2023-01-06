@@ -253,7 +253,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_0BE20AFEA54B4A89A4690240A0BBF40D"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -785,7 +785,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B0DBC76152CE4129B1DE970B476D66A5"
             {
-            "SourcePath" = "8:..\\App\\obj\\Release\\net7.0\\apphost.exe"
+            "SourcePath" = "8:..\\App\\obj\\Release\\net7.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_505FF03F2924487B80F1E1A692E93F28"
