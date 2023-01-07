@@ -1284,7 +1284,7 @@ class Update
 
         try
         {
-            if (!webClient.DownloadString("https://github.com/Oyne/Khai-schedule/raw/main/current_version.txt").Contains("2.2"))
+            if (!webClient.DownloadString("https://github.com/Oyne/Khai-schedule/raw/main/current_version.txt").Contains("2.1"))
             {
                 if (MessageBox.Show("Доступна новая версия! Хотите установить её прямо сейчас?", "Khai-schedule Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) using (var client = new WebClient())
                     {

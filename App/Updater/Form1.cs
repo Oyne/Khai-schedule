@@ -35,11 +35,11 @@ namespace Updater
                         File.Delete(file);
                     }
                 }
-                client.DownloadFile("https://github.com/Oyne/Khai-schedule/raw/main/KhaiSchedule.zip", @"KhaiSchedule.zip");
-                string zipPath = @".\KhaiSchedule.zip";
+                client.DownloadFile("https://github.com/Oyne/Khai-schedule/raw/main/KhaiScheduleUpdate.zip", @"KhaiScheduleUpdate.zip");
+                string zipPath = @".\KhaiScheduleUpdate.zip";
                 string extarctPath = @".\";
                 ZipFile.ExtractToDirectory(zipPath, extarctPath);
-                File.Delete(@".\KhaiSchedule.zip");
+                File.Delete(@".\KhaiScheduleUpdate.zip");
                 DialogResult result = MessageBox.Show("Приложение успешно обновлено", "Khai-schedule Update", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 if (result == DialogResult.OK)
                 {

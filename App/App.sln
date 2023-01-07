@@ -27,6 +27,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Khai-schedule", "Khai-sched
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "Updater\Updater.csproj", "{C3B4E54A-8987-4AF6-B857-8C2E6C5193AE}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup for Update", "Setup for Update\Setup for Update.vdproj", "{A4E4C759-1566-4560-AD86-D6EC874B8B06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,8 @@ Global
 		{C3B4E54A-8987-4AF6-B857-8C2E6C5193AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3B4E54A-8987-4AF6-B857-8C2E6C5193AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3B4E54A-8987-4AF6-B857-8C2E6C5193AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4E4C759-1566-4560-AD86-D6EC874B8B06}.Debug|Any CPU.ActiveCfg = Debug
+		{A4E4C759-1566-4560-AD86-D6EC874B8B06}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
