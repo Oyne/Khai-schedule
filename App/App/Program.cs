@@ -119,7 +119,7 @@ MenuCommand:
             Console.SetCursorPosition(0, 5);
             Output.PrintMenu(menu, menu_item, theme);
 
-            keyInfo = Console.ReadKey();
+            keyInfo = Console.ReadKey(true);
 
             switch (keyInfo.Key)
             {
@@ -309,7 +309,7 @@ MenuCommand:
                         }
                         Output.PrintMenu(Menu, menu_item, theme);
 
-                        keyInfo = Console.ReadKey();
+                        keyInfo = Console.ReadKey(true);
 
                         switch (keyInfo.Key)
                         {
@@ -379,7 +379,7 @@ MenuCommand:
                         Console.SetCursorPosition(0, 5);
                         Output.PrintMenu(settings_menu, menu_item, theme);
 
-                        keyInfo = Console.ReadKey();
+                        keyInfo = Console.ReadKey(true);
 
                         switch (keyInfo.Key)
                         {
@@ -455,7 +455,7 @@ MenuCommand:
                                         Console.SetCursorPosition(0, 5);
                                         Output.PrintMenu(console_size_menu, menu_item, theme);
 
-                                        keyInfo = Console.ReadKey();
+                                        keyInfo = Console.ReadKey(true);
 
                                         switch (keyInfo.Key)
                                         {
@@ -576,7 +576,7 @@ MenuCommand:
             Console.SetCursorPosition(0, 6);
             Output.PrintMenu(before_file_menu, menu_item, theme);
 
-            keyInfo = Console.ReadKey();
+            keyInfo = Console.ReadKey(true);
 
             switch (keyInfo.Key)
             {
@@ -671,7 +671,7 @@ MenuCommand:
                             else Console.SetCursorPosition(0, 9);
                             Output.PrintMenu(after_file_menu, menu_item, theme);
 
-                            keyInfo = Console.ReadKey();
+                            keyInfo = Console.ReadKey(true);
 
                             switch (keyInfo.Key)
                             {

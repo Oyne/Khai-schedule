@@ -52,8 +52,16 @@ public class WeekSchedule
     {
         ArgumentNullException.ThrowIfNull(days);
 
-        if (days.Count != 5)
-            throw new ArgumentException("The days count must equals 5.");
+        // original
+        //if (days.Count != 5)
+        //    throw new ArgumentException("The days count must equals 5.");
+
+        //temporary crutch
+        if (days.Count == 4)
+        {
+            DaySchedule blankDay = new DaySchedule();
+            return new WeekSchedule(days[0], days[1], days[2], days[3], blankDay);
+        }
 
         return new WeekSchedule(days[0], days[1], days[2], days[3], days[4]);
     }

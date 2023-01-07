@@ -132,10 +132,26 @@ public class KhaiClient : IDisposable
 
         if (char.IsDigit(items[0][0]))
         {
-            teacher    = items[3]?.Trim();
-            type       = items[2]?.Trim();
-            name       = items[1].Trim();
-            roomNumber = items[0];
+            //temporary crutch
+            if (items.Length < 4)
+            {
+                teacher = null;
+                type = items[2]?.Trim();
+                name = items[1].Trim();
+                roomNumber = items[0];
+            }
+            else
+            {
+                teacher = items[3]?.Trim();
+                type = items[2]?.Trim();
+                name = items[1].Trim();
+                roomNumber = items[0];
+            }
+            //original
+            //teacher = items[3]?.Trim();
+            //type = items[2]?.Trim();
+            //name = items[1].Trim();
+            //roomNumber = items[0];
         }
         else
         {
