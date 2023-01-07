@@ -96,7 +96,7 @@ public class Theme
             Console.SetCursorPosition(0, 5);
             PrintMenu(theme_menu, menu_item, theme);
 
-            keyInfo = Console.ReadKey();
+            keyInfo = Console.ReadKey(true);
 
             switch (keyInfo.Key)
             {
