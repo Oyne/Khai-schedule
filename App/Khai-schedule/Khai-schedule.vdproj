@@ -64,12 +64,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_BEF42C878DC9289F9F9A12F626F27D9D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_ADE65FA53C0D4075A9F0A840CEB756FE"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -89,6 +83,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_8CEF8A7EA39DF528BBF965D28C93BAD7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BEF42C878DC9289F9F9A12F626F27D9D"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -122,6 +122,16 @@
                     {
                     "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
                     "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.DesktopRuntime.7.0.x64"
+                    {
+                    "Name" = "8:.NET Desktop Runtime 7.0.1 (x64)"
+                    "ProductCode" = "8:Microsoft.NetCore.DesktopRuntime.7.0.x64"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.DesktopRuntime.7.0.x86"
+                    {
+                    "Name" = "8:.NET Desktop Runtime 7.0.1 (x86)"
+                    "ProductCode" = "8:Microsoft.NetCore.DesktopRuntime.7.0.x86"
                     }
                 }
             }
@@ -428,7 +438,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Khai Schedule"
         "ProductCode" = "8:{011A0206-18B1-4740-93C4-EFCA7250D589}"
-        "PackageCode" = "8:{F605CBC7-82B9-4D76-85DE-69E53CC113F8}"
+        "PackageCode" = "8:{376A2D5C-D7BB-4EDB-897E-4131E4C5E5A3}"
         "UpgradeCode" = "8:{080FF90D-7AE1-438F-9023-4D2A74F00563}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
