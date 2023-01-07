@@ -35,7 +35,7 @@ namespace Updater
                         File.Delete(file);
                     }
                 }
-                client.DownloadFile("https://github.com/Oyne/Khai-schedule/raw/Updater/KhaiSchedule.zip", @"KhaiSchedule.zip");
+                client.DownloadFile("https://github.com/Oyne/Khai-schedule/raw/main/KhaiSchedule.zip", @"KhaiSchedule.zip");
                 string zipPath = @".\KhaiSchedule.zip";
                 string extarctPath = @".\";
                 ZipFile.ExtractToDirectory(zipPath, extarctPath);
