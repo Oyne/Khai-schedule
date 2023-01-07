@@ -1289,6 +1289,7 @@ class Update
                 if (MessageBox.Show("Доступна новая версия! Хотите установить её прямо сейчас?", "Khai-schedule Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) using (var client = new WebClient())
                     {
                         Process.Start("Updater.exe");
+                        Environment.Exit(0);
                     }
             }
         }
