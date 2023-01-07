@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maximizing", "Maximizing\Ma
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Khai-schedule", "Khai-schedule\Khai-schedule.vdproj", "{8F95774C-783E-4AA7-A68E-5348B9C59767}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "Updater\Updater.csproj", "{C3B4E54A-8987-4AF6-B857-8C2E6C5193AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{48142CDC-B414-4AD7-89D9-F667D43F334F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8F95774C-783E-4AA7-A68E-5348B9C59767}.Debug|Any CPU.ActiveCfg = Debug
 		{8F95774C-783E-4AA7-A68E-5348B9C59767}.Release|Any CPU.ActiveCfg = Release
+		{C3B4E54A-8987-4AF6-B857-8C2E6C5193AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3B4E54A-8987-4AF6-B857-8C2E6C5193AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3B4E54A-8987-4AF6-B857-8C2E6C5193AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3B4E54A-8987-4AF6-B857-8C2E6C5193AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
