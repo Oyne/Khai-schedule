@@ -7,9 +7,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageIcon>Logo.png</PackageIcon>
-    <Title>Schedule</Title>
+    <Title>Khai Schedule</Title>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <Authors>Khai 123</Authors>
+    <Company>Khai</Company>
+    <Product>Khai Schedule</Product>
   </PropertyGroup>
 
   <ItemGroup>
