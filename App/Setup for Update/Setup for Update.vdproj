@@ -56,6 +56,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -119,12 +127,12 @@
             "Tag" = "8:"
             "Folder" = "8:_1A70E7E4177E429EA241CF880C2C1152"
             "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
+            "Transitive" = "11:TRUE"
+            "Vital" = "11:FALSE"
             "ReadOnly" = "11:FALSE"
             "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
+            "System" = "11:TRUE"
+            "Permanent" = "11:TRUE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -220,7 +228,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Setup for Update"
         "ProductCode" = "8:{28AB4544-637B-4BA1-A548-3C7BA47F787D}"
-        "PackageCode" = "8:{948D9845-DB58-4705-AC1B-A41B38C4BE6F}"
+        "PackageCode" = "8:{C5F94072-E0D5-4AB6-A068-76B92314771E}"
         "UpgradeCode" = "8:{9BFEBFBB-436F-4367-8771-1B81D1BC8E9E}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
