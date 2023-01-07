@@ -165,6 +165,16 @@
                     "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
                     "ProductCode" = "8:.NETFramework,Version=v4.7.2"
                     }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.DesktopRuntime.7.0.x64"
+                    {
+                    "Name" = "8:.NET Desktop Runtime 7.0.1 (x64)"
+                    "ProductCode" = "8:Microsoft.NetCore.DesktopRuntime.7.0.x64"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.DesktopRuntime.7.0.x86"
+                    {
+                    "Name" = "8:.NET Desktop Runtime 7.0.1 (x86)"
+                    "ProductCode" = "8:Microsoft.NetCore.DesktopRuntime.7.0.x86"
+                    }
                 }
             }
         }
@@ -987,7 +997,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_ADE65FA53C0D4075A9F0A840CEB756FE"
             {
-            "SourcePath" = "8:..\\Updater\\obj\\Debug\\Updater.exe"
+            "SourcePath" = "8:..\\Updater\\obj\\Release\\Updater.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_505FF03F2924487B80F1E1A692E93F28"
@@ -1015,7 +1025,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B0DBC76152CE4129B1DE970B476D66A5"
             {
-            "SourcePath" = "8:..\\App\\obj\\Debug\\net7.0-windows\\apphost.exe"
+            "SourcePath" = "8:..\\App\\obj\\Release\\net7.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_505FF03F2924487B80F1E1A692E93F28"
