@@ -33,7 +33,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_BF5F516A2CEC4603A457B516CF15A777"
+        "MsmKey" = "8:_F82B72BC60ED4410800F220A1F6DA261"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -182,7 +182,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BF5F516A2CEC4603A457B516CF15A777"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F82B72BC60ED4410800F220A1F6DA261"
             {
             "SourcePath" = "8:..\\..\\README.md"
             "TargetName" = "8:README.md"

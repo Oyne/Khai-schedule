@@ -27,14 +27,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7508290A598C57094D74CF6E730B08C5"
-        "OwnerKey" = "8:_ADE65FA53C0D4075A9F0A840CEB756FE"
+        "MsmKey" = "8:_52D2EAC8B7FE462EA28902A817BD9C72"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_7BFF4BF4312B48F0B887C79EE166DE25"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_7508290A598C57094D74CF6E730B08C5"
+        "OwnerKey" = "8:_ADE65FA53C0D4075A9F0A840CEB756FE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -273,6 +273,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_52D2EAC8B7FE462EA28902A817BD9C72"
+            {
+            "SourcePath" = "8:..\\..\\README.md"
+            "TargetName" = "8:README.md"
+            "Tag" = "8:"
+            "Folder" = "8:_505FF03F2924487B80F1E1A692E93F28"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7508290A598C57094D74CF6E730B08C5"
             {
             "AssemblyRegister" = "3:1"
@@ -302,26 +322,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7BFF4BF4312B48F0B887C79EE166DE25"
-            {
-            "SourcePath" = "8:..\\..\\README.md"
-            "TargetName" = "8:README.md"
-            "Tag" = "8:"
-            "Folder" = "8:_505FF03F2924487B80F1E1A692E93F28"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8CEF8A7EA39DF528BBF965D28C93BAD7"
@@ -1023,7 +1023,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_ADE65FA53C0D4075A9F0A840CEB756FE"
             {
-            "SourcePath" = "8:..\\Updater\\obj\\Release\\Updater.exe"
+            "SourcePath" = "8:..\\Updater\\obj\\Debug\\Updater.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_505FF03F2924487B80F1E1A692E93F28"
@@ -1051,7 +1051,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B0DBC76152CE4129B1DE970B476D66A5"
             {
-            "SourcePath" = "8:..\\App\\obj\\Release\\net7.0-windows\\apphost.exe"
+            "SourcePath" = "8:..\\App\\obj\\Debug\\net7.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_505FF03F2924487B80F1E1A692E93F28"
