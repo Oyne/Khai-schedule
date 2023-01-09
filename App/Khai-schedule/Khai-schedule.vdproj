@@ -608,18 +608,18 @@
             "Icon" = "8:_0BE20AFEA54B4A89A4690240A0BBF40D"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_AEC2025B8B2345288F405654F61468C4"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_8918239178C64ABFAE5C65EE7B0112AA"
             {
-            "Name" = "8:uninstall"
+            "Name" = "8:Khai Schedule"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_C99B521ECB7B4ECD96BE8150BE1C69AB"
+            "Target" = "8:_B0DBC76152CE4129B1DE970B476D66A5"
             "Folder" = "8:_9E920D2CCC8A425F81D28EE2E5391F97"
-            "WorkingFolder" = "8:_DF09BBCCD4974FDF824962A49DE768CC"
-            "Icon" = "8:_0BE20AFEA54B4A89A4690240A0BBF40D"
+            "WorkingFolder" = "8:_505FF03F2924487B80F1E1A692E93F28"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
         }
