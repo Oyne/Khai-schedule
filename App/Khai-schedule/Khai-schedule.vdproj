@@ -474,7 +474,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Khai Schedule"
         "ProductCode" = "8:{011A0206-18B1-4740-93C4-EFCA7250D589}"
-        "PackageCode" = "8:{376A2D5C-D7BB-4EDB-897E-4131E4C5E5A3}"
+        "PackageCode" = "8:{AE7E29C9-999F-4391-B0EB-DE4CA2B90192}"
         "UpgradeCode" = "8:{080FF90D-7AE1-438F-9023-4D2A74F00563}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -619,7 +619,7 @@
             "Target" = "8:_B0DBC76152CE4129B1DE970B476D66A5"
             "Folder" = "8:_9E920D2CCC8A425F81D28EE2E5391F97"
             "WorkingFolder" = "8:_505FF03F2924487B80F1E1A692E93F28"
-            "Icon" = "8:"
+            "Icon" = "8:_0BE20AFEA54B4A89A4690240A0BBF40D"
             "Feature" = "8:"
             }
         }

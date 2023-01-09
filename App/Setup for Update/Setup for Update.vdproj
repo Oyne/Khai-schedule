@@ -270,7 +270,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Setup for Update"
         "ProductCode" = "8:{28AB4544-637B-4BA1-A548-3C7BA47F787D}"
-        "PackageCode" = "8:{C5F94072-E0D5-4AB6-A068-76B92314771E}"
+        "PackageCode" = "8:{8E506332-BE89-4389-B3B4-F5C1B587BEF2}"
         "UpgradeCode" = "8:{9BFEBFBB-436F-4367-8771-1B81D1BC8E9E}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -401,7 +401,7 @@
             "Target" = "8:_192A200E5B114A49954A21C8586F13D4"
             "Folder" = "8:_9B6CB283348142A39A88ADD03E26D8A9"
             "WorkingFolder" = "8:_2D86C13BC87C45379FBFF05F02EA7E04"
-            "Icon" = "8:"
+            "Icon" = "8:_AB516944E9CD4C21B42AFC304CA58732"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_9A05C84FAA9F4559B163022DDAF6484C"
