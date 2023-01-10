@@ -792,6 +792,7 @@ class Output
 
         foreach (var day in Schedule.AsDays())
         {
+            if (day.Classes.Count == 0) continue;
             SetColor(TableBackColor, TableTextColor);
             Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
             Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
