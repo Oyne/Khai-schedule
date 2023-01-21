@@ -22,7 +22,7 @@ Update.CheckUpdate();
 // settings deserialization
 string settingsFilePath = "C://Khai/settings.json";
 var options = new JsonSerializerOptions { WriteIndented = true };
-Settings settings = null;
+Settings? settings = null;
 if (File.Exists(settingsFilePath))
 {
     settings = FileWork.ReadSettingsFromFile();
@@ -61,10 +61,9 @@ while (true)
     Console.InputEncoding = System.Text.Encoding.GetEncoding(1251);
 
     using var client = new KhaiClient();
-    string group = "";
-    string name = "";
-    string exit = "";
-    int choice, menu_item;
+    string? group = "";
+    string? name = "";
+    int menu_item;
     bool boolean;
     string[] menu = {"› Поиск по группе ",
                      "› Поиск по студенту ",
@@ -100,7 +99,7 @@ while (true)
 MenuCommand:
 
     Console.CursorVisible = false;
-    WeekSchedule Schedule = null;
+    WeekSchedule? Schedule = null;
     boolean = true;
     menu_item = 0;
     ConsoleColor ConsBackColor = theme.Colors[0];
@@ -169,13 +168,14 @@ MenuCommand:
                         if (group == "back") goto MenuCommand;
                         try
                         {
-                            Schedule = await client.GetGroupWeekSheduleAsync(group);
+                            if(group != null)
+                                Schedule = await client.GetGroupWeekSheduleAsync(group);
                         }
-                        catch (NullReferenceException e)
+                        catch (NullReferenceException)
                         {
                             Console.Write("Некорректный ввод или группы не существует\n");
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             Console.Write("Очень некорректный ввод, группы не существует или плохое интернет соединение\n");
                         }
@@ -184,7 +184,8 @@ MenuCommand:
                     Console.Clear();
                     Output.PrintKhai();
                     Console.WriteLine("\n\n\n\n\n\n");
-                    Console.WriteLine(new string(' ', (Console.WindowWidth - 8 - group.Length) / 2) + $"Группа: {group}");
+                    if(group != null)
+                        Console.WriteLine(new string(' ', (Console.WindowWidth - 8 - group.Length) / 2) + $"Группа: {group}");
                     await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
                     Console.SetCursorPosition(0, 0);
                     boolean = false;
@@ -201,17 +202,18 @@ MenuCommand:
                         if (name == "back") goto MenuCommand;
                         try
                         {
-                            Schedule = await client.GetStudentWeekSheduleAsync(name);
+                            if (name != null)
+                                Schedule = await client.GetStudentWeekSheduleAsync(name);
                         }
-                        catch (NullReferenceException e)
+                        catch (NullReferenceException)
                         {
                             Console.Write("Некорректный ввод или студента не существует\n");
                         }
-                        catch (System.Net.Http.HttpRequestException e)
+                        catch (System.Net.Http.HttpRequestException)
                         {
                             Console.Write("Некорректный ввод или студента не существует\n");
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             Console.Write("Очень некорректный ввод, студента не существует или плохое интернет соединение\n");
                         }
@@ -220,7 +222,8 @@ MenuCommand:
                     Console.Clear();
                     Output.PrintKhai();
                     Console.WriteLine("\n\n\n\n\n\n");
-                    Console.WriteLine(new string(' ', (Console.WindowWidth - 9 - name.Length) / 2) + $"Студент: {name}");
+                    if(name != null)
+                        Console.WriteLine(new string(' ', (Console.WindowWidth - 9 - name.Length) / 2) + $"Студент: {name}");
                     await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
                     Console.SetCursorPosition(0, 0);
                     boolean = false;
@@ -237,17 +240,18 @@ MenuCommand:
                         if (name == "back") goto MenuCommand;
                         try
                         {
-                            Schedule = await client.GetLecturerWeekSheduleAsync(name);
+                            if (name != null)
+                                Schedule = await client.GetLecturerWeekSheduleAsync(name);
                         }
-                        catch (NullReferenceException e)
+                        catch (NullReferenceException)
                         {
                             Console.Write("Некорректный ввод или преподавателя не существует\n");
                         }
-                        catch (System.Net.Http.HttpRequestException e)
+                        catch (System.Net.Http.HttpRequestException)
                         {
                             Console.Write("Некорректный ввод или преподавателя не существует\n");
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             Console.Write("Очень некорректный ввод, преподавателя не существует или плохое интернет соединение\n");
                         }
@@ -256,7 +260,8 @@ MenuCommand:
                     Console.Clear();
                     Output.PrintKhai();
                     Console.WriteLine("\n\n\n\n\n\n");
-                    Console.WriteLine(new string(' ', (Console.WindowWidth - 15 - name.Length) / 2) + $"Преподаватель: {name}");
+                    if(name != null)
+                        Console.WriteLine(new string(' ', (Console.WindowWidth - 15 - name.Length) / 2) + $"Преподаватель: {name}");
                     await Task.Run(() => Output.Outputing(Schedule, theme.Colors, settings.TableWidth, settings.TimeWidth));
                     Console.SetCursorPosition(0, 0);
                     boolean = false;
@@ -278,17 +283,17 @@ MenuCommand:
                         Console.SetCursorPosition(0, 0);
                         boolean = false;
                     }
-                    catch (FileWasNotFoundException e)
+                    catch (FileWasNotFoundException)
                     {
                         Console.WriteLine("Не удалось прочитать файл.\n");
                         file = 1;
                     }
-                    catch (ScheduleWasNotFoundException e)
+                    catch (ScheduleWasNotFoundException)
                     {
                         Console.WriteLine("Нет сохранённого расписания.\n");
                         file = 1;
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         Console.WriteLine("Произошло что-то очень плохое\n");
                         file = 1;
@@ -354,7 +359,6 @@ MenuCommand:
                                 {
                                     goto MenuCommand;
                                 }
-                                break;
                             case 1:
                                 {
                                     FileWork.SaveSettings(settings);
@@ -364,7 +368,6 @@ MenuCommand:
                         }
                     }
                 }
-                break;
             case 4:
                 {
                 SettingsMenu:
@@ -504,7 +507,6 @@ MenuCommand:
                                                     FileWork.SaveSettings(settings);
                                                     goto SizeMenu;
                                                 }
-                                                break;
                                             case 1:
                                                 {
                                                     Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
@@ -514,17 +516,14 @@ MenuCommand:
                                                     FileWork.SaveSettings(settings);
                                                     goto SizeMenu;
                                                 }
-                                                break;
                                             case 2:
                                                 {
                                                     goto SettingsMenu;
                                                 }
-                                                break;
                                             case 3:
                                                 {
                                                     goto MenuCommand;
                                                 }
-                                                break;
                                             case 4:
                                                 {
                                                     FileWork.SaveSettings(settings);
@@ -534,7 +533,6 @@ MenuCommand:
                                         }
                                     }
                                 }
-                                break;
                             case 2:
                                 {
                                     int[] arr = TableSize.SetTableSize(theme.Colors, settings.TableWidth, settings.TimeWidth);
@@ -543,12 +541,10 @@ MenuCommand:
                                     FileWork.SaveSettings(settings);
                                     goto SettingsMenu;
                                 }
-                                break;
                             case 3:
                                 {
                                     goto MenuCommand;
                                 }
-                                break;
                             case 4:
                                 {
                                     FileWork.SaveSettings(settings);
@@ -558,7 +554,6 @@ MenuCommand:
                         }
                     }
                 }
-                break;
             case 5:
                 {
                     FileWork.SaveSettings(settings);
@@ -619,9 +614,10 @@ MenuCommand:
                 {
                     try
                     {
-                        FileWork.SaveSchduleToFile(Schedule);
+                        if(Schedule != null)
+                            FileWork.SaveSchduleToFile(Schedule);
                     }
-                    catch (DirectoryDoesNotExistException e)
+                    catch (DirectoryDoesNotExistException)
                     {
                         Console.SetCursorPosition(0, 5);
                         tmp = 1;
@@ -632,9 +628,10 @@ MenuCommand:
                         Console.WriteLine("Путь для сохранения файла создан \"C://Khai/\"   ");
                         Console.Write(new string(' ', (Console.WindowWidth - "Файл для сохранения не найден   ".Length) / 2));
                         Console.WriteLine("Файл с расписанием создан");
-                        FileWork.SaveSchduleToFile(Schedule);
+                        if (Schedule != null)
+                            FileWork.SaveSchduleToFile(Schedule);
                     }
-                    catch (FileDoesNotExistException e)
+                    catch (FileDoesNotExistException)
                     {
                         Console.SetCursorPosition(0, 5);
                         tmp = 1;
@@ -643,9 +640,10 @@ MenuCommand:
                         FileWork.CreateAFile("C://Khai/info.json");
                         Console.Write(new string(' ', (Console.WindowWidth - "Файл для сохранения не найден   ".Length) / 2));
                         Console.WriteLine("Файл с расписанием создан по пути \"C://Khai/\"   ");
-                        FileWork.SaveSchduleToFile(Schedule);
+                        if (Schedule != null)
+                            FileWork.SaveSchduleToFile(Schedule);
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         Console.Clear();
                         Console.SetCursorPosition(0, 5);
@@ -715,7 +713,6 @@ MenuCommand:
                                     Console.Clear();
                                     goto MenuCommand;
                                 }
-                                break;
                             case 1:
                                 {
                                     FileWork.SaveSettings(settings);
@@ -731,7 +728,6 @@ MenuCommand:
                     Console.Clear();
                     goto MenuCommand;
                 }
-                break;
             case 2:
                 {
                     FileWork.SaveSettings(settings);
@@ -740,10 +736,7 @@ MenuCommand:
                 break;
         }
     }
-
-
-    Debugger.Break();
-
+    //Debugger.Break();
 }
 
 /// <summary>
@@ -788,7 +781,7 @@ class Output
         int count = 0;
         int den;
         int num;
-        string output;
+        string? output;
 
         foreach (var day in Schedule.AsDays())
         {
@@ -803,36 +796,36 @@ class Output
             Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
             for (int j = 0; j < 5; j++)
             {
-                if (j >= day.Classes.Count) break;
+                if (j >= day?.Classes.Count) break;
                 output = "";
                 num = 0;
                 den = 0;
-                if (day.Classes[j].Numerator == day.Classes[j].Denominator && day.Classes[j].Numerator != null)
+                if (day?.Classes[j].Numerator == day?.Classes[j].Denominator && day?.Classes[j].Numerator != null)
                 {
                     Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                     SetColor(TimeBackColor, TimeTextColor);
                     Console.Write(new string(' ', (TIMEWIDTH - timeOfPairs[j].Length) / 2) + timeOfPairs[j] + new string(' ', TIMEWIDTH - timeOfPairs[j].Length - ((TIMEWIDTH - timeOfPairs[j].Length) / 2)));
                     SetColor(TableBackColor, TableTextColor);
                     Console.Write("|");
-                    if (day.Classes[j].Numerator.RoomNumber != null)
+                    if (day.Classes[j].Numerator?.RoomNumber != null)
                     {
-                        output += day.Classes[j].Numerator.RoomNumber + ", ";
-                        num += day.Classes[j].Numerator.RoomNumber.Length + 2;
+                        output += day.Classes[j].Numerator?.RoomNumber + ", ";
+                        num += day.Classes[j].Numerator!.RoomNumber!.Length + 2;
                     }
-                    if (day.Classes[j].Numerator.Name != null)
+                    if (day.Classes[j].Numerator?.Name != null)
                     {
-                        output += day.Classes[j].Numerator.Name;
-                        num += day.Classes[j].Numerator.Name.Length;
+                        output += day.Classes[j].Numerator?.Name;
+                        num += day.Classes[j].Numerator!.Name!.Length;
                     }
-                    if (day.Classes[j].Numerator.Type != null)
+                    if (day.Classes[j].Numerator?.Type != null)
                     {
-                        output += ", " + day.Classes[j].Numerator.Type;
-                        num += day.Classes[j].Numerator.Type.Length + 2;
+                        output += ", " + day.Classes[j].Numerator?.Type;
+                        num += day.Classes[j].Numerator!.Type!.Length + 2;
                     }
-                    if (day.Classes[j].Numerator.Teacher != null)
+                    if (day.Classes[j].Numerator?.Teacher != null)
                     {
-                        output += ", " + day.Classes[j].Numerator.Teacher;
-                        num += day.Classes[j].Numerator.Teacher.Length + 2;
+                        output += ", " + day.Classes[j].Numerator?.Teacher;
+                        num += day.Classes[j].Numerator!.Teacher!.Length + 2;
                     }
                     SetColor(NumBackColor, NumTextColor);
                     if (num > SUBJECTWIDTH)
@@ -871,7 +864,7 @@ class Output
                     Console.Write("|\n");
                     Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
                 }
-                else if (day.Classes[j].Numerator == day.Classes[j].Denominator && day.Classes[j].Numerator == null)
+                else if (day?.Classes[j].Numerator == day?.Classes[j].Denominator && day?.Classes[j].Numerator == null)
                 {
                     Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                     SetColor(TimeBackColor, TimeTextColor);
@@ -887,27 +880,27 @@ class Output
                 }
                 else
                 {
-                    if (day.Classes[j].Numerator == null)
+                    if (day?.Classes[j].Numerator == null)
                     {
-                        if (day.Classes[j].Denominator.RoomNumber != null)
+                        if (day?.Classes[j].Denominator?.RoomNumber != null)
                         {
-                            output += day.Classes[j].Denominator.RoomNumber + ", ";
-                            den += day.Classes[j].Denominator.RoomNumber.Length + 2;
+                            output += day.Classes[j].Denominator?.RoomNumber + ", ";
+                            den += day.Classes[j].Denominator!.RoomNumber!.Length + 2;
                         }
-                        if (day.Classes[j].Denominator.Name != null)
+                        if (day?.Classes[j].Denominator?.Name != null)
                         {
-                            output += day.Classes[j].Denominator.Name;
-                            den += day.Classes[j].Denominator.Name.Length;
+                            output += day.Classes[j].Denominator?.Name;
+                            den += day.Classes[j].Denominator!.Name!.Length;
                         }
-                        if (day.Classes[j].Denominator.Type != null)
+                        if (day?.Classes[j].Denominator?.Type != null)
                         {
-                            output += ", " + day.Classes[j].Denominator.Type;
-                            den += day.Classes[j].Denominator.Type.Length + 2;
+                            output += ", " + day.Classes[j].Denominator?.Type;
+                            den += day.Classes[j].Denominator!.Type!.Length + 2;
                         }
-                        if (day.Classes[j].Denominator.Teacher != null)
+                        if (day?.Classes[j].Denominator?.Teacher != null)
                         {
-                            output += ", " + day.Classes[j].Denominator.Teacher;
-                            den += day.Classes[j].Denominator.Teacher.Length + 2;
+                            output += ", " + day.Classes[j].Denominator?.Teacher;
+                            den += day.Classes[j].Denominator!.Teacher!.Length + 2;
                         }
                         Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);
@@ -969,25 +962,25 @@ class Output
                     }
                     else if (day.Classes[j].Denominator == null)
                     {
-                        if (day.Classes[j].Numerator.RoomNumber != null)
+                        if (day.Classes[j].Numerator?.RoomNumber != null)
                         {
-                            output += day.Classes[j].Numerator.RoomNumber + ", ";
-                            num += day.Classes[j].Numerator.RoomNumber.Length + 2;
+                            output += day.Classes[j].Numerator?.RoomNumber + ", ";
+                            num += day.Classes[j].Numerator!.RoomNumber!.Length + 2;
                         }
-                        if (day.Classes[j].Numerator.Name != null)
+                        if (day.Classes[j].Numerator?.Name != null)
                         {
-                            output += day.Classes[j].Numerator.Name;
-                            num += day.Classes[j].Numerator.Name.Length;
+                            output += day.Classes[j].Numerator?.Name;
+                            num += day.Classes[j].Numerator!.Name!.Length;
                         }
-                        if (day.Classes[j].Numerator.Type != null)
+                        if (day.Classes[j].Numerator?.Type != null)
                         {
-                            output += ", " + day.Classes[j].Numerator.Type;
-                            num += day.Classes[j].Numerator.Type.Length + 2;
+                            output += ", " + day.Classes[j].Numerator?.Type;
+                            num += day.Classes[j].Numerator!.Type!.Length + 2;
                         }
-                        if (day.Classes[j].Numerator.Teacher != null)
+                        if (day.Classes[j].Numerator?.Teacher != null)
                         {
-                            output += ", " + day.Classes[j].Numerator.Teacher;
-                            num += day.Classes[j].Numerator.Teacher.Length + 2;
+                            output += ", " + day.Classes[j].Numerator?.Teacher;
+                            num += day.Classes[j].Numerator!.Teacher!.Length + 2;
                         }
                         Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);
@@ -1051,45 +1044,45 @@ class Output
                     else
                     {
                         string out_num = "", out_den = "";
-                        if (day.Classes[j].Numerator.RoomNumber != null)
+                        if (day.Classes[j].Numerator?.RoomNumber != null)
                         {
-                            out_num += day.Classes[j].Numerator.RoomNumber + ", ";
-                            num += day.Classes[j].Numerator.RoomNumber.Length + 2;
+                            out_num += day.Classes[j].Numerator?.RoomNumber + ", ";
+                            num += day.Classes[j].Numerator!.RoomNumber!.Length + 2;
                         }
-                        if (day.Classes[j].Numerator.Name != null)
+                        if (day.Classes[j].Numerator?.Name != null)
                         {
-                            out_num += day.Classes[j].Numerator.Name;
-                            num += day.Classes[j].Numerator.Name.Length;
+                            out_num += day.Classes[j].Numerator?.Name;
+                            num += day.Classes[j].Numerator!.Name!.Length;
                         }
-                        if (day.Classes[j].Numerator.Type != null)
+                        if (day.Classes[j].Numerator?.Type != null)
                         {
-                            out_num += ", " + day.Classes[j].Numerator.Type;
-                            num += day.Classes[j].Numerator.Type.Length + 2;
+                            out_num += ", " + day.Classes[j].Numerator?.Type;
+                            num += day.Classes[j].Numerator!.Type!.Length + 2;
                         }
-                        if (day.Classes[j].Numerator.Teacher != null)
+                        if (day.Classes[j].Numerator?.Teacher != null)
                         {
-                            out_num += ", " + day.Classes[j].Numerator.Teacher;
-                            num += day.Classes[j].Numerator.Teacher.Length + 2;
+                            out_num += ", " + day.Classes[j].Numerator?.Teacher;
+                            num += day.Classes[j].Numerator!.Teacher!.Length + 2;
                         }
-                        if (day.Classes[j].Denominator.RoomNumber != null)
+                        if (day.Classes[j].Denominator?.RoomNumber != null)
                         {
-                            out_den += day.Classes[j].Denominator.RoomNumber + ", ";
-                            den += day.Classes[j].Denominator.RoomNumber.Length + 2;
+                            out_den += day.Classes[j].Denominator?.RoomNumber + ", ";
+                            den += day.Classes[j].Denominator!.RoomNumber!.Length + 2;
                         }
-                        if (day.Classes[j].Denominator.Name != null)
+                        if (day.Classes[j].Denominator?.Name != null)
                         {
-                            out_den += day.Classes[j].Denominator.Name;
-                            den += day.Classes[j].Denominator.Name.Length;
+                            out_den += day.Classes[j].Denominator?.Name;
+                            den += day.Classes[j].Denominator!.Name!.Length;
                         }
-                        if (day.Classes[j].Denominator.Type != null)
+                        if (day.Classes[j].Denominator?.Type != null)
                         {
-                            out_den += ", " + day.Classes[j].Denominator.Type;
-                            den += day.Classes[j].Denominator.Type.Length + 2;
+                            out_den += ", " + day.Classes[j].Denominator?.Type;
+                            den += day.Classes[j].Denominator!.Type!.Length + 2;
                         }
-                        if (day.Classes[j].Denominator.Teacher != null)
+                        if (day.Classes[j].Denominator?.Teacher != null)
                         {
-                            out_den += ", " + day.Classes[j].Denominator.Teacher;
-                            den += day.Classes[j].Denominator.Teacher.Length + 2;
+                            out_den += ", " + day.Classes[j].Denominator?.Teacher;
+                                den += day.Classes[j].Denominator!.Teacher!.Length + 2;
                         }
                         Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
                         SetColor(TimeBackColor, TimeTextColor);

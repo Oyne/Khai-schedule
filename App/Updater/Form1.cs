@@ -20,7 +20,6 @@ namespace Updater
         {
             InitializeComponent();
 
-            WebClient webClient = new WebClient();
             var client = new WebClient();
 
             try
@@ -50,7 +49,6 @@ namespace Updater
             catch (Exception ex)
             {
                 MessageBox.Show("Произошла ошибка:" + ex.ToString() + "\nСкорее всего Вы установили программу в защищённую папку, из-за чего не удаётся установить новую версию.\nВ данном случае нужно скачать и установить новую версию самостоятельно.");
-                //Process.Start(@".\App.exe");
                 this.Close();
             }
 

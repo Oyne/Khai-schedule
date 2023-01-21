@@ -18,10 +18,6 @@ public class Theme
     /// arary of all colors
     /// </summary>
     public static readonly ConsoleColor[] examples = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
-    /// <summary>
-    /// schedule table dimensions
-    /// </summary>
-    readonly int tableWidth, timeWidth;
 
     public ConsoleColor[] Colors
     {
@@ -141,37 +137,31 @@ public class Theme
                         theme.SetBackColor(tableWidth, timeWidth);
                         goto MenuCommand;
                     }
-                    break;
                 case 1:
                     {
                         theme.SetFrontColor(tableWidth, timeWidth);
                         goto MenuCommand;
                     }
-                    break;
                 case 2:
                     {
                         theme.SetDenBackColor(tableWidth, timeWidth);
                         goto MenuCommand;
                     }
-                    break;
                 case 3:
                     {
                         theme.SetDenTextColor(tableWidth, timeWidth);
                         goto MenuCommand;
                     }
-                    break;
                 case 4:
                     {
                         theme.SetDefaultTheme();
                         goto MenuCommand;
                     }
-                    break;
                 case 5:
                     {
                         theme.SetDefaultColors();
                         goto MenuCommand;
                     }
-                    break;
                 case 6:
                     {
                         ret = 2;
@@ -524,7 +514,7 @@ public class Theme
         string[] timeOfPairs = { "08:00 - 09:35", "09:50 - 11:25", "11:55 - 13:30", "13:45 - 15:20", "15:35 - 17:10" };
 
         string output = "", out_num = "", out_den = "";
-        int den = 0, num = 0, count = 0;
+        int den = 0, num = 0;
 
         ConsoleColor CurrentBackColor = colors[0];
         ConsoleColor TableBackColor = CurrentBackColor; // background color of the table

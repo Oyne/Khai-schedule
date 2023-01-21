@@ -56,7 +56,7 @@ public class FileWork
     }
     public static WeekSchedule ReadScheduleFromFile()
     {
-        WeekSchedule readed;
+        WeekSchedule? readed;
         try
         {
             CheckIsFileExist(_infoFilePath);
@@ -67,7 +67,7 @@ public class FileWork
 
              readed = JsonSerializer.Deserialize<Khai.WeekSchedule>(rowJSON);
         }
-        catch (ScheduleWasNotFoundException ex)
+        catch (ScheduleWasNotFoundException)
         {
             throw new ScheduleWasNotFoundException("Немає збереженого розкладу.");
         }
@@ -84,7 +84,7 @@ public class FileWork
 
     public static Settings ReadSettingsFromFile()
     {
-        Settings readed;
+        Settings? readed;
         try
         {
             CheckIsFileExist(_settingsFilePath);
