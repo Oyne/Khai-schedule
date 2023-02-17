@@ -23,7 +23,7 @@ public class Size
             Console.Write(" Настройки размера консоли ");
             Console.WriteLine("|");
             Console.WriteLine('\n');
-            Instuction();
+            Instruction();
 
             Console.Write(new string(' ', (Console.WindowWidth - "Текущий размер: {0} x {1}".Length) / 2) + "Текущий размер: {0} x {1}\n\n", Console.WindowWidth, Console.WindowHeight);
             Theme.PrintTable(colors, tableWidth, timeWidth);
@@ -54,7 +54,7 @@ public class Size
         return arr;
     }
 
-    public static void Instuction()
+    public static void Instruction()
     {
         Console.Write(new string(' ', (Console.WindowWidth - "← →-управление".Length) / 2));
         Console.WriteLine("↑");

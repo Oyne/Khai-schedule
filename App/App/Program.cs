@@ -16,7 +16,7 @@ using System.Runtime.CompilerServices;
 //Console title
 Console.Title = "Khai schedule";
 
-//Check the udates
+//Check the updates
 Update.CheckUpdate();
 
 // settings deserialization
@@ -196,7 +196,7 @@ MenuCommand:
                     while (Schedule == null)
                     {
                         Console.CursorVisible = true;
-                        Console.Write("Введите имя в формате bondarenko-a-o, kuzmichov-i-i\n>>> ");
+                        Console.Write("Введите имя в формате bondarenko-i-r-525, kuzmichov-i-i-623p\n>>> ");
                         name = Console.ReadLine();
                         if (name == "exit") Environment.Exit(0);
                         if (name == "back") goto MenuCommand;

@@ -21,7 +21,7 @@ public class TableSize
                 Console.Write(" Настройки размера таблицы ");
                 Console.WriteLine("|");
                 Console.WriteLine('\n');
-                Instuction();
+                Instruction();
 
                 Console.Write(new string(' ', (Console.WindowWidth - "Текущий размер: {0} x {1}".Length) / 2) + "Текущий размер: {0} x {1}\n\n", tableWidth, timeWidth);
                 Theme.PrintTable(colors, tableWidth, timeWidth);
@@ -52,7 +52,7 @@ public class TableSize
             return arr;
     }
 
-    public static void Instuction()
+    public static void Instruction()
     {
         Console.Write(new string(' ', (Console.WindowWidth - "↓-изменение длины области времени".Length) / 2));
         Console.WriteLine("↑ - изменение длины области времени");

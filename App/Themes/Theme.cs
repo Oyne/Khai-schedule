@@ -513,21 +513,21 @@ public class Theme
 
         string[] timeOfPairs = { "08:00 - 09:35", "09:50 - 11:25", "11:55 - 13:30", "13:45 - 15:20", "15:35 - 17:10" };
 
-        string output = "", out_num = "", out_den = "";
+        string output, out_num, out_den;
         int den = 0, num = 0;
 
         ConsoleColor CurrentBackColor = colors[0];
         ConsoleColor TableBackColor = CurrentBackColor; // background color of the table
-        ConsoleColor NumBackColor = colors[1];        // background color of the numerator
-        ConsoleColor DenBackColor = colors[2];        // background color of the denominator
-        ConsoleColor TimeBackColor = colors[3];        // background color of the time field
-        ConsoleColor DayOfWeekBackColor = colors[4];        // background color of the day of week field
+        ConsoleColor NumBackColor = colors[1];          // background color of the numerator
+        ConsoleColor DenBackColor = colors[2];          // background color of the denominator
+        ConsoleColor TimeBackColor = colors[3];         // background color of the time field
+        ConsoleColor DayOfWeekBackColor = colors[4];    // background color of the day of week field
         ConsoleColor CurrentTextColor = colors[5];
         ConsoleColor TableTextColor = CurrentTextColor; // font color of the table         
-        ConsoleColor NumTextColor = colors[6];        // font color of the numerator         
-        ConsoleColor DenTextColor = colors[7];        // font color of the denominator       
-        ConsoleColor TimeTextColor = colors[8];        // font color of the time field        
-        ConsoleColor DayOfWeekTextColor = colors[9];        // font color of the day of week field 
+        ConsoleColor NumTextColor = colors[6];          // font color of the numerator         
+        ConsoleColor DenTextColor = colors[7];          // font color of the denominator       
+        ConsoleColor TimeTextColor = colors[8];         // font color of the time field        
+        ConsoleColor DayOfWeekTextColor = colors[9];    // font color of the day of week field 
         //ConsoleColor BlankBackColor = ConsoleColor.DarkBlue;
         //ConsoleColor BlankTextColor = ConsoleColor.White;
 
@@ -546,7 +546,7 @@ public class Theme
         SetColor(TableBackColor, TableTextColor);
         Console.Write("|");
 
-        output += "233р, Технології програмування, лекція";
+        output = "233р, Технології програмування, лекція";
         num += "233р, Технології програмування, лекція".Length;
         SetColor(NumBackColor, NumTextColor);
         if (num > SUBJECTWIDTH)
@@ -587,8 +587,8 @@ public class Theme
 
         num = 0;
         den = 0;
-        out_num += "136ар, Комп'ютерна схемотехніка, лаб. практикум";
-        out_den += "210лк, Вища математика, лекція";
+        out_num = "136ар, Комп'ютерна схемотехніка, лаб. практикум";
+        out_den = "210лк, Вища математика, лекція";
         num += "136ар, Комп'ютерна схемотехніка, лаб. практикум".Length;
         den += "210лк, Вища математика, лекція".Length;
 
@@ -681,8 +681,7 @@ public class Theme
         Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
 
         den = 0;
-        output = "";
-        output += "207аг, Філософія, практика";
+        output = "207аг, Філософія, практика";
         den += "207аг, Філософія, практика".Length;
 
         Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");
@@ -744,8 +743,7 @@ public class Theme
         Console.WriteLine(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + new string('-', TABLEWIDTH));
 
         num = 0;
-        output = "";
-        output += "Фізичне виховання";
+        output = "Фізичне виховання";
         num += "Фізичне виховання".Length;
 
         Console.Write(new string(' ', (Console.WindowWidth - TABLEWIDTH) / 2) + "|");

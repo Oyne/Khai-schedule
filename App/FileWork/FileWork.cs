@@ -42,8 +42,10 @@ public class FileWork
                 var json = JsonSerializer.Serialize(weekSchedule);
                 File.WriteAllText(_infoFilePath, json);
             }
-            else if(CheckIsFileExist(_infoFilePath) == -1) throw new DirectoryDoesNotExistException("Directory is not existing");
-            else throw new FileDoesNotExistException("File is not existing");      
+            else if(CheckIsFileExist(_infoFilePath) == -1)
+                throw new DirectoryDoesNotExistException("Directory is not existing");
+            else
+                throw new FileDoesNotExistException("File is not existing");      
     }
 
     public static void CleanFile()

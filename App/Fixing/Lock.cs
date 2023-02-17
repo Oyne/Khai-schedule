@@ -1,6 +1,12 @@
 ﻿using System.Runtime.InteropServices;
 
 namespace Khai;
+
+// Code to paste in main program
+// Lock.DeleteMenu(Lock.GetSystemMenu(Lock.GetConsoleWindow(), false), Lock.SC_MINIMIZE, Lock.MF_BYCOMMAND);
+// Lock.DeleteMenu(Lock.GetSystemMenu(Lock.GetConsoleWindow(), false), Lock.SC_MAXIMIZE, Lock.MF_BYCOMMAND);
+// Lock.DeleteMenu(Lock.GetSystemMenu(Lock.GetConsoleWindow(), false), Lock.SC_SIZE, Lock.MF_BYCOMMAND);
+
 public class Lock
 {
     // code to fix size of a console
